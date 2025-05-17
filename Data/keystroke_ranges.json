@@ -1,0 +1,22 @@
+{
+  "hold": {
+    "control": {
+      "mean": 72.1,
+      "std": 54837.3
+    },
+    "parkinsons": {
+      "mean": 80.5,
+      "std": 68036.2
+    }
+  },
+  "latency": {
+    "control": {
+      "mean": 250.5,
+      "std": 132.7
+    },
+    "parkinsons": {
+      "mean": 264.5,
+      "std": 401.3
+    }
+  }
+}

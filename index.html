@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Simulator - Parkinson's Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <h1>Parkinson's Visualizations</h1>
+
+  <section id="viz-1">
+    <h2>Visualization 1: User vs Parkinsons Disease</h2>
+    <div id="viz1-container">
+        <p>Type a sentence below and see how your typing rhythm compares to Parkinson’s and non-Parkinson’s patterns.</p>
+        <label for="metric-select">Choose a timing metric:</label>
+        <select id="metric-select">
+        <option value="hold">Hold Time</option>
+        <option value="latency">Latency</option>
+        </select>
+        <input id="typing-box" type="text" placeholder="Start typing..." autofocus />
+        <div style="margin-bottom: 10px;">
+            <button id="reset-button">Reset Typing</button>
+        </div>      
+        <svg id="typing-viz" width="800" height="200"></svg>
+        <div id="legend" style="margin-top: 10px;">
+            <svg width="200" height="30">
+            <circle cx="10" cy="10" r="5" fill="steelblue"></circle>
+            <text x="20" y="14" font-size="12px">Your Typing</text>
+            <line x1="110" y1="10" x2="130" y2="10" stroke="darkred" stroke-width="2" stroke-dasharray="4"></line>
+            <text x="135" y="14" font-size="12px">Parkinson’s Sample</text>
+            </svg>
+        </div>      
+        <p id="typing-stats"></p>
+    </div>
+</section>
+  
+
+<section id="viz-2">
+    <h2>Visualization 2: Typing Progression Over Time</h2>
+    <p>This chart shows how each user's typing (hold or latency time) changes daily. PD users are in red, others in blue.</p>
+  
+    <label for="metric-toggle">Choose Metric:</label>
+    <select id="metric-toggle">
+      <option value="medianHoldTime">Hold Time</option>
+      <option value="medianLatency">Latency</option>
+    </select>
+  
+    <svg id="progression-viz" width="900" height="400"></svg>
+  
+    <div id="tooltip" style="
+      position: absolute;
+      visibility: hidden;
+      background: white;
+      border: 1px solid #aaa;
+      padding: 6px;
+      font-size: 12px;
+      pointer-events: none;
+      border-radius: 4px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    "></div>
+  </section>
+  
+  
+
+  <section id="viz-3">
+    <h2>Visualization 3: [Insert Title]</h2>
+    <div id="viz3-container"></div>
+  </section>
+
+  <section id="viz-4">
+    <h2>Visualization 4: [Insert Title]</h2>
+    <div id="viz4-container"></div>
+  </section>
+
+  <section id="viz-5">
+    <h2>Visualization 5: [Insert Title]</h2>
+    <div id="viz5-container"></div>
+  </section>
+
+  <section id="viz-6">
+    <h2>Visualization 6: [Insert Title]</h2>
+    <div id="viz6-container"></div>
+  </section>
+
+  <script type="module" src="typing.js"></script>
+</body>
