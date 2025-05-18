@@ -165,7 +165,6 @@ const tooltip = d3.select("#tooltip");
 let allData;
 let currentMetric = "medianHoldTime";
 
-// Load the progression data
 d3.csv("data/progression_by_day_with_latency.csv").then(data => {
   data.forEach(d => {
     d.Date = new Date(d.Date);
@@ -200,23 +199,29 @@ function renderProgression(metricKey) {
     const isPD = userData[0].Parkinsons;
     const color = isPD ? colorPD(i / users.length) : colorControl(i / users.length);
 
-    const path = chart2.append("path")
+    chart2.append("path")
       .datum(userData)
       .attr("fill", "none")
       .attr("stroke", color)
       .attr("stroke-width", 1.5)
       .attr("class", "user-line")
       .attr("d", lineGen)
-      .on("mouseover", function (event, d) {
+      .on("mouseover", function (event) {
         d3.selectAll(".user-line").attr("stroke-opacity", 0.1);
         d3.select(this)
           .raise()
           .attr("stroke-opacity", 1)
           .attr("stroke-width", 3);
 
+        const mostRecent = userData[userData.length - 1];
+
         tooltip
           .style("visibility", "visible")
-          .html(`User: ${userKey}<br>${isPD ? "PD" : "Control"}`);
+          .html(`
+            User: ${userKey}<br>
+            PD: ${isPD ? "Yes" : "No"}<br>
+            Latest ${metricKey === "medianHoldTime" ? "Hold" : "Latency"}: ${mostRecent[metricKey].toFixed(1)} ms
+          `);
       })
       .on("mousemove", function (event) {
         tooltip
@@ -227,19 +232,16 @@ function renderProgression(metricKey) {
         d3.selectAll(".user-line")
           .attr("stroke-opacity", 1)
           .attr("stroke-width", 1.5);
-
         tooltip.style("visibility", "hidden");
       });
   });
 
-  // Axes
   chart2.append("g")
     .attr("transform", `translate(0,${innerHeight2})`)
     .call(d3.axisBottom(xScale2));
 
   chart2.append("g").call(d3.axisLeft(yScale2));
 
-  // Axis labels
   chart2.append("text")
     .attr("x", innerWidth2 / 2)
     .attr("y", height2 - 5)
@@ -253,3 +255,4 @@ function renderProgression(metricKey) {
     .attr("text-anchor", "middle")
     .text(metricKey === "medianHoldTime" ? "Hold Time (ms)" : "Latency (ms)");
 }
+

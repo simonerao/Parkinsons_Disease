@@ -1,18 +1,18 @@
 import pandas as pd
 
-# Load your full keystroke dataset
-df = pd.read_csv("data/keystroke_data_combined.csv")
+# Step 1: Load your keystroke dataset
+df = pd.read_csv("data/keystroke_data_combined.csv", low_memory=False)
 
-# Convert the custom datetime format (like 3/1/2017 8:45:42 AM)
-df['Datetime'] = pd.to_datetime(df['Datetime'], format='%m/%d/%Y %I:%M:%S %p', errors='coerce')
+# Step 2: Parse datetime flexibly (let pandas auto-infer the format)
+df['Datetime'] = pd.to_datetime(df['Datetime'], errors='coerce', infer_datetime_format=True)
 
-# Drop rows that are missing necessary columns
+# Step 3: Drop rows missing required values
 df = df.dropna(subset=['Datetime', 'HoldTime', 'LatencyTime', 'UserKey', 'Parkinsons'])
 
-# Extract just the date for daily grouping
+# Step 4: Convert date to just the day
 df['Date'] = df['Datetime'].dt.date
 
-# Group by User, Date, and Parkinsons status
+# Step 5: Group by User, Date, Parkinsons, and calculate medians
 agg = (
     df.groupby(['UserKey', 'Date', 'Parkinsons'])
       .agg(
@@ -22,7 +22,9 @@ agg = (
       .reset_index()
 )
 
-# Save it to your data folder
+# Step 6: Save the output for your D3.js visualization
 agg.to_csv("data/progression_by_day_with_latency.csv", index=False)
 
-print("✅ progression_by_day_with_latency.csv has been generated!")
+print("✅ File saved: data/progression_by_day_with_latency.csv")
+print("📊 Preview:")
+print(agg.head())
