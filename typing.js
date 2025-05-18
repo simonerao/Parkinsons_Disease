@@ -145,6 +145,7 @@ document.getElementById("reset-button").addEventListener("click", () => {
 //END VISUALIZATION 1 CODE
 
 //VISUALIZATION 2 CODE
+// VISUALIZATION 2 CODE
 const svg2 = d3.select("#progression-viz");
 const width2 = +svg2.attr("width");
 const height2 = +svg2.attr("height");
@@ -166,7 +167,6 @@ let allData;
 let currentMetric = "medianHoldTime";
 
 d3.csv("data/progression_by_day_with_latency.csv").then(data => {
-    console.log("Loaded data:", data.slice(0, 5));
   data.forEach(d => {
     d.Date = new Date(d.Date);
     d.medianHoldTime = +d.medianHoldTime;
@@ -185,73 +185,117 @@ document.getElementById("metric-toggle").addEventListener("change", e => {
 });
 
 function renderProgression(metricKey) {
-    const userGroups = d3.group(allData, d => d.UserKey);
-    const users = Array.from(userGroups.keys());
-  
-    xScale2.domain(d3.extent(allData, d => d.Date));
-    const maxY = d3.max(allData, d => d[metricKey]) || 300;
-    yScale2.domain([0, maxY * 1.1]);
-  
-    const lineGen = d3.line()
-      .x(d => xScale2(d.Date))
-      .y(d => yScale2(d[metricKey]));
-  
-    userGroups.forEach((userData, userKey, i) => {
-      if (userData.length < 2) return;
-      userData.sort((a, b) => a.Date - b.Date);
-      const isPD = userData[0].Parkinsons;
-      const color = isPD ? colorPD(i / users.length) : colorControl(i / users.length);
-  
-      chart2.append("path")
-        .datum(userData)
-        .attr("fill", "none")
-        .attr("stroke", color)
-        .attr("stroke-width", 1.5)
-        .attr("class", "user-line")
-        .attr("stroke-opacity", 1)
-        .attr("d", lineGen);
-    });
-  
-    // Draw dots for debugging
-    chart2.selectAll(".dot")
-      .data(allData)
-      .enter()
-      .append("circle")
-      .attr("class", "dot")
-      .attr("cx", d => xScale2(d.Date))
-      .attr("cy", d => yScale2(d[metricKey]))
-      .attr("r", 2)
-      .attr("fill", d => d.Parkinsons ? "red" : "blue")
-      .attr("opacity", 0.6);
-  
-    chart2.append("g")
-      .attr("transform", `translate(0,${innerHeight2})`)
-      .call(d3.axisBottom(xScale2));
-  
-    chart2.append("g").call(d3.axisLeft(yScale2));
-  
-    chart2.append("text")
-      .attr("x", innerWidth2 / 2)
-      .attr("y", height2 - 5)
-      .attr("text-anchor", "middle")
-      .text("Date");
-  
-    chart2.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("x", -innerHeight2 / 2)
-      .attr("y", -45)
-      .attr("text-anchor", "middle")
-      .text(metricKey === "medianHoldTime" ? "Hold Time (ms)" : "Latency (ms)");
+  console.log("Rendering with metric:", metricKey);
+
+  chart2.selectAll("*").remove();
+
+  const userGroups = d3.group(allData, d => d.UserKey);
+  const users = Array.from(userGroups.keys());
+
+  // Set x and y domains
+  const xExtent = d3.extent(allData, d => d.Date);
+  const yMax = d3.max(allData, d => d[metricKey]);
+  if (!xExtent[0] || !xExtent[1] || !yMax) {
+    console.error("Invalid axis data:", { xExtent, yMax });
+    return;
   }
-  
 
-chart2.selectAll(".dot")
-  .data(allData)
-  .enter()
-  .append("circle")
-  .attr("cx", d => xScale2(d.Date))
-  .attr("cy", d => yScale2(d[metricKey]))
-  .attr("r", 3)
-  .attr("fill", d => d.Parkinsons ? "red" : "blue");
+  xScale2.domain(xExtent);
+  yScale2.domain([0, yMax * 1.1]);
 
+  const lineGen = d3.line()
+    .x(d => xScale2(d.Date))
+    .y(d => yScale2(d[metricKey]));
+
+  let drawn = 0;
+
+  userGroups.forEach((userData, userKey, i) => {
+    userData = userData.filter(d => d[metricKey] != null);
+    if (userData.length < 2) return;
+
+    userData.sort((a, b) => a.Date - b.Date);
+
+    const pathD = lineGen(userData);
+    if (!pathD) {
+      console.warn(`Skipping user ${userKey}, invalid path`);
+      return;
+    }
+
+    const isPD = userData[0].Parkinsons;
+    const color = isPD ? "darkred" : "steelblue";
+
+    chart2.append("path")
+      .datum(userData)
+      .attr("class", "user-line")
+      .attr("fill", "none")
+      .attr("stroke", color)
+      .attr("stroke-width", 1.5)
+      .attr("stroke-opacity", 0.8)
+      .attr("d", pathD);
+
+    drawn++;
+  });
+
+  console.log(`Drew ${drawn} user lines`);
+
+  // Axes
+  chart2.append("g")
+    .attr("transform", `translate(0,${innerHeight2})`)
+    .call(d3.axisBottom(xScale2));
+
+  chart2.append("g").call(d3.axisLeft(yScale2));
+
+  // Labels
+  chart2.append("text")
+    .attr("x", innerWidth2 / 2)
+    .attr("y", height2 - 5)
+    .attr("text-anchor", "middle")
+    .text("Date");
+
+  chart2.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -innerHeight2 / 2)
+    .attr("y", -45)
+    .attr("text-anchor", "middle")
+    .text(metricKey === "medianHoldTime" ? "Hold Time (ms)" : "Latency (ms)");
+
+  // Remove existing legend if re-rendering
+chart2.selectAll(".legend").remove();
+
+// Legend group
+const legend = chart2.append("g")
+  .attr("class", "legend")
+  .attr("transform", `translate(${innerWidth2 - 150}, 10)`);
+
+// Parkinson's entry
+legend.append("rect")
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("width", 15)
+  .attr("height", 15)
+  .attr("fill", "darkred");
+
+legend.append("text")
+  .attr("x", 20)
+  .attr("y", 12)
+  .text("Parkinson’s")
+  .attr("font-size", "12px")
+  .attr("alignment-baseline", "middle");
+
+// Control entry
+legend.append("rect")
+  .attr("x", 0)
+  .attr("y", 20)
+  .attr("width", 15)
+  .attr("height", 15)
+  .attr("fill", "steelblue");
+
+legend.append("text")
+  .attr("x", 20)
+  .attr("y", 32)
+  .text("Control")
+  .attr("font-size", "12px")
+  .attr("alignment-baseline", "middle");
+
+}
 
