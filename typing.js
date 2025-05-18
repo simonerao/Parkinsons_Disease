@@ -166,6 +166,7 @@ let allData;
 let currentMetric = "medianHoldTime";
 
 d3.csv("data/progression_by_day_with_latency.csv").then(data => {
+    console.log("Loaded data:", data.slice(0, 5));
   data.forEach(d => {
     d.Date = new Date(d.Date);
     d.medianHoldTime = +d.medianHoldTime;
@@ -184,75 +185,73 @@ document.getElementById("metric-toggle").addEventListener("change", e => {
 });
 
 function renderProgression(metricKey) {
-  const userGroups = d3.group(allData, d => d.UserKey);
-  const users = Array.from(userGroups.keys());
+    const userGroups = d3.group(allData, d => d.UserKey);
+    const users = Array.from(userGroups.keys());
+  
+    xScale2.domain(d3.extent(allData, d => d.Date));
+    const maxY = d3.max(allData, d => d[metricKey]) || 300;
+    yScale2.domain([0, maxY * 1.1]);
+  
+    const lineGen = d3.line()
+      .x(d => xScale2(d.Date))
+      .y(d => yScale2(d[metricKey]));
+  
+    userGroups.forEach((userData, userKey, i) => {
+      if (userData.length < 2) return;
+      userData.sort((a, b) => a.Date - b.Date);
+      const isPD = userData[0].Parkinsons;
+      const color = isPD ? colorPD(i / users.length) : colorControl(i / users.length);
+  
+      chart2.append("path")
+        .datum(userData)
+        .attr("fill", "none")
+        .attr("stroke", color)
+        .attr("stroke-width", 1.5)
+        .attr("class", "user-line")
+        .attr("stroke-opacity", 1)
+        .attr("d", lineGen);
+    });
+  
+    // Draw dots for debugging
+    chart2.selectAll(".dot")
+      .data(allData)
+      .enter()
+      .append("circle")
+      .attr("class", "dot")
+      .attr("cx", d => xScale2(d.Date))
+      .attr("cy", d => yScale2(d[metricKey]))
+      .attr("r", 2)
+      .attr("fill", d => d.Parkinsons ? "red" : "blue")
+      .attr("opacity", 0.6);
+  
+    chart2.append("g")
+      .attr("transform", `translate(0,${innerHeight2})`)
+      .call(d3.axisBottom(xScale2));
+  
+    chart2.append("g").call(d3.axisLeft(yScale2));
+  
+    chart2.append("text")
+      .attr("x", innerWidth2 / 2)
+      .attr("y", height2 - 5)
+      .attr("text-anchor", "middle")
+      .text("Date");
+  
+    chart2.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -innerHeight2 / 2)
+      .attr("y", -45)
+      .attr("text-anchor", "middle")
+      .text(metricKey === "medianHoldTime" ? "Hold Time (ms)" : "Latency (ms)");
+  }
+  
 
-  xScale2.domain(d3.extent(allData, d => d.Date));
-  yScale2.domain([0, d3.max(allData, d => d[metricKey]) * 1.1]);
+chart2.selectAll(".dot")
+  .data(allData)
+  .enter()
+  .append("circle")
+  .attr("cx", d => xScale2(d.Date))
+  .attr("cy", d => yScale2(d[metricKey]))
+  .attr("r", 3)
+  .attr("fill", d => d.Parkinsons ? "red" : "blue");
 
-  const lineGen = d3.line()
-    .x(d => xScale2(d.Date))
-    .y(d => yScale2(d[metricKey]));
-
-  userGroups.forEach((userData, userKey, i) => {
-    userData.sort((a, b) => a.Date - b.Date);
-    const isPD = userData[0].Parkinsons;
-    const color = isPD ? colorPD(i / users.length) : colorControl(i / users.length);
-
-    chart2.append("path")
-      .datum(userData)
-      .attr("fill", "none")
-      .attr("stroke", color)
-      .attr("stroke-width", 1.5)
-      .attr("class", "user-line")
-      .attr("d", lineGen)
-      .on("mouseover", function (event) {
-        d3.selectAll(".user-line").attr("stroke-opacity", 0.1);
-        d3.select(this)
-          .raise()
-          .attr("stroke-opacity", 1)
-          .attr("stroke-width", 3);
-
-        const mostRecent = userData[userData.length - 1];
-
-        tooltip
-          .style("visibility", "visible")
-          .html(`
-            User: ${userKey}<br>
-            PD: ${isPD ? "Yes" : "No"}<br>
-            Latest ${metricKey === "medianHoldTime" ? "Hold" : "Latency"}: ${mostRecent[metricKey].toFixed(1)} ms
-          `);
-      })
-      .on("mousemove", function (event) {
-        tooltip
-          .style("top", (event.pageY + 10) + "px")
-          .style("left", (event.pageX + 10) + "px");
-      })
-      .on("mouseout", function () {
-        d3.selectAll(".user-line")
-          .attr("stroke-opacity", 1)
-          .attr("stroke-width", 1.5);
-        tooltip.style("visibility", "hidden");
-      });
-  });
-
-  chart2.append("g")
-    .attr("transform", `translate(0,${innerHeight2})`)
-    .call(d3.axisBottom(xScale2));
-
-  chart2.append("g").call(d3.axisLeft(yScale2));
-
-  chart2.append("text")
-    .attr("x", innerWidth2 / 2)
-    .attr("y", height2 - 5)
-    .attr("text-anchor", "middle")
-    .text("Date");
-
-  chart2.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("x", -innerHeight2 / 2)
-    .attr("y", -45)
-    .attr("text-anchor", "middle")
-    .text(metricKey === "medianHoldTime" ? "Hold Time (ms)" : "Latency (ms)");
-}
 
