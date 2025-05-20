@@ -65,13 +65,23 @@
   
 
   <section id="viz-3">
-    <h2>Visualization 3: [Insert Title]</h2>
-    <div id="viz3-container"></div>
+    <h2>Visualization 3: Comparing Latency Time Between Participants With and Without Parkinson's</h2>
+    <div id="viz3-container">
+        <svg id="direction-viz" width="800", height="500"></svg>
+    </div>
   </section>
 
   <section id="viz-4">
     <h2>Visualization 4: [Insert Title]</h2>
-    <div id="viz4-container"></div>
+    <div id="viz4-container">
+        <select id="metric-select">
+            <option value="LatencyTime">Latency Time</option>
+            <option value="HoldTime">Hold Time</option>
+            <option value="FlightTime">Flight Time</option>
+        </select>
+
+        <svg id="scatterplot" width="700" height="500"></svg>
+    </div>
   </section>
 
   <section id="viz-5">
