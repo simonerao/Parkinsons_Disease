@@ -501,13 +501,13 @@ function createVisualizationThree(data) {
 // END OF VISUALIZATION 3
 
 // START OF VISUALIZATION 4
-d3.csv("data/keystroke_data_individuals.csv").then((data) => {
+d3.csv("data/keystroke_data_individuals.csv", d3.autoType).then((data) => {
     createVisualizationFour(data);
 });
 
 function createVisualizationFour(data) {
     data.forEach(d => {
-        d.yearsSinceDiagnosis = d.current_year - d.DiagnosisYear;
+        d.ageAtDiagnosis = d.DiagnosisYear - d.BirthYear;
         });
 
     // Setup
@@ -530,7 +530,7 @@ function createVisualizationFour(data) {
     .attr("x", width / 2)
     .attr("y", height + 45)
     .attr("text-anchor", "middle")
-    .text("Years Since Diagnosis");
+    .text("Age at Diagnosis");
 
     svg.append("text")
     .attr("class", "y-label")
@@ -544,19 +544,32 @@ function createVisualizationFour(data) {
     // Initial render
     update("LatencyTime");
 
-    d3.select("#metric-select").on("change", function () {
-    update(this.value);
-    });
+    d3.select("#metric-select-4")
+        .on("change", function (event) {
+            update(event.target.value);
+        });
+
+    function linearRegression(data, xKey, yKey) {
+        const xMean = d3.mean(data, d => d[xKey]);
+        const yMean = d3.mean(data, d => d[yKey]);
+
+        const numerator = d3.sum(data, d => (d[xKey] - xMean) * (d[yKey] - yMean));
+        const denominator = d3.sum(data, d => (d[xKey] - xMean) ** 2);
+        const slope = numerator / denominator;
+        const intercept = yMean - slope * xMean;
+
+        return { slope, intercept };
+    }
 
     function update(metric) {
         // Update scales
-        x.domain(d3.extent(data, d => d.yearsSinceDiagnosis)).nice();
+        x.domain(d3.extent(data, d => d.ageAtDiagnosis)).nice();
         y.domain(d3.extent(data, d => d[metric])).nice();
 
         xAxis.transition().duration(500).call(d3.axisBottom(x));
         yAxis.transition().duration(500).call(d3.axisLeft(y));
 
-        svg.select(".y-label").text(metric);
+        svg.select(".y-label").text(`${metric} (ms)`);
 
         // DATA JOIN
         const dots = circles.selectAll("circle").data(data, d => d.UserKey + metric);
@@ -566,14 +579,40 @@ function createVisualizationFour(data) {
             enter => enter.append("circle")
             .attr("r", 5)
             .attr("fill", "steelblue")
-            .attr("cx", d => x(d.yearsSinceDiagnosis))
+            .attr("cx", d => x(d.ageAtDiagnosis))
             .attr("cy", d => y(d[metric])),
             update => update
             .transition()
             .duration(500)
-            .attr("cx", d => x(d.yearsSinceDiagnosis))
+            .attr("cx", d => x(d.ageAtDiagnosis))
             .attr("cy", d => y(d[metric]))
         );
+
+        // Compute linear regression
+        const { slope, intercept } = linearRegression(data, "ageAtDiagnosis", metric);
+
+        // Define the x range
+        const xRange = d3.extent(data, d => d.ageAtDiagnosis);
+
+        // Compute corresponding y values
+        const linePoints = xRange.map(xVal => ({
+            x: xVal,
+            y: slope * xVal + intercept
+        }));
+
+        // Bind line data (just 2 points) and draw/update line
+        const regressionLine = svg.selectAll(".regression-line")
+            .data([linePoints]);
+
+        regressionLine.join("line")
+            .attr("class", "regression-line")
+            .attr("x1", d => x(d[0].x))
+            .attr("y1", d => y(d[0].y))
+            .attr("x2", d => x(d[1].x))
+            .attr("y2", d => y(d[1].y))
+            .attr("stroke", "darkorange")
+            .attr("stroke-width", 2)
+            .attr("stroke-dasharray", "4 2");
     }
 }
 

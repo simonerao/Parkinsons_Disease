@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script type="module" src="typing.js"></script>
 </head>
 <body>
   <h1>Parkinson's Visualizations</h1>
@@ -72,15 +73,14 @@
   </section>
 
   <section id="viz-4">
-    <h2>Visualization 4: [Insert Title]</h2>
+    <h2>Visualization 4: Does Getting Diagnosed With Parkinson's at a Later Point in Life Affect Performance?</h2>
     <div id="viz4-container">
-        <select id="metric-select">
+        <svg id="scatterplot" width="700" height="500"></svg>
+        <select id="metric-select-4">
             <option value="LatencyTime">Latency Time</option>
             <option value="HoldTime">Hold Time</option>
             <option value="FlightTime">Flight Time</option>
         </select>
-
-        <svg id="scatterplot" width="700" height="500"></svg>
     </div>
   </section>
 
@@ -93,6 +93,4 @@
     <h2>Visualization 6: [Insert Title]</h2>
     <div id="viz6-container"></div>
   </section>
-
-  <script type="module" src="typing.js"></script>
 </body>
