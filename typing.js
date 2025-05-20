@@ -299,3 +299,329 @@ legend.append("text")
 
 }
 
+// END OF VISUALIZATION 2
+
+// START OF VISUALIZATION 3
+d3.csv("data/keystroke_data_combined.csv", d3.autoType).then((data) => {
+    createVisualizationThree(data);
+});
+
+function createVisualizationThree(data) {
+    // Sort by user and datetime
+    data.sort((a, b) => d3.ascending(a.UserKey, b.UserKey) || d3.ascending(a.Datetime, b.Datetime));
+
+    // Filter to only rows with transition and LatencyTime
+    const filtered = data.filter(d => d.Direction && d.LatencyTime != null && d.Parkinsons != null);
+
+    const grouped = d3.groups(filtered, d => d.Direction, d => d.Parkinsons);
+
+    // Compute boxplot stats
+    const boxData = [];
+    grouped.forEach(([direction, parkinsonsGroups]) => {
+        parkinsonsGroups.forEach(([parkinsons, values]) => {
+            const latencies = values.map(d => d.LatencyTime).sort(d3.ascending);
+            const q1 = d3.quantile(latencies, 0.25);
+            const median = d3.quantile(latencies, 0.5);
+            const q3 = d3.quantile(latencies, 0.75);
+            const iqr = q3 - q1;
+            const lower = q1 - 1.5 * iqr;
+            const upper = q3 + 1.5 * iqr;
+            const min = d3.min(latencies.filter(d => d >= lower));
+            const max = d3.max(latencies.filter(d => d <= upper));
+            const parkinsons_bool = parkinsons === 'TRUE' ? true : false;
+            
+            boxData.push({
+                direction,
+                parkinsons_bool,
+                q1,
+                median,
+                q3,
+                min,
+                max,
+            });
+        });
+    });
+
+    // Set up SVG
+    const svg = d3.select("#direction-viz"),
+        margin = {top: 60, right: 60, bottom: 60, left: 60},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom;
+
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const directions = ["LL", "RR", "LR", "RL", "SL", "SR", "RS", "LS", "SS"];
+    const groups = [false, true]; // Parkinsons: false (no), true (yes)
+
+    const x0 = d3.scaleBand()
+        .domain(directions)
+        .range([0, width])
+        .paddingInner(0.2);
+
+    const x1 = d3.scaleBand()
+        .domain(groups)
+        .range([0, x0.bandwidth()])
+        .padding(0.1);
+
+    const y = d3.scaleLinear()
+        .domain([0, d3.max(boxData, d => d.max)])
+        .range([height, 0]);
+
+    // X Axis
+    g.append("g")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x0));
+
+    svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "middle")
+        .attr("x", margin.left + width / 2)
+        .attr("y", height + margin.top + 40)
+        .text("Key Transition (i.e. Right Hand → Left Hand, Left Hand → Space)");
+
+    // Y Axis
+    g.append("g")
+        .call(d3.axisLeft(y));
+
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "middle")
+        .attr("x", margin.left / 3)
+        .attr("y", margin.top + height / 2)
+        .attr("transform", `rotate(-90, ${margin.left / 3}, ${margin.top + height / 2})`)
+        .text("Latency Time (ms)");
+
+    // Draw boxplots
+    g.selectAll(".box")
+        .data(boxData)
+        .enter()
+        .append("rect")
+        .attr("class", "box")
+        .attr("x", d => x0(d.direction) + x1(d.parkinsons_bool))
+        .attr("y", d => y(d.q3))
+        .attr("height", d => y(d.q1) - y(d.q3))
+        .attr("width", x1.bandwidth())
+        .attr("fill", "none")
+        .attr("stroke", d => !d.parkinsons_bool ? "firebrick" : "steelblue")
+        .attr("stroke-width", 2)
+        .attr("rx", 6)
+        .attr("ry", 6);
+
+    // Median lines
+    g.selectAll(".median")
+        .data(boxData)
+        .enter()
+        .append("line")
+        .attr("class", "median")
+        .attr("x1", d => x0(d.direction) + x1(d.parkinsons_bool))
+        .attr("x2", d => x0(d.direction) + x1(d.parkinsons_bool) + x1.bandwidth())
+        .attr("y1", d => y(d.median))
+        .attr("y2", d => y(d.median))
+        .attr("stroke", d => !d.parkinsons_bool ? "firebrick" : "steelblue")
+        .attr("stroke-width", 2);
+
+    // Whiskers
+    g.selectAll(".min-line")
+        .data(boxData)
+        .enter()
+        .append("line")
+        .attr("x1", d => x0(d.direction) + x1(d.parkinsons_bool) + x1.bandwidth() / 2)
+        .attr("x2", d => x0(d.direction) + x1(d.parkinsons_bool) + x1.bandwidth() / 2)
+        .attr("y1", d => y(d.min))
+        .attr("y2", d => y(d.q1))
+        .attr("stroke-width", 2)
+        .attr("stroke", d => !d.parkinsons_bool ? "firebrick" : "steelblue");
+
+    g.selectAll(".max-line")
+        .data(boxData)
+        .enter()
+        .append("line")
+        .attr("x1", d => x0(d.direction) + x1(d.parkinsons_bool) + x1.bandwidth() / 2)
+        .attr("x2", d => x0(d.direction) + x1(d.parkinsons_bool) + x1.bandwidth() / 2)
+        .attr("y1", d => y(d.q3))
+        .attr("y2", d => y(d.max))
+        .attr("stroke-width", 2)
+        .attr("stroke", d => !d.parkinsons_bool ? "firebrick" : "steelblue");
+
+    g.selectAll(".min-cap")
+        .data(boxData)
+        .enter()
+        .append("line")
+        .attr("class", "min-cap")
+        .attr("x1", d => x0(d.direction) + x1(d.parkinsons_bool) + x1.bandwidth() * 0.25)
+        .attr("x2", d => x0(d.direction) + x1(d.parkinsons_bool) + x1.bandwidth() * 0.75)
+        .attr("y1", d => y(d.min))
+        .attr("y2", d => y(d.min))
+        .attr("stroke", "steelblue")
+        .attr("stroke", d => !d.parkinsons_bool ? "firebrick" : "steelblue");
+
+    g.selectAll(".max-cap")
+        .data(boxData)
+        .enter()
+        .append("line")
+        .attr("class", "max-cap")
+        .attr("x1", d => x0(d.direction) + x1(d.parkinsons_bool) + x1.bandwidth() * 0.25)
+        .attr("x2", d => x0(d.direction) + x1(d.parkinsons_bool) + x1.bandwidth() * 0.75)
+        .attr("y1", d => y(d.max))
+        .attr("y2", d => y(d.max))
+        .attr("stroke", d => !d.parkinsons_bool ? "firebrick" : "steelblue")
+        .attr("stroke-width", 2);
+
+    const legend = svg.append("g").attr("transform", `translate(100, 50)`);
+
+    legend.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 20)
+        .attr("height", 10)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr('rx', 4)
+        .attr('ry', 4);
+    legend.append("text")
+        .attr("x", 25)
+        .attr("y", 10)
+        .text("No Parkinson's");
+
+    legend.append("rect")
+        .attr("x", 0)
+        .attr("y", 20)
+        .attr("width", 20)
+        .attr("height", 10)
+        .attr("fill", "none")
+        .attr("stroke", "firebrick")
+        .attr('rx', 4)
+        .attr('ry', 4);
+    legend.append("text")
+        .attr("x", 25)
+        .attr("y", 30)
+        .text("Parkinson's");
+};
+
+// END OF VISUALIZATION 3
+
+// START OF VISUALIZATION 4
+d3.csv("data/keystroke_data_individuals.csv", d3.autoType).then((data) => {
+    createVisualizationFour(data);
+});
+
+function createVisualizationFour(data) {
+    data.forEach(d => {
+        d.ageAtDiagnosis = d.DiagnosisYear - d.BirthYear;
+        });
+
+    // Setup
+    const margin = { top: 40, right: 40, bottom: 60, left: 70 },
+        width = 700 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    const svg = d3.select("#scatterplot")
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const x = d3.scaleLinear().range([0, width]);
+    const y = d3.scaleLinear().range([height, 0]);
+
+    const xAxis = svg.append("g").attr("transform", `translate(0,${height})`);
+    const yAxis = svg.append("g");
+
+    svg.append("text")
+    .attr("class", "x-label")
+    .attr("x", width / 2)
+    .attr("y", height + 45)
+    .attr("text-anchor", "middle")
+    .text("Age at Diagnosis");
+
+    svg.append("text")
+    .attr("class", "y-label")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -height / 2)
+    .attr("y", -50)
+    .attr("text-anchor", "middle");
+
+    const circles = svg.append("g").attr("class", "circles");
+
+    // Initial render
+    update("LatencyTime");
+
+    d3.select("#metric-select-4")
+        .on("change", function (event) {
+            update(event.target.value);
+        });
+
+    function linearRegression(data, xKey, yKey) {
+        const xMean = d3.mean(data, d => d[xKey]);
+        const yMean = d3.mean(data, d => d[yKey]);
+
+        const numerator = d3.sum(data, d => (d[xKey] - xMean) * (d[yKey] - yMean));
+        const denominator = d3.sum(data, d => (d[xKey] - xMean) ** 2);
+        const slope = numerator / denominator;
+        const intercept = yMean - slope * xMean;
+
+        return { slope, intercept };
+    }
+
+    function update(metric) {
+        // Update scales
+        x.domain(d3.extent(data, d => d.ageAtDiagnosis)).nice();
+        y.domain(d3.extent(data, d => d[metric])).nice();
+
+        xAxis.transition().duration(500).call(d3.axisBottom(x));
+        yAxis.transition().duration(500).call(d3.axisLeft(y));
+
+        svg.select(".y-label").text(`${metric} (ms)`);
+
+        // DATA JOIN
+        const dots = circles.selectAll("circle").data(data, d => d.UserKey + metric);
+
+        // ENTER + UPDATE
+        dots.join(
+            enter => enter.append("circle")
+            .attr("r", 5)
+            .attr("fill", "steelblue")
+            .attr("cx", d => x(d.ageAtDiagnosis))
+            .attr("cy", d => y(d[metric])),
+            update => update
+            .transition()
+            .duration(500)
+            .attr("cx", d => x(d.ageAtDiagnosis))
+            .attr("cy", d => y(d[metric]))
+        );
+
+        // Compute linear regression
+        const { slope, intercept } = linearRegression(data, "ageAtDiagnosis", metric);
+
+        // Define the x range
+        const xRange = d3.extent(data, d => d.ageAtDiagnosis);
+
+        // Compute corresponding y values
+        const linePoints = xRange.map(xVal => ({
+            x: xVal,
+            y: slope * xVal + intercept
+        }));
+
+        // Bind line data (just 2 points) and draw/update line
+        const regressionLine = svg.selectAll(".regression-line")
+            .data([linePoints]);
+
+        regressionLine.join("line")
+            .attr("class", "regression-line")
+            .attr("x1", d => x(d[0].x))
+            .attr("y1", d => y(d[0].y))
+            .attr("x2", d => x(d[1].x))
+            .attr("y2", d => y(d[1].y))
+            .attr("stroke", "darkorange")
+            .attr("stroke-width", 2)
+            .attr("stroke-dasharray", "4 2");
+    }
+}
+
+// END OF VISUALIZATION 4
+
+// START OF VISUALIZATION 5
+
+// END OF VISUALIZATION 5
+
+// START OF VISUALIZATION 6
+
+// END OF VISUALIZATION 6
