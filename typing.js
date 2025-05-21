@@ -27,6 +27,7 @@ d3.json("data/sample_pd_user.json").then(data => {
     latency: d.latency
   }));
   updateChart(); // draw initial chart
+  console.log('Visualization 1 rendered!')
 });
 
 document.getElementById("typing-box").addEventListener("keydown", e => {
@@ -144,7 +145,6 @@ document.getElementById("reset-button").addEventListener("click", () => {
 
 //END VISUALIZATION 1 CODE
 
-//VISUALIZATION 2 CODE
 // VISUALIZATION 2 CODE
 const svg2 = d3.select("#progression-viz");
 const width2 = +svg2.attr("width");
@@ -176,6 +176,7 @@ d3.csv("data/progression_by_day_with_latency.csv").then(data => {
 
   allData = data;
   renderProgression(currentMetric);
+  console.log('Visualization 2 rendered!')
 });
 
 document.getElementById("metric-toggle").addEventListener("change", e => {
@@ -185,7 +186,7 @@ document.getElementById("metric-toggle").addEventListener("change", e => {
 });
 
 function renderProgression(metricKey) {
-  console.log("Rendering with metric:", metricKey);
+//   console.log("Rendering with metric:", metricKey);
 
   chart2.selectAll("*").remove();
 
@@ -236,7 +237,7 @@ function renderProgression(metricKey) {
     drawn++;
   });
 
-  console.log(`Drew ${drawn} user lines`);
+//   console.log(`Drew ${drawn} user lines`);
 
   // Axes
   chart2.append("g")
@@ -304,6 +305,7 @@ legend.append("text")
 // START OF VISUALIZATION 3
 d3.csv("data/keystroke_data_combined.csv", d3.autoType).then((data) => {
     createVisualizationThree(data);
+    console.log('Visualization 3 rendered!')
 });
 
 function createVisualizationThree(data) {
@@ -503,6 +505,7 @@ function createVisualizationThree(data) {
 // START OF VISUALIZATION 4
 d3.csv("data/keystroke_data_individuals.csv", d3.autoType).then((data) => {
     createVisualizationFour(data);
+    console.log('Visualization 4 rendered!')
 });
 
 function createVisualizationFour(data) {
