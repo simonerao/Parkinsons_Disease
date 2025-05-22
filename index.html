@@ -85,12 +85,41 @@
   </section>
 
   <section id="viz-5">
-    <h2>Visualization 5: [Insert Title]</h2>
-    <div id="viz5-container"></div>
-  </section>
+      <h2>Visualization 5: Typing Dynamics by Medication Type</h2>
+
+      <label for="metric-select">Metric:</label>
+      <select id="metric-select">
+        <option value="Hold">Hold Time</option>
+        <option value="Latency">Latency</option>
+      </select>
+
+      <div id="viz5-container">
+        <svg id="viz5-svg"></svg>
+      </div>
+
+      <div id="tooltip5" class="tooltip5"></div>
+    </section>
 
   <section id="viz-6">
-    <h2>Visualization 6: [Insert Title]</h2>
-    <div id="viz6-container"></div>
+    <h2>Vizualization 6: Interactive Typing Pulse by Medication</h2>
+
+    <div id="med-buttons">
+      <button class="med-btn" data-med="Levadopa">Levadopa</button>
+      <button class="med-btn" data-med="DA">DA</button>
+      <button class="med-btn" data-med="MAOB">MAOB</button>
+      <button class="med-btn" data-med="Other">Other</button>
+      <button class="med-btn" data-med="No Med">No Med</button>
+    </div>
+
+    <div id="tempo-control">
+      Tempo: <input type="range" id="tempo-slider" min="0.5" max="3" step="0.1" value="1">
+      <span id="tempo-value">1x</span>
+    </div>
+    <div id="button-viz-container">
+      <button id="big-button">PULSE</button>
+    </div>
+
+    <div id="tooltip6" class="tooltip6"></div>
   </section>
+  
 </body>

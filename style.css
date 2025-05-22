@@ -5,3 +5,98 @@
 #metric-select-4 {
     margin-bottom: auto;
 }
+
+#viz5-svg {
+  width: 100%;
+  height: 500px;
+  font-family: sans-serif;
+}
+
+
+.box {
+  fill: #ccc;
+  stroke: #333;
+}
+
+.median {
+  stroke: #000;
+  stroke-width: 2px;
+}ß
+
+.whisker {
+  stroke: #333;
+  stroke-width: 1px;
+}
+
+.tooltip5 {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #333;
+  padding: 6px;
+  font-size: 12px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+}
+
+.tooltip5 {
+  opacity: 0;            
+  transition: opacity .2s;
+}
+.tooltip5.visible {
+  opacity: 1;           
+}
+
+
+/* For Vizualization 6 */
+
+#viz-6 {
+  margin-bottom: 100px;
+}
+
+#med-buttons {
+  margin-bottom: 10px;
+}
+.med-btn {
+  margin-right: 5px;
+  padding: 6px 12px;
+}
+
+.med-btn.active {
+  background-color: darkgrey;
+  color: white;
+}
+
+#tempo-control {
+  margin-bottom: 20px;
+  font-family: sans-serif;
+}
+
+#button-viz-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#big-button {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: none;
+  background: #88c0d0;
+  color: white;
+  font-size: 1.5rem;
+  transition: transform 0.1s ease;
+  outline: none;
+  cursor: pointer;
+}
+
+.tooltip6 {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid #333;
+  padding: 6px;
+  font-size: 12px;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
