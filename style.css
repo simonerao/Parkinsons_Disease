@@ -6,8 +6,9 @@
     margin-bottom: auto;
 }
 
+/*For Vis 5*/
 #viz5-svg {
-  width: 100%;
+  width: 1000px;
   height: 500px;
   font-family: sans-serif;
 }
