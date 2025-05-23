@@ -5,8 +5,20 @@
   <title>Typing Simulator - Parkinson's Detection</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.164.1/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.164.1/examples/jsm/"
+      }
+    }
+  </script>
+
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script type="module" src="typing.js"></script>
+  <script type="module" src="hand.js"></script>
+
 </head>
 <body>
   <h1>Parkinson's Visualizations</h1>
@@ -121,5 +133,26 @@
 
     <div id="tooltip6" class="tooltip6"></div>
   </section>
+
+  <section id="viz-7">
+    <h2>Visualization 7: Interactive 3D Hand Model</h2>
+    <p>Hover over the highlighted parts to learn how Parkinson’s affects hand function.</p>
+    <div id="hand-container" style="width: 100%; height: 500px; position: relative;">
+      </div>
+    <div id="hand-tooltip" style="
+      position: absolute;
+      visibility: hidden;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 14px;
+      pointer-events: none; /* Important for allowing mouse events to pass through to the canvas */
+      z-index: 1000;
+      max-width: 200px;
+    "></div>
+  </section>
+  
   
 </body>
+</html>
