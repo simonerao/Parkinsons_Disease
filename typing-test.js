@@ -89,7 +89,6 @@ let latencies = [];
 function moveGhostCaret(spans, delayArray, ghostIndex) {
     if (!d3.select('#latency-line').empty()) { plotLatencyLine() };
     const ghostDelay = delayArray[ghostIndex] * (Math.random() / 2 + 1); // ms between keystrokes
-    console.log(ghostDelay);
     const ghostCaret = d3.select('.ghost-caret');
     
     if (ghostIndex >= spans.length) {
@@ -113,18 +112,18 @@ function plotLatencyLine() {
     const data = latencies.map((latency, i) => ({ index: i + 1, latency }));
     const ghostData = ghostLatencies.map((latency, i) => ({ index: i + 1, latency }));
 
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-    const width = 600 - margin.left - margin.right;
-    const height = 200 - margin.top - margin.bottom;
+    const margin = { top: 20, right: 20, bottom: 50, left: 60 };
+    const width = 700 - margin.left - margin.right;
+    const height = 300 - margin.top - margin.bottom;
 
     const svg = d3.select("#result")
-        .html("") // clear previous
+        .html("") // Clear previous chart
         .append("svg")
-        .attr('id', 'latency-line')
+        .attr("id", "latency-line")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`)
+        .attr("transform", `translate(${margin.left},${margin.top})`);
 
     const x = d3.scaleLinear()
         .domain([1, d3.max([data.length, ghostData.length])])
@@ -138,20 +137,37 @@ function plotLatencyLine() {
     const line = d3.line()
         .x(d => x(d.index))
         .y(d => y(d.latency))
-        .curve(d3.curveCatmullRom);;
+        .curve(d3.curveCatmullRom);
 
-    const colors = ['steelblue', 'red'];
+    const colors = ['lightsteelblue', 'moccasin'];
 
+    // Draw X axis
+    svg.append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .call(d3.axisBottom(x).ticks(Math.min(10, data.length)))
+        .append("text")
+        .attr("class", "x label")
+        .attr("x", width / 2)
+        .attr("y", 40)
+        .attr("fill", "#000")
+        .attr("text-anchor", "middle")
+        .text("Character Index");
+
+    // Draw Y axis
+    svg.append("g")
+        .call(d3.axisLeft(y))
+        .append("text")
+        .attr("class", "y label")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", -45)
+        .attr("dy", "0.71em")
+        .attr("fill", "#000")
+        .attr("text-anchor", "middle")
+        .text("Latency (ms)");
+
+    // Draw lines
     [data, ghostData].forEach((points, i) => {
-        // Axes
-        svg.append("g")
-            .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).ticks(Math.min(10, points.length)));
-
-        svg.append("g")
-            .call(d3.axisLeft(y));
-
-        // Line path
         svg.append("path")
             .datum(points)
             .attr("fill", "none")
@@ -161,10 +177,8 @@ function plotLatencyLine() {
     });
 }
 
+
 function createResults(sentence) {
-    console.log(timestamps);
-    console.log(latencies);
-    
     const time = (timestamps[timestamps.length - 1] - timestamps[0]) / 1000;
     const wpm = Math.round((sentence.split(" ").length / time) * 60);
 
@@ -175,7 +189,7 @@ function createResults(sentence) {
 }
 
 function createTypingTest(words) {
-    const sentence = generateRandomSentence(words, 3);
+    const sentence = generateRandomSentence(words, 30);
     console.log(sentence);
 
     let sentenceDiv = d3.select('#sentence');
@@ -281,6 +295,7 @@ function createTypingTest(words) {
         // End condition
         if (typed.length === sentence.length && !ended) {
             ended = true;
+            input.node().blur();
             createResults(sentence);
         }
     });
