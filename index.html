@@ -1,9 +1,11 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Typing Simulator - Parkinson's Detection</title>
+  <title>Interactive Guide to Parkinson's Disease</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
   <script type="importmap">
@@ -14,143 +16,177 @@
       }
     }
   </script>
-
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script type="module" src="typing.js"></script>
-  <script type="module" src="hand.js"></script>
-
 </head>
 <body>
-  <h1>Parkinson's Visualizations</h1>
+  <main id="fullpage-container">
 
-  <section id="viz-1">
-    <h2>Visualization 1: User vs Parkinsons Disease</h2>
-    <div id="viz1-container">
-        <p>Type a sentence below and see how your typing rhythm compares to Parkinson’s and non-Parkinson’s patterns.</p>
-        <label for="metric-select">Choose a timing metric:</label>
-        <select id="metric-select">
-        <option value="hold">Hold Time</option>
-        <option value="latency">Latency</option>
-        </select>
-        <input id="typing-box" type="text" placeholder="Start typing..." autofocus />
-        <div style="margin-bottom: 10px;">
-            <button id="reset-button">Reset Typing</button>
-        </div>      
-        <svg id="typing-viz" width="800" height="200"></svg>
-        <div id="legend" style="margin-top: 10px;">
-            <svg width="200" height="30">
-            <circle cx="10" cy="10" r="5" fill="steelblue"></circle>
-            <text x="20" y="14" font-size="12px">Your Typing</text>
-            <line x1="110" y1="10" x2="130" y2="10" stroke="darkred" stroke-width="2" stroke-dasharray="4"></line>
-            <text x="135" y="14" font-size="12px">Parkinson’s Sample</text>
-            </svg>
-        </div>      
-        <p id="typing-stats"></p>
-    </div>
-</section>
-  
-
-<section id="viz-2">
-    <h2>Visualization 2: Typing Progression Over Time</h2>
-    <p>This chart shows how each user's typing (hold or latency time) changes daily. PD users are in red, others in blue.</p>
-  
-    <label for="metric-toggle">Choose Metric:</label>
-    <select id="metric-toggle">
-      <option value="medianHoldTime">Hold Time</option>
-      <option value="medianLatency">Latency</option>
-    </select>
-  
-    <svg id="progression-viz" width="900" height="400"></svg>
-  
-    <div id="tooltip" style="
-      position: absolute;
-      visibility: hidden;
-      background: white;
-      border: 1px solid #aaa;
-      padding: 6px;
-      font-size: 12px;
-      pointer-events: none;
-      border-radius: 4px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    "></div>
-  </section>
-  
-  
-
-  <section id="viz-3">
-    <h2>Visualization 3: Comparing Latency Time Between Participants With and Without Parkinson's</h2>
-    <div id="viz3-container">
-        <svg id="direction-viz" width="800", height="500"></svg>
-    </div>
-  </section>
-
-  <section id="viz-4">
-    <h2>Visualization 4: Does Getting Diagnosed With Parkinson's at a Later Point in Life Affect Performance?</h2>
-    <div id="viz4-container">
-        <svg id="scatterplot" width="700" height="500"></svg>
-        <select id="metric-select-4">
-            <option value="LatencyTime">Latency Time</option>
-            <option value="HoldTime">Hold Time</option>
-            <option value="FlightTime">Flight Time</option>
-        </select>
-    </div>
-  </section>
-
-  <section id="viz-5">
-      <h2>Visualization 5: Typing Dynamics by Medication Type</h2>
-
-      <label for="metric-select">Metric:</label>
-      <select id="metric-select">
-        <option value="Hold">Hold Time</option>
-        <option value="Latency">Latency</option>
-      </select>
-
-      <div id="viz5-container">
-        <svg id="viz5-svg"></svg>
+    <section id="title-page" class="section">
+      <div class="content-wrapper">
+        <h1>Parkinson's Disease</h1>
+        <h2>TEAM SEABORN - Simone Rao, Sophia Vo, Nicolas Toon</h2>
       </div>
-
-      <div id="tooltip5" class="tooltip5"></div>
     </section>
 
-  <section id="viz-6">
-    <h2>Vizualization 6: Interactive Typing Pulse by Medication</h2>
-
-    <div id="med-buttons">
-      <button class="med-btn" data-med="Levadopa">Levadopa</button>
-      <button class="med-btn" data-med="DA">DA</button>
-      <button class="med-btn" data-med="MAOB">MAOB</button>
-      <button class="med-btn" data-med="Other">Other</button>
-      <button class="med-btn" data-med="No Med">No Med</button>
-    </div>
-
-    <div id="tempo-control">
-      Tempo: <input type="range" id="tempo-slider" min="0.5" max="3" step="0.1" value="1">
-      <span id="tempo-value">1x</span>
-    </div>
-    <div id="button-viz-container">
-      <button id="big-button">PULSE</button>
-    </div>
-
-    <div id="tooltip6" class="tooltip6"></div>
-  </section>
-
-  <section id="viz-7">
-    <h2>Visualization 7: Interactive 3D Hand Model</h2>
-    <p>Hover over the highlighted parts to learn how Parkinson’s affects hand function.</p>
-    <div id="hand-container" style="width: 100%; height: 500px; position: relative;">
+    <section id="intro-page" class="section">
+      <div class="content-wrapper">
+        <h1>What have you done so far?</h1>
+        <p>We met up last week in person to talk about our project. At that meeting, we were able to draw up a quick schema for how we wanted our final project to look, as well as decide on what functionalities we wanted our visualizations to have. So far, our team has designed some of those additional visualizations that will be featured on our final project, including an interactive typing test that compares the user to an individual with Parkinson’s disease. Another one of our visualizations involves a 3D model of a hand (using Three.js), which will give the audience a quick rundown of what Parkinson’s is, how it affects the individual and their typing abilities, and why typing can be an indicator of Parkinson’s. In addition, we have implemented a scrolling functionality for the storytelling aspect, allowing for clean and direct information retention by the audience.</p>
+        <h1>What will be the most challenging of your project to design and why?</h1>
+        <p>There are two parts that are most challenging to design for our project: the 3D hand model and typing test. In the midst of creating the 3D hand model, we discovered some issues that stopped us from creating annotations in certain parts of the hand like we wanted. As a workaround, we downloaded another software that would allow us to do so, but there will be a learning curve to create the hand model and re-configure it back into the website. Another design challenge that we are facing is the typing test. We want the typing test to be a big part of our project, and to make it perfect (or at least up to our standards) will require lots of refactoring and tweaking on our end.</p>
       </div>
-    <div id="hand-tooltip" style="
-      position: absolute;
-      visibility: hidden;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 8px;
-      border-radius: 4px;
-      font-size: 14px;
-      pointer-events: none; /* Important for allowing mouse events to pass through to the canvas */
-      z-index: 1000;
-      max-width: 200px;
-    "></div>
-  </section>  
+    </section>
+
+    <section id="intro-page" class="section">
+      <div class="content-wrapper narrow-content">
+        <h2>Understanding Parkinson's</h2>
+        <p>Parkinson's disease is a progressive neurodegenerative disorder that primarily affects dopamine-producing ("dopaminergic") neurons in a specific area of the brain called substantia nigra. Symptoms typically develop slowly over years. The progression of symptoms is often different from one person to another due to the diversity of the disease.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      </div>
+    </section>
+
+    <section id="hand-viz-page" class="section">
+      <div class="two-column-layout">
+        <div class="column text-column">
+          <h2>Motor Symptoms & The Hand</h2>
+          <p>Parkinson's disease is well-known for its impact on motor control. Symptoms such as tremors, rigidity (stiffness), bradykinesia (slowness of movement), and postural instability can significantly affect daily activities.</p>
+          <p>The hands are often one of the first areas to show signs. Fine motor skills required for writing, buttoning clothes, or eating can become challenging. The interactive 3D model on the right highlights how different parts of the hand can be affected. Hover over the model to learn more.</p>
+        </div>
+        <div class="column viz-column">
+          <div id="hand-container"></div>
+          <div id="hand-tooltip"></div> <!-- Tooltip for hand.js -->
+        </div>
+      </div>
+    </section>
+
+    <section id="pulse-viz-page" class="section">
+      <div class="two-column-layout">
+        <div class="column viz-column pulse-column-left">
+          <h2>Typing Rhythm & Medication</h2>
+          <p>The consistency of motor actions, like typing, can be altered by Parkinson's. This interactive "pulse" demonstrates representative typing rhythms. Select a medication category to see how treatment might influence these patterns.</p>
+          <div id="med-buttons">
+            <button class="med-btn" data-med="Levadopa">Levadopa</button>
+            <button class="med-btn" data-med="DA">DA</button>
+            <button class="med-btn" data-med="MAOB">MAOB</button>
+            <button class="med-btn" data-med="Other">Other</button>
+            <button class="med-btn" data-med="No Med">No Med</button>
+          </div>
+          <div id="tempo-control">
+            Tempo: <input type="range" id="tempo-slider" min="0.5" max="3" step="0.1" value="1">
+            <span id="tempo-value">1x</span>
+          </div>
+          <div id="button-viz-container">
+            <button id="big-button">PULSE</button>
+          </div>
+          <div id="pulse-info-box">
+            <p>Hold Time: <span id="pulse-hold-time">-</span> ms</p>
+            <p>Flight Time: <span id="pulse-flight-time">-</span> ms</p>
+          </div>
+        </div>
+        <div class="column text-column pulse-column-right">
+          <h3>Interpreting the Pulse</h3>
+          <p>The "PULSE" button simulates the rhythm of typing, specifically focusing on:</p>
+          <ul>
+            <li><strong>Hold Time:</strong> The duration a key is pressed.</li>
+            <li><strong>Flight Time:</strong> The time between releasing one key and pressing the next.</li>
+          </ul>
+          <p>Variability in these timings can be a subtle indicator of changes in motor control. Common Parkinson's medications like Levodopa, Dopamine Agonists (DA), and MAO-B inhibitors aim to manage these motor symptoms, and their effects can sometimes be observed in fine motor tasks like typing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quote-page" class="section">
+      <div class="content-wrapper narrow-content">
+        <blockquote class="large-quote">
+          "I have Parkinson's disease. I am not Parkinson's disease. My identity is not based on the illness, but on who I am as a person. It is a part of my life, not the entirety of it."
+          <footer>— Michael J. Fox (paraphrased)</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section id="typing-test-page" class="section">
+      <div class="content-wrapper typing-test-wrapper">
+        <h2>Analyze Your Typing</h2>
+        <p>This interactive test allows you to compare your typing characteristics, such as key hold times and the latency between keystrokes, against generalized patterns. Type a sentence in the box below to see your data visualized.</p>
+        
+        <div id="viz1-container-typing"> 
+            <label for="metric-select-typing">Choose a timing metric:</label>
+            <select id="metric-select-typing">
+              <option value="hold">Hold Time</option>
+              <option value="latency">Latency</option>
+            </select>
+            
+            <input id="typing-box" type="text" placeholder="Start typing here..." />
+            <div style="margin-bottom: 10px; margin-top: 10px;">
+                <button id="reset-button">Reset Typing</button>
+            </div>      
+            <svg id="typing-viz" width="800" height="220"></svg>
+            <div id="legend" style="margin-top: 10px;">
+                <svg width="300" height="30">
+                  <circle cx="10" cy="10" r="5" style="fill: steelblue;"></circle>
+                  <text x="20" y="14" font-size="12px">Your Typing</text>
+                  <line x1="130" y1="10" x2="150" y2="10" style="stroke: darkred; stroke-width: 2; stroke-dasharray: 4;"></line>
+                  <text x="155" y="14" font-size="12px">Parkinson’s Sample</text>
+                </svg>
+            </div>      
+            <p id="typing-stats"></p>
+        </div>
+
+      </div>
+    </section>
+
+<!--     <section id="typing-test-page" class="section">
+      <div class="content-wrapper typing-test-wrapper">
+        <h2>Analyze Your Typing</h2>
+        <p>This interactive test allows you to compare your typing characteristics, such as key hold times and the latency between keystrokes, against generalized patterns. Type a sentence in the box below to see your data visualized.</p>
+
+        <select id="person-select">
+            <option value="5USOYSDCXB">Person 1, 76M</option>
+            <option value="8TEUUGQBYB">Person 2, 81M</option>
+            <option value="E0TBSMYHQI">Person 3, 68M</option>
+            <option value="I3U47MF5UF">Person 4, 69F</option>
+            <option value="IDZHIUK2W2">Person 5, 73F</option>
+            <option value="JHBOKKHOQW">Person 6, 77F</option>
+            <option value="LIOUUNGQ8Q">Person 7, 59M</option>
+            <option value="LSQWWDXEYO">Person 8, 65M</option>
+            <option value="QEYNMBJ8T0">Person 9, 77M</option>
+            <option value="SGT8K5GXG0">Person 10, 74M</option>
+            <option value="TL2XHTLK1T">Person 11, 70M</option>
+            <option value="UDCY90VKYN">Person 12, 78M</option>
+            <option value="V2SZVYXBOD">Person 13, 75F</option>
+            <option value="VCTVD6LMPK">Person 14, 83F</option>
+            <option value="WDNE1Q9EHT">Person 15, 75F</option>
+            <option value="XWAX2IHF3O">Person 16, 46F</option>
+        </select>
+
+        <button id="reset">Reset</button>
+
+        <div id="test-container">
+            <div id="blur-overlay">Click to start</div>
+            <div id="sentence"></div>
+            <input type="text" id="input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        </div>
+
+        <div id="result"></div>
+      </div>
+    </section> -->
+
+  </main>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script type="module" src="hand.js"></script>
+  <script type="module" src="typing.js"></script>
+  <script type="module" src="typing-test.js"></script>
+
+  <!-- Optional: Force scroll to top if removing autofocus is not enough -->
+  
+  <script>
+    window.addEventListener('load', () => {
+      document.getElementById('fullpage-container').scrollTop = 0;
+      // Alternatively, for browsers that might not immediately respect scrollTop on the container:
+      // document.documentElement.scrollTop = 0; 
+      // document.body.scrollTop = 0; // For older browsers
+    });
+  </script>
+ 
 </body>
 </html>
