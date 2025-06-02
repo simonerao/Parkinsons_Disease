@@ -304,34 +304,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const tooltipWidth = handTooltip.offsetWidth;
         const tooltipHeight = handTooltip.offsetHeight;
         const containerRect = handContainer.getBoundingClientRect();
-        console.log(containerRect.left);
     
         // To make it appear 20px to the left and 20px above the mouse cursor
-        let left = clientX - containerRect.left + 50;
-        let top = clientY - containerRect.top + 50;
+        let left = clientX + 50;
+        let top = clientY + 50;
     
         // --- Boundary checks (keep these as they are good for preventing overflow) ---
         // Make sure the tooltip doesn't go off the right edge
-        if (left + tooltipWidth > containerRect.width - 10) {
-            left = containerRect.width - tooltipWidth - 10;
-            console.log(1)
+        if (left + tooltipWidth > window.screen.width - 10) {
+            left = window.screen.width - tooltipWidth - 10;
         }
-        // Make sure the tooltip doesn't go off the bottom edge
-        if (top + tooltipHeight > containerRect.height - 10) {
-            top = containerRect.height - tooltipHeight - 10;
-            console.log(2)
-        }
-        // Make sure the tooltip doesn't go off the left edge (adjusting for our -20 offset)
-        if (left < 10) { // Keep it at least 10px from container's left edge
-            left = 10;
-            console.log(3)
-        }
-        // Make sure the tooltip doesn't go off the top edge (adjusting for our -20 offset)
-        if (top < 10) { // Keep it at least 10px from container's top edge
-            top = 10;
-            console.log(4)
-        }
-    
     
         handTooltip.style.left = `${left}px`;
         handTooltip.style.top = `${top}px`;
