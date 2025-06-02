@@ -18,21 +18,17 @@
   </script>
 </head>
 <body>
+    <div id="loader">
+        <h1>Loading models...</h1>
+        <div class="spinner"></div>
+    </div>
+
   <main id="fullpage-container">
 
     <section id="title-page" class="section">
       <div class="content-wrapper">
         <h1>Parkinson's Disease</h1>
         <h2>TEAM SEABORN - Simone Rao, Sophia Vo, Nicolas Toon</h2>
-      </div>
-    </section>
-
-    <section id="intro-page" class="section">
-      <div class="content-wrapper">
-        <h1>What have you done so far?</h1>
-        <p>We met up last week in person to talk about our project. At that meeting, we were able to draw up a quick schema for how we wanted our final project to look, as well as decide on what functionalities we wanted our visualizations to have. So far, our team has designed some of those additional visualizations that will be featured on our final project, including an interactive typing test that compares the user to an individual with Parkinson’s disease. Another one of our visualizations involves a 3D model of a hand (using Three.js), which will give the audience a quick rundown of what Parkinson’s is, how it affects the individual and their typing abilities, and why typing can be an indicator of Parkinson’s. In addition, we have implemented a scrolling functionality for the storytelling aspect, allowing for clean and direct information retention by the audience.</p>
-        <h1>What will be the most challenging of your project to design and why?</h1>
-        <p>There are two parts that are most challenging to design for our project: the 3D hand model and typing test. In the midst of creating the 3D hand model, we discovered some issues that stopped us from creating annotations in certain parts of the hand like we wanted. As a workaround, we downloaded another software that would allow us to do so, but there will be a learning curve to create the hand model and re-configure it back into the website. Another design challenge that we are facing is the typing test. We want the typing test to be a big part of our project, and to make it perfect (or at least up to our standards) will require lots of refactoring and tweaking on our end.</p>
       </div>
     </section>
 
@@ -102,37 +98,6 @@
         </blockquote>
       </div>
     </section>
-
-    <!-- <section id="typing-test-page" class="section">
-      <div class="content-wrapper typing-test-wrapper">
-        <h2>Analyze Your Typing</h2>
-        <p>This interactive test allows you to compare your typing characteristics, such as key hold times and the latency between keystrokes, against generalized patterns. Type a sentence in the box below to see your data visualized.</p>
-        
-        <div id="viz1-container-typing"> 
-            <label for="metric-select-typing">Choose a timing metric:</label>
-            <select id="metric-select-typing">
-              <option value="hold">Hold Time</option>
-              <option value="latency">Latency</option>
-            </select>
-            
-            <input id="typing-box" type="text" placeholder="Start typing here..." />
-            <div style="margin-bottom: 10px; margin-top: 10px;">
-                <button id="reset-button">Reset Typing</button>
-            </div>      
-            <svg id="typing-viz" width="800" height="220"></svg>
-            <div id="legend" style="margin-top: 10px;">
-                <svg width="300" height="30">
-                  <circle cx="10" cy="10" r="5" style="fill: steelblue;"></circle>
-                  <text x="20" y="14" font-size="12px">Your Typing</text>
-                  <line x1="130" y1="10" x2="150" y2="10" style="stroke: darkred; stroke-width: 2; stroke-dasharray: 4;"></line>
-                  <text x="155" y="14" font-size="12px">Parkinson’s Sample</text>
-                </svg>
-            </div>      
-            <p id="typing-stats"></p>
-        </div>
-
-      </div>
-    </section> -->
 
     <section id="typing-test-page" class="section">
         <div class="content-wrapper typing-test-wrapper">

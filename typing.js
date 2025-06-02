@@ -342,6 +342,10 @@ function initializePulseVisualization() {
         });
     }
     console.log('Visualization 6 (Pulse) initialized!');
+
+    // show loading screen while website is loading
+    const loader = document.getElementById('loader');
+    loader.style.display = 'none';
   }).catch(err => {
     console.error("Error processing pulse visualization data:", err);
     const pulseInfoBox = document.getElementById('pulse-info-box');
