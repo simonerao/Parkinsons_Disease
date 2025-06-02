@@ -74,6 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
         (gltf) => {
             handModel = gltf.scene;
             scene.add(handModel);
+            console.log("Loaded mesh names:");
+        handModel.traverse((object) => {
+        if (object.isMesh) {
+            console.log(object.name);
+        }
+        });
+
 
             // Adjust Model Scale (trial-and-error based on your model)
             handModel.scale.set(1000, 1000, 1000); // Keep existing scale or adjust
@@ -153,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let intersectedObject = null;
-    const highlightColor = new THREE.Color(0xffa500); // Orange highlight
+    const highlightColor = new THREE.Color("rgb(129, 209, 219)"); // Light Blue 
 
     const parkinsonsAffectedAreas = {
         // Make sure these names match your model's mesh names
@@ -168,28 +175,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function onMouseMove(event) {
         if (!handModel) return;
-
+    
         const rect = handContainer.getBoundingClientRect();
         mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
+    
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObject(handModel, true); // Intersect with the model and its children
-
+        const intersects = raycaster.intersectObjects(handModel.children, true);
+    
         let newIntersectedPart = null;
         if (intersects.length > 0) {
-            // Find the first ancestor that has a name in parkinsonsAffectedAreas
-            // This helps if the model is complex and ray hits a sub-mesh
-            let currentObject = intersects[0].object;
-            while (currentObject) {
-                if (parkinsonsAffectedAreas[currentObject.name]) {
-                    newIntersectedPart = currentObject;
+            let hitObject = intersects[0].object; // This is the specific mesh that was hit
+            console.log("Mouse hit object:", hitObject.name, "Type:", hitObject.type); // DEBUG
+            
+            let currentCheck = hitObject;
+            while (currentCheck) {
+                console.log("Checking part:", currentCheck.name, "Type:", currentCheck.type, "IsMesh:", currentCheck.isMesh); // DEBUG
+                if (currentCheck.isMesh && parkinsonsAffectedAreas[currentCheck.name]) { // Added isMesh check
+                    newIntersectedPart = currentCheck;
+                    console.log("MATCH FOUND (Mesh):", newIntersectedPart.name); // DEBUG
                     break;
                 }
-                if (currentObject.parent === handModel || !currentObject.parent) break; // Stop if we reach the model root or scene
-                currentObject = currentObject.parent;
+                // If currentCheck is a Group (not a Mesh) but its name is in parkinsonsAffectedAreas,
+                // then it should be our target.
+                if (!currentCheck.isMesh && currentCheck.isGroup && parkinsonsAffectedAreas[currentCheck.name]) {
+                    newIntersectedPart = currentCheck;
+                    console.log("MATCH FOUND (Group):", newIntersectedPart.name); // DEBUG
+                    break;
+                }
+    
+                // Stop if we reach the top-level handModel or a null parent, to avoid going too far up
+                if (currentCheck === handModel || !currentCheck.parent) {
+                    break;
+                }
+                currentCheck = currentCheck.parent; // Move up the hierarchy
             }
         }
+    
+        console.log("Final newIntersectedPart assigned:", newIntersectedPart ? newIntersectedPart.name + " (" + newIntersectedPart.type + ")" : "NONE"); // DEBUG
+    
 
         if (intersectedObject !== newIntersectedPart) {
             // Restore previous
@@ -280,20 +304,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const tooltipWidth = handTooltip.offsetWidth;
         const tooltipHeight = handTooltip.offsetHeight;
         const containerRect = handContainer.getBoundingClientRect();
-
-        let left = clientX - containerRect.left + 15;
-        let top = clientY - containerRect.top + 15;
-
+        console.log(containerRect.left);
+    
+        // To make it appear 20px to the left and 20px above the mouse cursor
+        let left = clientX - containerRect.left + 50;
+        let top = clientY - containerRect.top + 50;
+    
+        // --- Boundary checks (keep these as they are good for preventing overflow) ---
+        // Make sure the tooltip doesn't go off the right edge
         if (left + tooltipWidth > containerRect.width - 10) {
             left = containerRect.width - tooltipWidth - 10;
+            console.log(1)
         }
+        // Make sure the tooltip doesn't go off the bottom edge
         if (top + tooltipHeight > containerRect.height - 10) {
             top = containerRect.height - tooltipHeight - 10;
+            console.log(2)
         }
-        if (left < 10) left = 10;
-        if (top < 10) top = 10;
-
-
+        // Make sure the tooltip doesn't go off the left edge (adjusting for our -20 offset)
+        if (left < 10) { // Keep it at least 10px from container's left edge
+            left = 10;
+            console.log(3)
+        }
+        // Make sure the tooltip doesn't go off the top edge (adjusting for our -20 offset)
+        if (top < 10) { // Keep it at least 10px from container's top edge
+            top = 10;
+            console.log(4)
+        }
+    
+    
         handTooltip.style.left = `${left}px`;
         handTooltip.style.top = `${top}px`;
     }
