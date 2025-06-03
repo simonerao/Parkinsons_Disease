@@ -1036,15 +1036,7 @@
                         }
                     });
 
-                    const storedIndex = localStorage.getItem('currentSectionIndex');
-                    if (storedIndex !== null && !isNaN(parseInt(storedIndex))) {
-                        currentSectionIndex = parseInt(storedIndex);
-                        if (currentSectionIndex >= sections.length || currentSectionIndex < 0) {
-                            currentSectionIndex = 0;
-                        }
-                    } else {
-                        currentSectionIndex = 0;
-                    }
+                    let currentSectionIndex = 0;
 
                     if (sections.length > 0) {
                         createDots();
