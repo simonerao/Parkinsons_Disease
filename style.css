@@ -11,12 +11,11 @@ html {
 }
 
 #fullpage-container {
-    overflow: hidden;
-    /* No scroll on the main container */
+    overflow-x: hidden;
+    /* Important for sliding */
+    position: relative;
     height: 100vh;
     width: 100vw;
-    position: relative;
-    /* For positioning nav elements */
 }
 
 .section {
@@ -38,27 +37,69 @@ html {
     overflow-y: auto;
     /* Section itself scrolls if content overflows */
 
-    visibility: hidden;
     opacity: 0;
-    transition: opacity 0.4s ease-in-out;
-    /* Smoother transition */
+    visibility: hidden;
+    transform: translateX(0);
+    /* Default position */
+    /* Smoother easing for transform, standard ease for opacity */
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease-in-out;
     z-index: 0;
 }
 
-.section.active {
+
+/* State for section that is off-screen to the right, ready to slide in */
+.section.prepare-slide-from-right {
+    transform: translateX(100%);
     visibility: visible;
-    opacity: 1;
-    z-index: 1;
+    /* Must be visible for transition, opacity 0 from .section default state */
+    opacity: 0;
+    /* Explicitly start with opacity 0 before sliding in */
 }
 
+/* State for section that is off-screen to the left, ready to slide in */
+.section.prepare-slide-from-left {
+    transform: translateX(-100%);
+    visibility: visible;
+    /* Must be visible for transition, opacity 0 from .section default state */
+    opacity: 0;
+    /* Explicitly start with opacity 0 before sliding in */
+}
+
+.section.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    /* Slides/fades into center */
+    z-index: 10;
+    /* Active section on top */
+}
+
+/* State for an active section sliding out to the left */
+.section.slide-to-left {
+    transform: translateX(-100%);
+    opacity: 0;
+    /* Fades out as it slides */
+    visibility: visible;
+    /* Keep visible during transition out */
+    z-index: 5;
+    /* Keep it above default but below new active during transition */
+}
+
+/* State for an active section sliding out to the right */
+.section.slide-to-right {
+    transform: translateX(100%);
+    opacity: 0;
+    /* Fades out as it slides */
+    visibility: visible;
+    /* Keep visible during transition out */
+    z-index: 5;
+}
+
+
 /* Section-specific backgrounds and styles */
-#title-page {
-    /* background-image: url('https://cdn.dribbble.com/userupload/20255086/file/original-8dc949cfe3d32a38ebd66be432aa165d.gif'); */
-    /* background-size: cover; */
-    /* background-position: center; */
-    /* background-repeat: no-repeat; */
+#title-page-main,
+#title-page-sub {
     background-color: #1a1a1a;
-    /* Added a dark background color */
     color: white;
     display: flex;
     justify-content: center;
@@ -73,81 +114,60 @@ html {
     align-items: center;
     justify-content: center;
     max-width: 90%;
-    /* Allow it to be wider */
 }
 
 .masked-main-title {
     font-family: 'Roboto', sans-serif;
-    /* Example: A bolder font */
     font-size: 15rem;
-    /* Made significantly larger */
     font-weight: 900;
-    /* Very bold */
     text-transform: uppercase;
     line-height: 0.8;
     margin-bottom: 25px;
     margin-top: 0px;
     background-image: url('https://cdn.dribbble.com/userupload/20255086/file/original-8dc949cfe3d32a38ebd66be432aa165d.gif');
     background-size: cover;
-    /* Ensure GIF covers the text area */
     background-position: center;
-    /* Center the GIF within text */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    /* Makes the text itself transparent to show background */
-    /* Optional: add a subtle stroke if the mask is hard to read on some parts of GIF */
-    /* -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1); */
-    /* text-stroke: 1px rgba(255, 255, 255, 0.1); */
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    /* For slide-up animation */
 }
 
-.fading-subtext {
+.masked-main-title.slide-up-out {
+    transform: translateY(-60vh);
     opacity: 0;
-    animation: fadeInSubtext 1.5s ease-in-out 0.5s forwards;
-    /* Delay to let main title appear */
 }
 
-@keyframes fadeInSubtext {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.title-page-subtitle {
-    font-size: 2rem;
-    /* Adjust as needed */
+.title-page-subtitle-typed {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.5rem;
     color: white;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-weight: 400;
+    min-height: 3rem;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
-.title-page-teamname {
-    font-size: 1.5rem;
-    /* Adjust as needed */
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+.title-page-teamname-typed {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.75);
+    /* Lighter text color */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    /* Optional: Adjust shadow for lighter text */
     font-weight: 300;
-    /* Lighter weight for team name */
-    margin-top: 5px;
+    margin-top: 10px;
+    min-height: 2.2rem;
+    padding: 0 10px;
+    box-sizing: border-box;
+    opacity: 0;
+    /* Start transparent for fade-in */
+    transition: opacity 0.5s ease-in-out;
+    /* CSS transition for fade-in */
 }
-
-
-/* Remove or comment out old title animation styles if they were specific */
-/*
-#title-page h1 { ... old styles ... }
-#animated-title-container { ... }
-#animated-title-prefix, #animated-title-suffix { ... }
-#title-cursor { ... }
-.title-fade-in { ... }
-@keyframes blink-animation { ... }
-*/
 
 #hook-page,
 #intro-page,
@@ -176,24 +196,20 @@ html {
     background-color: #384E77;
     color: #f0f2f5;
     display: flex;
-    /* For centering blockquote */
     justify-content: center;
     align-items: center;
 }
 
 #writeup-title-page {
     background-color: #2c3e50;
-    /* Dark blue-grey */
     color: white;
     display: flex;
-    /* For centering content */
     justify-content: center;
     align-items: center;
 }
 
 #writeup-title-page h1 {
     font-size: 3.5rem;
-    /* Prominent title */
     font-weight: 700;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
@@ -204,12 +220,9 @@ html {
     width: 100%;
     text-align: center;
     padding: 10px 20px;
-    /* Reduced padding slightly */
     box-sizing: border-box;
     margin-top: 10px;
-    /* Adjust top margin */
     margin-bottom: 30px;
-    /* Ensure space at the bottom for scrolling */
 }
 
 .content-wrapper.narrow-content {
@@ -221,21 +234,15 @@ html {
     font-family: 'Roboto', sans-serif;
     font-size: 2.2rem;
     margin-top: 10px;
-    /* Adjust top margin for headings */
     margin-bottom: 20px;
     color: #2c3e50;
 }
 
-/* Specific centering for requested headings */
 #intro-page .text-column>h2,
 #hand-viz-page .text-column>h2 {
     text-align: center;
     width: 100%;
-    /* Ensure it takes full width of column to center text */
 }
-
-/* Pulse viz h2 is already centered by its parent .pulse-column-left */
-
 
 .content-wrapper h3 {
     font-family: 'Roboto', sans-serif;
@@ -245,15 +252,7 @@ html {
     color: #2c3e50;
 }
 
-/* #title-page .content-wrapper h1, */
-/* #title-page .content-wrapper h2 { */
-/* color: white; */
-/* Ensure text is white over GIF - Handled by new title specific classes */
-/* } */
-
-
 #quote-page .content-wrapper h2 {
-    /* If there was an H2 on quote page */
     color: #f0f2f5;
 }
 
@@ -277,7 +276,8 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
+    /* Changed from flex-start to stretch */
     width: 100%;
     max-width: 1200px;
     gap: 30px;
@@ -293,7 +293,6 @@ html {
     flex-direction: column;
     justify-content: flex-start;
     padding: 15px;
-    /* Reduced padding */
     box-sizing: border-box;
 }
 
@@ -302,7 +301,6 @@ html {
 }
 
 .text-column h2,
-/* General h2 in text-column */
 .text-column h3 {
     margin-top: 0;
 }
@@ -319,7 +317,6 @@ html {
 }
 
 .pulse-column-left h2 {
-    /* This h2 is already centered */
     text-align: center;
 }
 
@@ -430,12 +427,10 @@ html {
     font-style: italic;
     line-height: 1.6;
     margin: 20px auto;
-    /* This centers the blockquote element */
     max-width: 700px;
     position: relative;
     padding-left: 40px;
     text-align: left;
-    /* Text inside quote remains left-aligned */
 }
 
 .large-quote:before {
@@ -633,16 +628,17 @@ html {
     }
 
     .masked-main-title {
-        font-size: 4rem;
-        /* Adjust for smaller screens */
+        font-size: 6rem;
     }
 
-    .title-page-subtitle {
-        font-size: 1.5rem;
+    .title-page-subtitle-typed {
+        font-size: 1.8rem;
+        min-height: 2.2rem;
     }
 
-    .title-page-teamname {
-        font-size: 1.2rem;
+    .title-page-teamname-typed {
+        font-size: 1.3rem;
+        min-height: 1.6rem;
     }
 
 
@@ -673,18 +669,18 @@ html {
 
     .two-column-layout {
         flex-direction: column;
-        /* Stack columns on smaller screens */
     }
 
     .column {
         width: 100%;
         padding: 10px;
-        /* Adjust padding for stacked columns */
     }
 
     #hand-container {
-        height: 300px;
+        /* height will be 100% of its parent column, so fixed height here is less relevant unless for specific cases.
+           min-height is still useful. */
         min-height: 250px;
+        /* Adjusted min-height for smaller screens */
     }
 
     .typing-test-wrapper {
@@ -702,16 +698,17 @@ html {
 
 @media (max-width: 480px) {
     .masked-main-title {
-        font-size: 3rem;
-        /* Further adjust for very small screens */
+        font-size: 4rem;
     }
 
-    .title-page-subtitle {
-        font-size: 1.2rem;
+    .title-page-subtitle-typed {
+        font-size: 1.5rem;
+        min-height: 1.8rem;
     }
 
-    .title-page-teamname {
-        font-size: 1rem;
+    .title-page-teamname-typed {
+        font-size: 1.1rem;
+        min-height: 1.4rem;
     }
 }
 
@@ -719,8 +716,10 @@ html {
 #hand-container {
     position: relative;
     width: 100%;
-    height: 450px;
+    height: 100%;
+    /* Changed from 450px to 100% */
     min-height: 300px;
+    /* Keeps a minimum sensible height */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -736,7 +735,6 @@ html {
     font-size: 0.85em;
     max-width: 220px;
     z-index: 10001;
-    /* Ensure it's above nav arrows/tooltips if any */
     visibility: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     line-height: 1.4;
@@ -791,7 +789,6 @@ html {
     justify-content: center;
     align-items: center;
     z-index: 99999;
-    /* Highest z-index for initial load */
 }
 
 .spinner {
@@ -813,14 +810,12 @@ html {
     display: flex;
     gap: 20px;
     align-items: flex-start;
-    /* Changed from stretch for natural height */
     justify-content: center;
     flex-wrap: nowrap;
     max-width: 1300px;
     margin: 0 auto;
     padding: 10px;
     box-sizing: border-box;
-    /* Height is determined by content, scrolling handled by .section */
 }
 
 .three-column-layout .image-column {
@@ -829,7 +824,6 @@ html {
     gap: 15px;
     flex: 0 1 220px;
     max-width: 220px;
-    /* No overflow-y here, section scrolls */
     padding: 10px;
     box-sizing: border-box;
     background-color: #f8f9fa;
@@ -849,15 +843,11 @@ html {
     max-width: 700px;
     padding: 15px 20px;
     box-sizing: border-box;
-    /* No overflow-y here, section scrolls */
     background-color: #fff;
     border-radius: 5px;
 }
 
 .three-column-layout .text-column h2 {
-    /* This h2 is targeted by specific centering rules if needed */
-    /* text-align: center; */
-    /* Removed general center, apply specifically */
     margin-top: 0;
 }
 
@@ -918,24 +908,18 @@ a:hover {
     color: white;
     border: none;
     padding: 0;
-    /* Remove padding, use width/height and flex for centering icon */
     font-size: 28px;
-    /* Adjust icon size */
     font-weight: bold;
     cursor: pointer;
     z-index: 1000;
-    /* Ensure above section content but below modals/tooltips if any */
     border-radius: 50%;
     width: 44px;
-    /* Circular button */
     height: 44px;
     display: flex;
-    /* Changed to flex by JS, ensure it's always flex */
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s, opacity 0.3s;
     line-height: 1;
-    /* For better vertical centering of text character */
     opacity: 0.7;
 }
 
@@ -956,25 +940,18 @@ a:hover {
 #nav-dots-container {
     position: fixed;
     bottom: 25px;
-    /* Slightly more space from bottom */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 12px;
-    /* Slightly more gap */
     z-index: 1000;
-    /* Same as arrows */
     padding: 5px;
-    /* Add padding for a subtle background effect if needed */
-    /* background-color: rgba(255, 255, 255, 0.3); Optional: subtle background */
-    /* border-radius: 15px; */
 }
 
 .nav-dot {
     width: 12px;
     height: 12px;
     background-color: rgba(204, 204, 204, 0.7);
-    /* Lighter, semi-transparent */
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;

@@ -26,13 +26,17 @@
     </div>
 
     <main id="fullpage-container">
-        <section id="title-page" class="section">
+        <section id="title-page-main" class="section"> <!-- Renamed from title-page -->
             <div class="content-wrapper title-page-content-wrapper">
                 <h1 class="masked-main-title">PRESS, RELEASE, REPEAT</h1>
-                <div class="fading-subtext">
-                    <h1 class="title-page-subtitle">Decoding Parkinson’s Through Typing</p>
-                    <h2 class="title-page-teamname">TEAM SEABORN</h2>
-                </div>
+                <!-- Subtitle and team name removed from here -->
+            </div>
+        </section>
+
+        <section id="title-page-sub" class="section"> <!-- New section for subtitle and team name -->
+            <div class="content-wrapper title-page-content-wrapper">
+                <h1 class="title-page-subtitle-typed"></h1> <!-- Will be populated by typing effect -->
+                <h2 class="title-page-teamname-typed"></h2> <!-- Will be populated by fade-in effect -->
             </div>
         </section>
 
@@ -259,6 +263,52 @@
                     technology in your own life might be leveraged for health awareness and discuss any concerns about
                     motor symptoms with a healthcare professional. Early understanding and action can make a significant
                     difference.</p>
+            </div>
+        </section>
+
+        <section id="resources-support-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Resources and Support</h2>
+                <h3>Links to Parkinson's Organizations</h3>
+                <ul>
+                    <li><strong>Parkinson's Foundation:</strong> <a href="https://www.parkinson.org" target="_blank"
+                            rel="noopener noreferrer">www.parkinson.org</a> - Comprehensive information, resources, and
+                        support for patients and families.</li>
+                    <li><strong>The Michael J. Fox Foundation for Parkinson's Research:</strong> <a
+                            href="https://www.michaeljfox.org" target="_blank"
+                            rel="noopener noreferrer">www.michaeljfox.org</a> - Leading research initiatives and patient
+                        advocacy.</li>
+                    <li><strong>American Parkinson Disease Association (APDA):</strong> <a
+                            href="https://www.apdaparkinson.org" target="_blank"
+                            rel="noopener noreferrer">www.apdaparkinson.org</a> - Support, education, and research
+                        programs.</li>
+                </ul>
+                <h3>Further Reading and Research</h3>
+                <ul>
+                    <li>Explore the "Understanding Parkinson's" section on the Parkinson's Foundation website.</li>
+                    <li>Search for "keystroke dynamics Parkinson's disease" on Google Scholar or PubMed for research
+                        articles.</li>
+                    <li>Visit the National Institute of Neurological Disorders and Stroke (NINDS) Parkinson's Disease
+                        Information Page.</li>
+                    <li><strong>Tappy Keystroke Dataset on PhysioNet:</strong> For those interested in the source data:
+                        <a href="https://physionet.org/content/tappy/1.0.0/" target="_blank"
+                            rel="noopener noreferrer">https://physionet.org/content/tappy/1.0.0/</a>
+                    </li>
+                </ul>
+                <h3>Support Resources for Patients and Families</h3>
+                <ul>
+                    <li><strong>Helplines:</strong> Many Parkinson's organizations offer toll-free helplines for
+                        information and support.
+                        <ul>
+                            <li>Parkinson's Foundation Helpline: 1-800-4PD-INFO (473-4636)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Support Groups:</strong> Local and online support groups provide a valuable way to
+                        connect with others affected by Parkinson's. Check the websites of the major organizations for
+                        listings.</li>
+                    <li><strong>Educational Materials:</strong> Brochures, webinars, and articles are widely available
+                        from the organizations listed above.</li>
+                </ul>
             </div>
         </section>
 
@@ -666,56 +716,12 @@
             </div>
         </section>
 
-        <section id="resources-support-page" class="section">
-            <div class="content-wrapper narrow-content">
-                <h2>Resources and Support</h2>
-                <h3>Links to Parkinson's Organizations</h3>
-                <ul>
-                    <li><strong>Parkinson's Foundation:</strong> <a href="https://www.parkinson.org" target="_blank"
-                            rel="noopener noreferrer">www.parkinson.org</a> - Comprehensive information, resources, and
-                        support for patients and families.</li>
-                    <li><strong>The Michael J. Fox Foundation for Parkinson's Research:</strong> <a
-                            href="https://www.michaeljfox.org" target="_blank"
-                            rel="noopener noreferrer">www.michaeljfox.org</a> - Leading research initiatives and patient
-                        advocacy.</li>
-                    <li><strong>American Parkinson Disease Association (APDA):</strong> <a
-                            href="https://www.apdaparkinson.org" target="_blank"
-                            rel="noopener noreferrer">www.apdaparkinson.org</a> - Support, education, and research
-                        programs.</li>
-                </ul>
-                <h3>Further Reading and Research</h3>
-                <ul>
-                    <li>Explore the "Understanding Parkinson's" section on the Parkinson's Foundation website.</li>
-                    <li>Search for "keystroke dynamics Parkinson's disease" on Google Scholar or PubMed for research
-                        articles.</li>
-                    <li>Visit the National Institute of Neurological Disorders and Stroke (NINDS) Parkinson's Disease
-                        Information Page.</li>
-                    <li><strong>Tappy Keystroke Dataset on PhysioNet:</strong> For those interested in the source data:
-                        <a href="https://physionet.org/content/tappy/1.0.0/" target="_blank"
-                            rel="noopener noreferrer">https://physionet.org/content/tappy/1.0.0/</a>
-                    </li>
-                </ul>
-                <h3>Support Resources for Patients and Families</h3>
-                <ul>
-                    <li><strong>Helplines:</strong> Many Parkinson's organizations offer toll-free helplines for
-                        information and support.
-                        <ul>
-                            <li>Parkinson's Foundation Helpline: 1-800-4PD-INFO (473-4636)</li>
-                        </ul>
-                    </li>
-                    <li><strong>Support Groups:</strong> Local and online support groups provide a valuable way to
-                        connect with others affected by Parkinson's. Check the websites of the major organizations for
-                        listings.</li>
-                    <li><strong>Educational Materials:</strong> Brochures, webinars, and articles are widely available
-                        from the organizations listed above.</li>
-                </ul>
-            </div>
-        </section>
 
     </main>
 
     <!-- Navigation Arrows -->
-    <button id="prev-section" class="nav-arrow prev-arrow"><</button>
+    <button id="prev-section" class="nav-arrow prev-arrow">
+        << /button>
             <button id="next-section" class="nav-arrow next-arrow">></button>
 
             <!-- Navigation Dots -->
@@ -728,13 +734,39 @@
 
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
-                    // New Navigation Logic
                     const sections = document.querySelectorAll('.section');
                     const prevArrow = document.getElementById('prev-section');
                     const nextArrow = document.getElementById('next-section');
                     const dotsContainer = document.getElementById('nav-dots-container');
                     const globalLoader = document.getElementById('loader');
                     let currentSectionIndex = 0;
+                    let typeWriterTimeout1 = null;
+                    // typeWriterTimeout2 is no longer needed for team name typing
+
+
+                    function typeWriter(element, text, speed, callback) {
+                        let i = 0;
+                        element.innerHTML = ''; // Clear existing content
+
+                        if (element.typeWriterTimeout) {
+                            clearTimeout(element.typeWriterTimeout);
+                        }
+
+                        function type() {
+                            if (i < text.length) {
+                                element.innerHTML += text.charAt(i);
+                                i++;
+                                element.typeWriterTimeout = setTimeout(type, speed);
+                            } else {
+                                element.typeWriterTimeout = null;
+                                if (callback) {
+                                    callback();
+                                }
+                            }
+                        }
+                        type();
+                    }
+
 
                     function initializeVisualization(section) {
                         if (section.id === 'hand-viz-page' && !section.dataset.handVizInitialized) {
@@ -744,32 +776,179 @@
                             }
                         } else if (section.id === 'pulse-viz-page' && !section.dataset.pulseVizInitialized) {
                             if (typeof window.initializePulseVisualization === 'function') {
-                                window.initializePulseVisualization(); // This also handles the globalLoader hiding
+                                window.initializePulseVisualization();
                                 section.dataset.pulseVizInitialized = 'true';
                             }
                         }
-                        // typing-test.js initializes itself based on data fetching, may not need explicit call here
-                        // If other visualizations need deferred init, add them here.
                     }
 
+                    function showSection(newIndex, isSpecialTitleTransition = false) {
+                        if (newIndex < 0 || newIndex >= sections.length) return;
 
-                    function showSection(index) {
-                        if (index < 0 || index >= sections.length) return;
+                        const oldSectionIndex = currentSectionIndex;
+                        const oldSection = sections[oldSectionIndex];
+                        const newSection = sections[newIndex];
 
-                        sections.forEach((section, i) => {
-                            if (i === index) {
-                                section.classList.add('active');
-                                section.scrollTop = 0; // Scroll to top of new section
-                                initializeVisualization(section); // Initialize viz if needed
+                        const titleMainId = 'title-page-main';
+                        const titleSubId = 'title-page-sub';
+
+                        // Determine if a "push" slide transition should be applied
+                        let applyPushTransition = false;
+                        if (oldSection && newSection && oldSectionIndex !== newIndex) {
+                            const isBetweenTitleMainAndSub =
+                                (oldSection.id === titleMainId && newSection.id === titleSubId) ||
+                                (oldSection.id === titleSubId && newSection.id === titleMainId);
+
+                            if (isBetweenTitleMainAndSub) {
+                                applyPushTransition = false; // No push for title-main <-> title-sub
                             } else {
-                                section.classList.remove('active');
+                                applyPushTransition = true;  // Push for all other transitions
                             }
-                        });
-                        updateDots(index);
-                        updateArrowVisibility(index);
-                        currentSectionIndex = index;
-                        localStorage.setItem('currentSectionIndex', index);
+                        }
+
+                        // Clear previous animation states from old section if it's not the new one
+                        if (oldSection && oldSection !== newSection) {
+                            oldSection.classList.remove('active', 'prepare-slide-from-left', 'prepare-slide-from-right', 'slide-to-left', 'slide-to-right');
+                        }
+                        // Clear preparation classes from new section in case of rapid navigation
+                        newSection.classList.remove('prepare-slide-from-left', 'prepare-slide-from-right', 'slide-to-left', 'slide-to-right');
+
+
+                        if (applyPushTransition) {
+                            // Prepare new section for push
+                            if (newIndex > oldSectionIndex) { // Moving Forward
+                                newSection.classList.add('prepare-slide-from-right');
+                            } else { // Moving Backward
+                                newSection.classList.add('prepare-slide-from-left');
+                            }
+                            newSection.style.visibility = 'visible'; // Make it part of layout for transition
+
+                            // Force reflow for the new section's preparation
+                            newSection.offsetWidth;
+
+                            // Animate old section out
+                            if (oldSection && oldSection !== newSection) {
+                                oldSection.classList.remove('active');
+                                if (newIndex > oldSectionIndex) {
+                                    oldSection.classList.add('slide-to-left');
+                                } else {
+                                    oldSection.classList.add('slide-to-right');
+                                }
+                            }
+
+                            // Animate new section in
+                            newSection.classList.remove('prepare-slide-from-left', 'prepare-slide-from-right');
+                            newSection.classList.add('active');
+
+                        } else { // Non-push transition (e.g., title-main <-> title-sub, or initial load)
+                            if (oldSection && oldSection !== newSection) {
+                                oldSection.classList.remove('active');
+                                // Special handling for title-main -> title-sub transition (main title slides up)
+                                if (oldSection.id === titleMainId && newSection.id === titleSubId && isSpecialTitleTransition) {
+                                    const titleMainText = oldSection.querySelector('.masked-main-title');
+                                    if (titleMainText) {
+                                        titleMainText.classList.add('slide-up-out');
+                                        // Cleanup for the main title text slide-up is handled by a timeout later
+                                    }
+                                } else {
+                                    // Standard fade out for other non-push transitions
+                                    oldSection.style.opacity = '0';
+                                    oldSection.style.visibility = 'hidden';
+                                }
+                                oldSection.style.transform = 'translateX(0)'; // Reset transform if it was ever pushed
+                            }
+
+                            // Activate new section (fade in by default via .active class)
+                            newSection.classList.add('active');
+                            newSection.style.transform = 'translateX(0)'; // Ensure centered
+                            newSection.style.opacity = '1';
+                            newSection.style.visibility = 'visible';
+                        }
+
+                        // Cleanup for the old section after its transition completes
+                        if (oldSection && oldSection !== newSection) {
+                            setTimeout(() => {
+                                oldSection.classList.remove('slide-to-left', 'slide-to-right');
+                                // If it was the special title slide-up, ensure final hidden state
+                                if (oldSection.id === titleMainId && newSection.id === titleSubId && isSpecialTitleTransition) {
+                                    oldSection.style.opacity = '0';
+                                    oldSection.style.visibility = 'hidden';
+                                    const titleMainText = oldSection.querySelector('.masked-main-title');
+                                    if (titleMainText) titleMainText.classList.remove('slide-up-out');
+                                } else if (!applyPushTransition) { // General non-push hide already done
+                                    // oldSection.style.visibility = 'hidden'; // Already set
+                                } else { // General push hide
+                                    oldSection.style.visibility = 'hidden';
+                                }
+                            }, 600); // Match CSS transition duration
+                        }
+
+
+                        newSection.scrollTop = 0; // Scroll to top of new section
+                        initializeVisualization(newSection);
+
+                        // Handle typing and fade-in effect for title-page-sub
+                        const isMovingFromMainToSub = oldSection && oldSection.id === titleMainId && newSection.id === titleSubId;
+                        if (newSection.id === titleSubId) {
+                            const subtitleElement = newSection.querySelector('.title-page-subtitle-typed');
+                            const teamNameElement = newSection.querySelector('.title-page-teamname-typed');
+
+                            subtitleElement.textContent = ''; // Clear previous text for subtitle
+                            teamNameElement.textContent = ''; // Clear previous text for team name
+                            teamNameElement.style.opacity = 0; // Set team name to transparent initially
+
+                            const textToTypeSubtitle = "Decoding Parkinson’s Through Typing";
+                            const teamNameFullText = "TEAM SEABORN";
+                            const typingSpeed = 70;
+
+                            // Delay typing start if transitioning from main title with slide-up
+                            const startTypingDelay = (isMovingFromMainToSub && isSpecialTitleTransition) ? 300 : (oldSection ? 500 : 0);
+
+
+                            clearTimeout(typeWriterTimeout1);
+
+                            typeWriterTimeout1 = setTimeout(() => {
+                                typeWriter(subtitleElement, textToTypeSubtitle, typingSpeed, () => {
+                                    // Callback after subtitle typing is done
+                                    teamNameElement.textContent = teamNameFullText; // Set team name text directly
+                                    // Short delay before starting fade-in to ensure text is set and transition applies
+                                    setTimeout(() => {
+                                        teamNameElement.style.opacity = 1; // Fade in team name (CSS transition handles the animation)
+                                    }, 50);
+                                });
+                            }, startTypingDelay);
+
+                        } else if (oldSection && oldSection.id === titleSubId) { // Clear effects if navigating away from title-page-sub
+                            const subtitleTyped = oldSection.querySelector('.title-page-subtitle-typed');
+                            const teamNameTyped = oldSection.querySelector('.title-page-teamname-typed');
+                            if (subtitleTyped && subtitleTyped.typeWriterTimeout) {
+                                clearTimeout(subtitleTyped.typeWriterTimeout);
+                                subtitleTyped.typeWriterTimeout = null;
+                            }
+                            if (subtitleTyped) subtitleTyped.textContent = '';
+                            if (teamNameTyped) {
+                                teamNameTyped.textContent = '';
+                                teamNameTyped.style.opacity = 0; // Reset opacity
+                            }
+                        }
+
+
+                        // Restore title-page-main if navigating back to it
+                        if (newSection.id === titleMainId) {
+                            const titleMainText = newSection.querySelector('.masked-main-title');
+                            if (titleMainText) {
+                                titleMainText.classList.remove('slide-up-out'); // Ensure it's not stuck in slide-up
+                                titleMainText.style.transform = ''; // Reset any transform
+                                titleMainText.style.opacity = ''; // Reset opacity
+                            }
+                        }
+
+                        updateDots(newIndex);
+                        updateArrowVisibility(newIndex);
+                        currentSectionIndex = newIndex;
+                        localStorage.setItem('currentSectionIndex', newIndex);
                     }
+
 
                     function updateDots(activeIndex) {
                         if (!dotsContainer) return;
@@ -785,17 +964,17 @@
 
                     function updateArrowVisibility(index) {
                         if (!prevArrow || !nextArrow) return;
-                        prevArrow.style.display = index === 0 ? 'none' : 'flex'; // use flex for centering
+                        prevArrow.style.display = index === 0 ? 'none' : 'flex';
                         nextArrow.style.display = index === sections.length - 1 ? 'none' : 'flex';
                     }
 
                     function createDots() {
                         if (!dotsContainer) return;
-                        dotsContainer.innerHTML = ''; // Clear existing dots
+                        dotsContainer.innerHTML = '';
                         sections.forEach((_, i) => {
                             const dot = document.createElement('div');
                             dot.classList.add('nav-dot');
-                            dot.addEventListener('click', () => showSection(i));
+                            dot.addEventListener('click', () => showSection(i, false)); // Clicking dot is not special title transition
                             dotsContainer.appendChild(dot);
                         });
                     }
@@ -803,48 +982,52 @@
                     if (prevArrow) {
                         prevArrow.addEventListener('click', () => {
                             if (currentSectionIndex > 0) {
-                                showSection(currentSectionIndex - 1);
+                                showSection(currentSectionIndex - 1, false); // Moving back is not special title transition
                             }
                         });
                     }
 
                     if (nextArrow) {
                         nextArrow.addEventListener('click', () => {
-                            if (currentSectionIndex < sections.length - 1) {
-                                showSection(currentSectionIndex + 1);
+                            const currentActiveSection = sections[currentSectionIndex];
+                            const nextPotentialIndex = currentSectionIndex + 1;
+                            let specialTransitionFlag = false;
+
+                            // Special transition only for title-main -> title-sub via next arrow
+                            if (currentActiveSection.id === 'title-page-main' && nextPotentialIndex < sections.length && sections[nextPotentialIndex].id === 'title-page-sub') {
+                                specialTransitionFlag = true;
+                            }
+
+                            if (nextPotentialIndex < sections.length) {
+                                showSection(nextPotentialIndex, specialTransitionFlag);
                             }
                         });
                     }
 
+
                     document.addEventListener('keydown', (event) => {
                         const activeElement = document.activeElement;
-                        const isTyping = activeElement.tagName === 'INPUT' ||
+                        const isTypingInput = activeElement.tagName === 'INPUT' ||
                             activeElement.tagName === 'TEXTAREA' ||
-                            activeElement.isContentEditable ||
-                            activeElement.closest('#typing-test-page');
+                            activeElement.isContentEditable;
 
-                        if (isTyping && (event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'PageUp' || event.key === 'PageDown')) {
-                            if (activeElement.tagName === 'INPUT' && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) return;
-                            if (activeElement.closest('#typing-test-page') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) return;
-                            if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA' || activeElement.isContentEditable) return;
-
+                        if (isTypingInput && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+                            // Allow arrow keys for input fields, especially the typing test
+                            if (activeElement.closest('#typing-test-page')) return;
                         }
 
 
                         if (event.key === 'ArrowRight' || event.key === 'PageDown') {
-                            if (currentSectionIndex < sections.length - 1) {
-                                showSection(currentSectionIndex + 1);
+                            if (!(isTypingInput && activeElement.closest('#typing-test-page'))) {
+                                nextArrow.click(); event.preventDefault();
                             }
-                            event.preventDefault();
                         } else if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
-                            if (currentSectionIndex > 0) {
-                                showSection(currentSectionIndex - 1);
+                            if (!(isTypingInput && activeElement.closest('#typing-test-page'))) {
+                                prevArrow.click(); event.preventDefault();
                             }
-                            event.preventDefault();
                         }
                     });
 
-                    // Initial setup
                     const storedIndex = localStorage.getItem('currentSectionIndex');
                     if (storedIndex !== null && !isNaN(parseInt(storedIndex))) {
                         currentSectionIndex = parseInt(storedIndex);
@@ -857,20 +1040,24 @@
 
                     if (sections.length > 0) {
                         createDots();
-                        showSection(currentSectionIndex);
+                        // For initial load, don't use special title transition logic, just standard fade-in
+                        showSection(currentSectionIndex, false);
                     }
 
-                    const firstSection = sections[currentSectionIndex];
-                    if (globalLoader && (!firstSection || firstSection.id !== 'pulse-viz-page' || !firstSection.dataset.pulseVizInitialized)) {
-                        if (typeof window.initializePulseVisualization !== 'function' || sections[currentSectionIndex].id !== 'pulse-viz-page') {
-                            if (!document.getElementById('pulse-viz-page') || document.getElementById('pulse-viz-page').classList.contains('active') === false || !document.getElementById('pulse-viz-page').dataset.pulseVizInitialized) {
-                                globalLoader.style.display = 'none';
-                            }
-                        } else if (sections[currentSectionIndex].id === 'pulse-viz-page' && !sections[currentSectionIndex].dataset.pulseVizInitialized) {
-                            // If it IS pulse viz page but not yet initialized (e.g. data still loading), don't hide loader here.
-                        } else {
-                            globalLoader.style.display = 'none';
+                    const activeSectionForLoader = sections[currentSectionIndex];
+                    let hideLoader = true;
+                    if (activeSectionForLoader) {
+                        if (activeSectionForLoader.id === 'pulse-viz-page' && !activeSectionForLoader.dataset.pulseVizInitialized) {
+                            hideLoader = false; // Pulse viz will hide loader itself
                         }
+                        // Hand viz has its own internal loader, global loader can hide.
+                    }
+
+                    if (globalLoader && hideLoader) {
+                        // Add a small delay to ensure initial section setup/rendering before hiding loader
+                        setTimeout(() => {
+                            globalLoader.style.display = 'none';
+                        }, 100);
                     }
                 });
             </script>
