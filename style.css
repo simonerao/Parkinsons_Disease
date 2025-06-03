@@ -968,3 +968,11 @@ a:hover {
     border-color: #4A90E2;
     transform: scale(1.1);
 }
+
+#quote-page2 {
+    background-color: #384E77;
+    color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
