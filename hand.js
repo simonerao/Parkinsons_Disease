@@ -1,117 +1,101 @@
-// hand.js
-import * as THREE from 'three'; // Resolved by import map
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; // Resolved by import map
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Resolved by import map
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+// Wrap the main logic in a function
+function initializeHandVisualization() {
     const handContainer = document.getElementById('hand-container');
     const handTooltip = document.getElementById('hand-tooltip');
-    const loadingOverlay = document.getElementById('loading-overlay'); // Get loading overlay
+    const loadingOverlay = document.getElementById('loading-overlay');
 
     if (!handContainer) {
         console.error("Hand container not found.");
-        if (loadingOverlay) loadingOverlay.style.display = 'none'; // Hide loader if container fails
+        if (loadingOverlay) loadingOverlay.style.display = 'none';
         return;
     }
     if (!loadingOverlay) {
-        console.warn("Loading overlay not found.Proceeding without it.");
+        console.warn("Loading overlay not found. Proceeding without it.");
+    }
+
+    // Critical: Check for valid dimensions. If not, this function might have been called too early.
+    if (handContainer.clientWidth === 0 || handContainer.clientHeight === 0) {
+        console.warn("Hand container has no dimensions. Initialization might be too early or section not visible.");
+        // Optionally, try again after a short delay, or rely on resize event
+        // For now, we'll proceed, but OrbitControls and camera might be misconfigured.
+        // A more robust solution would be to wait for the container to be visible.
     }
 
 
-    // Ensure the container has a defined size in CSS (e.g., width: 100%; height: 500px;)
-    // Otherwise, clientWidth/clientHeight might be 0.
-    const width = handContainer.clientWidth;
-    const height = handContainer.clientHeight;
+    const width = handContainer.clientWidth || 500; // Fallback width
+    const height = handContainer.clientHeight || 450; // Fallback height
 
-    // 1. Scene, Camera, Renderer
+
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000); // FOV, Aspect, Near, Far planes
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true for transparent background
+    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(window.devicePixelRatio); // For sharper rendering on high DPI screens
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    // Clear previous renderer if any (important if re-initializing)
+    while (handContainer.firstChild) {
+        handContainer.removeChild(handContainer.firstChild);
+    }
     handContainer.appendChild(renderer.domElement);
 
-    // 2. Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7); // Slightly increased ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0); // Slightly increased directional
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
     directionalLight.position.set(2, 3, 2).normalize();
     scene.add(directionalLight);
-    const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 0.5); // Sky, Ground, Intensity
+    const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 0.5);
     scene.add(hemisphereLight);
 
-
-    // 3. OrbitControls for user interaction
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; 
-    controls.dampingFactor = 0.03; // Adjusted for a bit more responsiveness with auto-rotate
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.03;
     controls.screenSpacePanning = false;
-    controls.minDistance = 1; // Prevent zooming too close (adjust as needed)
-    controls.maxDistance = 5000; // Prevent zooming too far (adjust based on model scale)
-    controls.maxPolarAngle = Math.PI / 1.5; // Allow slightly more vertical rotation if desired
-    controls.rotateSpeed = 0.5; 
+    controls.minDistance = 1;
+    controls.maxDistance = 5000;
+    controls.maxPolarAngle = Math.PI / 1.5;
+    controls.rotateSpeed = 0.5;
     controls.zoomSpeed = 0.8;
-
-    // --- AUTO ROTATION ---
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.5; // Adjust speed (e.g., 0.5 for slower, 2.0 for faster)
-                                   // Negative value will rotate in the opposite direction.
-                                   // Rotation stops when user interacts.
+    controls.autoRotateSpeed = 1.5;
 
-    // 4. Load 3D Hand Model
     const loader = new GLTFLoader();
     let handModel;
     const originalColors = new Map();
 
-    // Show loading screen before starting to load
     if (loadingOverlay) {
-        loadingOverlay.style.opacity = '1'; // Ensure it's visible if already 'flex'
+        loadingOverlay.style.opacity = '1';
         loadingOverlay.style.display = 'flex';
     }
 
     loader.load(
-        './models/hand.glb', // Ensure this path is correct
+        './models/hand.glb',
         (gltf) => {
             handModel = gltf.scene;
             scene.add(handModel);
             console.log("Loaded mesh names:");
-        handModel.traverse((object) => {
-        if (object.isMesh) {
-            console.log(object.name);
-        }
-        });
+            handModel.traverse((object) => {
+                if (object.isMesh) {
+                    console.log(object.name);
+                }
+            });
 
+            handModel.scale.set(1000, 1000, 1000);
 
-            // Adjust Model Scale (trial-and-error based on your model)
-            handModel.scale.set(1000, 1000, 1000); // Keep existing scale or adjust
-
-            // Center the camera and controls target on the scaled model
             const box = new THREE.Box3().setFromObject(handModel);
             const center = box.getCenter(new THREE.Vector3());
-            const size = box.getSize(new THREE.Vector3());
-
-            controls.target.copy(center);
-
-            // --- ADJUSTED CAMERA POSITION FOR INITIAL ZOOM ---
-            // The multiplier determines how "far back" the camera is.
-            // Smaller multiplier = more zoomed in.
-            // Adjust this value (e.g., 0.8, 1.0, 1.2) to get the desired initial zoom.
             const boundingSphere = box.getBoundingSphere(new THREE.Sphere());
             const modelRadius = boundingSphere.radius;
-            
-            // Position camera based on model's bounding sphere radius
+
+            controls.target.copy(center);
             camera.position.x = center.x;
-            camera.position.y = center.y + modelRadius * 0.5; // Slightly above center for a better view
-            camera.position.z = center.z + modelRadius * 1.5; // Start closer (adjust multiplier)
+            camera.position.y = center.y + modelRadius * 0.5;
+            camera.position.z = center.z + modelRadius * 1.5;
+            camera.lookAt(center);
 
-            // Alternative using size.length():
-            // camera.position.x = center.x;
-            // camera.position.y = center.y;
-            // camera.position.z = center.z + size.length() * 1.2; // Adjusted for closer zoom
-
-            camera.lookAt(center); // Ensure camera is looking at the center
-
-            // Store original colors
             handModel.traverse((object) => {
                 if (object.isMesh && object.material) {
                     if (Array.isArray(object.material)) {
@@ -126,17 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             controls.update();
 
-            // Hide loading screen
             if (loadingOverlay) {
                 loadingOverlay.style.opacity = '0';
-                setTimeout(() => { // Wait for transition to finish before setting display none
+                setTimeout(() => {
                     loadingOverlay.style.display = 'none';
-                }, 500); // Should match transition duration in CSS
+                }, 500);
             }
         },
         (xhr) => {
-            // Optional: Update loading progress (e.g., display xhr.loaded / xhr.total * 100)
-            // console.log((xhr.loaded / xhr.total * 100) + '% loaded');
             const percentLoaded = Math.round((xhr.loaded / xhr.total) * 100);
             if (loadingOverlay) {
                 const pElement = loadingOverlay.querySelector('p');
@@ -147,23 +128,18 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         (error) => {
             console.error('An error occurred while loading the 3D model:', error);
-            // Hide loading screen and show error
             if (loadingOverlay) {
                 loadingOverlay.innerHTML = `<p style="color: red;">Error loading model. Please try again later.</p>`;
-                // Keep the overlay visible to show the error, or hide after a delay:
-                // setTimeout(() => { loadingOverlay.style.display = 'none'; }, 3000);
             }
         }
     );
 
-    // 5. Raycasting for hover effects
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let intersectedObject = null;
-    const highlightColor = new THREE.Color("rgb(129, 209, 219)"); // Light Blue 
+    const highlightColor = new THREE.Color("rgb(129, 209, 219)");
 
     const parkinsonsAffectedAreas = {
-        // Make sure these names match your model's mesh names
         "Thumb": "Parkinson's can cause tremors and rigidity in the thumb, affecting fine motor skills like pinching and grasping.",
         "IndexFinger": "The index finger may experience bradykinesia (slowness of movement) and difficulty with precision tasks.",
         "MiddleFinger": "Rigidity and tremors can reduce the flexibility and control of the middle finger.",
@@ -174,123 +150,87 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function onMouseMove(event) {
-        if (!handModel) return;
-    
+        if (!handModel || !handContainer) return;
+
         const rect = handContainer.getBoundingClientRect();
         mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    
+
         raycaster.setFromCamera(mouse, camera);
         const intersects = raycaster.intersectObjects(handModel.children, true);
-    
+
         let newIntersectedPart = null;
         if (intersects.length > 0) {
-            let hitObject = intersects[0].object; // This is the specific mesh that was hit
-            console.log("Mouse hit object:", hitObject.name, "Type:", hitObject.type); // DEBUG
-            
+            let hitObject = intersects[0].object;
             let currentCheck = hitObject;
             while (currentCheck) {
-                console.log("Checking part:", currentCheck.name, "Type:", currentCheck.type, "IsMesh:", currentCheck.isMesh); // DEBUG
-                if (currentCheck.isMesh && parkinsonsAffectedAreas[currentCheck.name]) { // Added isMesh check
+                if (currentCheck.isMesh && parkinsonsAffectedAreas[currentCheck.name]) {
                     newIntersectedPart = currentCheck;
-                    console.log("MATCH FOUND (Mesh):", newIntersectedPart.name); // DEBUG
                     break;
                 }
-                // If currentCheck is a Group (not a Mesh) but its name is in parkinsonsAffectedAreas,
-                // then it should be our target.
                 if (!currentCheck.isMesh && currentCheck.isGroup && parkinsonsAffectedAreas[currentCheck.name]) {
                     newIntersectedPart = currentCheck;
-                    console.log("MATCH FOUND (Group):", newIntersectedPart.name); // DEBUG
                     break;
                 }
-    
-                // Stop if we reach the top-level handModel or a null parent, to avoid going too far up
                 if (currentCheck === handModel || !currentCheck.parent) {
                     break;
                 }
-                currentCheck = currentCheck.parent; // Move up the hierarchy
+                currentCheck = currentCheck.parent;
             }
         }
-    
-        console.log("Final newIntersectedPart assigned:", newIntersectedPart ? newIntersectedPart.name + " (" + newIntersectedPart.type + ")" : "NONE"); // DEBUG
-    
 
         if (intersectedObject !== newIntersectedPart) {
-            // Restore previous
             if (intersectedObject) {
-                setObjectColor(intersectedObject, originalColors.get(intersectedObject.uuid) || (Array.isArray(intersectedObject.material) ? intersectedObject.material.map((mat,i) => originalColors.get(`${intersectedObject.uuid}-${i}`)) : null));
+                setObjectColor(intersectedObject, originalColors.get(intersectedObject.uuid) || (Array.isArray(intersectedObject.material) ? intersectedObject.material.map((mat, i) => originalColors.get(`${intersectedObject.uuid}-${i}`)) : null));
             }
-
             intersectedObject = newIntersectedPart;
-
             if (intersectedObject) {
                 setObjectColor(intersectedObject, highlightColor);
                 displayTooltip(intersectedObject.name, event.clientX, event.clientY);
-                controls.autoRotate = false; // Stop auto-rotation on hover
+                controls.autoRotate = false;
             } else {
                 hideTooltip();
-                if (!controls.autoRotate && !isUserInteracting()) { // Resume auto-rotation if not interacting
+                if (!controls.autoRotate && !isUserInteracting()) {
                     controls.autoRotate = true;
                 }
             }
         } else if (intersectedObject) {
             updateTooltipPosition(event.clientX, event.clientY);
-            controls.autoRotate = false; // Keep auto-rotation stopped while hovering
+            controls.autoRotate = false;
         }
     }
-    
+
     function setObjectColor(object, color) {
         if (!object || !object.material) return;
-
         if (Array.isArray(object.material)) {
-            object.material.forEach((mat, index) => {
-                if (color && Array.isArray(color) && color[index]) { // For restoring original array of colors
-                    mat.color.copy(color[index]);
-                } else if (color instanceof THREE.Color) { // For applying highlight
-                     mat.color.copy(color);
-                }
+            object.material.forEach((mat) => { // Simplified: apply to all sub-materials
+                if (color instanceof THREE.Color) mat.color.copy(color);
             });
         } else {
-            if (color instanceof THREE.Color) {
-                 object.material.color.copy(color);
-            }
+            if (color instanceof THREE.Color) object.material.color.copy(color);
         }
     }
 
-
-    // Helper to track if user is actively interacting (mousedown)
     let userDragging = false;
-    renderer.domElement.addEventListener('mousedown', () => {
-        userDragging = true;
-        controls.autoRotate = false; // Stop auto-rotation on mousedown
-    });
-    renderer.domElement.addEventListener('mouseup', () => {
-        userDragging = false;
-        // Resume auto-rotation if no part is hovered and not dragging
-        if (!intersectedObject) {
-             controls.autoRotate = true;
-        }
-    });
-    
-    function isUserInteracting() {
-        // OrbitControls sets a flag or you can check mouse state
-        // For simplicity, we use our 'userDragging' flag.
-        // A more robust way might involve checking controls' internal state if available,
-        // or listening to 'start' and 'end' events from OrbitControls.
-        return userDragging;
+    if (renderer.domElement) {
+        renderer.domElement.addEventListener('mousedown', () => {
+            userDragging = true;
+            controls.autoRotate = false;
+        });
+        renderer.domElement.addEventListener('mouseup', () => {
+            userDragging = false;
+            if (!intersectedObject) {
+                controls.autoRotate = true;
+            }
+        });
     }
-    
-    controls.addEventListener('start', () => {
-        controls.autoRotate = false; // Stop auto-rotation when user starts interaction
-    });
 
+    function isUserInteracting() { return userDragging; }
+
+    controls.addEventListener('start', () => { controls.autoRotate = false; });
     controls.addEventListener('end', () => {
-        // Only resume auto-rotate if not currently hovering over a highlighted part
-        if (!intersectedObject) {
-            controls.autoRotate = true;
-        }
+        if (!intersectedObject) { controls.autoRotate = true; }
     });
-
 
     function displayTooltip(partName, clientX, clientY) {
         if (!handTooltip) return;
@@ -302,19 +242,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTooltipPosition(clientX, clientY) {
         if (!handTooltip) return;
         const tooltipWidth = handTooltip.offsetWidth;
-        const tooltipHeight = handTooltip.offsetHeight;
-        const containerRect = handContainer.getBoundingClientRect();
-    
-        // To make it appear 20px to the left and 20px above the mouse cursor
-        let left = clientX + 50;
-        let top = clientY + 50;
-    
-        // --- Boundary checks (keep these as they are good for preventing overflow) ---
-        // Make sure the tooltip doesn't go off the right edge
-        if (left + tooltipWidth > window.screen.width - 10) {
-            left = window.screen.width - tooltipWidth - 10;
+        // const tooltipHeight = handTooltip.offsetHeight; // Not used in this positioning logic
+        // const containerRect = handContainer.getBoundingClientRect(); // Not used for fixed positioning
+
+        let left = clientX + 20; // Adjust offset from cursor
+        let top = clientY + 20;  // Adjust offset from cursor
+
+        if (left + tooltipWidth > window.innerWidth - 10) { // Use window.innerWidth for viewport
+            left = window.innerWidth - tooltipWidth - 10;
         }
-    
+        // Add similar check for bottom edge if needed
+        if (top + handTooltip.offsetHeight > window.innerHeight - 10) {
+            top = clientY - handTooltip.offsetHeight - 10; // Position above cursor if near bottom
+        }
+
         handTooltip.style.left = `${left}px`;
         handTooltip.style.top = `${top}px`;
     }
@@ -324,31 +265,30 @@ document.addEventListener('DOMContentLoaded', () => {
         handTooltip.style.visibility = 'hidden';
     }
 
-    handContainer.addEventListener('mousemove', onMouseMove);
-    handContainer.addEventListener('mouseleave', () => { // When mouse leaves the container
-        if (intersectedObject) {
-             setObjectColor(intersectedObject, originalColors.get(intersectedObject.uuid) || (Array.isArray(intersectedObject.material) ? intersectedObject.material.map((mat,i) => originalColors.get(`${intersectedObject.uuid}-${i}`)) : null));
-            intersectedObject = null;
-            hideTooltip();
-        }
-        if (!isUserInteracting()) { // Resume auto-rotation if mouse leaves and not interacting
-             controls.autoRotate = true;
-        }
-    });
-
-    // 6. Animation Loop
-    function animate() {
-        requestAnimationFrame(animate);
-        controls.update(); // Crucial for damping and auto-rotation
-        renderer.render(scene, camera);
+    if (handContainer) {
+        handContainer.addEventListener('mousemove', onMouseMove);
+        handContainer.addEventListener('mouseleave', () => {
+            if (intersectedObject) {
+                setObjectColor(intersectedObject, originalColors.get(intersectedObject.uuid) || (Array.isArray(intersectedObject.material) ? intersectedObject.material.map((mat, i) => originalColors.get(`${intersectedObject.uuid}-${i}`)) : null));
+                intersectedObject = null;
+                hideTooltip();
+            }
+            if (!isUserInteracting()) {
+                controls.autoRotate = true;
+            }
+        });
     }
 
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
     animate();
 
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        const newWidth = handContainer.clientWidth;
-        const newHeight = handContainer.clientHeight;
+    const resizeObserver = new ResizeObserver(entries => {
+        if (!entries || entries.length === 0) return;
+        const { width: newWidth, height: newHeight } = entries[0].contentRect;
 
         if (newWidth > 0 && newHeight > 0) {
             camera.aspect = newWidth / newHeight;
@@ -357,4 +297,22 @@ document.addEventListener('DOMContentLoaded', () => {
             renderer.setPixelRatio(window.devicePixelRatio);
         }
     });
-});
+    if (handContainer) resizeObserver.observe(handContainer);
+
+    // Initial resize call in case dimensions are set after a delay
+    // setTimeout(() => {
+    //     if (handContainer) {
+    //         const newWidth = handContainer.clientWidth;
+    //         const newHeight = handContainer.clientHeight;
+    //         if (newWidth > 0 && newHeight > 0) {
+    //             camera.aspect = newWidth / newHeight;
+    //             camera.updateProjectionMatrix();
+    //             renderer.setSize(newWidth, newHeight);
+    //         }
+    //     }
+    // }, 100);
+
+}
+
+// Make the function globally available for the main script to call
+window.initializeHandVisualization = initializeHandVisualization;

@@ -1,11 +1,12 @@
-<!-- index.html -->
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Interactive Guide to Parkinson's Disease</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Open+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
     <script type="importmap">
@@ -17,36 +18,56 @@
         }
     </script>
 </head>
+
 <body>
     <div id="loader">
-        <h1>Loading models...</h1>
+        <h1>Loading content...</h1>
         <div class="spinner"></div>
     </div>
 
     <main id="fullpage-container">
         <section id="title-page" class="section">
-            <div class="content-wrapper">
-                <h1>Parkinson's Disease</h1>
-                <h2>TEAM SEABORN - Simone Rao, Sophia Vo, Nicolas Toon</h2>
+            <div class="content-wrapper title-page-content-wrapper">
+                <h1 class="masked-main-title">PRESS, RELEASE, REPEAT</h1>
+                <div class="fading-subtext">
+                    <h1 class="title-page-subtitle">Decoding Parkinson’s Through Typing</p>
+                    <h2 class="title-page-teamname">TEAM SEABORN</h2>
+                </div>
             </div>
         </section>
 
         <section id="intro-page" class="section">
             <div class="three-column-layout">
                 <div class="image-column">
-                    <img src="images/doubtfire.jpg" alt="Image of Mrs.Doubtfire">
-                    <img src="images/ali.jpg" alt="Image of Muhammad Ali">
+                    <img src="images/doubtfire.jpg" alt="Image of Robin Williams, who had Parkinson's">
+                    <img src="images/ali.jpg" alt="Image of Muhammad Ali, who had Parkinson's">
                 </div>
-            
+
                 <div class="text-column">
-                    <h2>Understanding Parkinson's</h2>
-                    <p>Parkinson's disease is a progressive neurodegenerative disorder that primarily affects dopamine-producing ("dopaminergic") neurons in a specific area of the brain called substantia nigra. Symptoms typically develop slowly over years. The progression of symptoms is often different from one person to another due to the diversity of the disease.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                    <h2>A Deeper Look into Parkinson's</h2>
+                    <p><em>What if the way you typed could tell a story about your brain health? Parkinson's Disease, a
+                            condition affecting millions, often whispers its first signs in the subtle changes to our
+                            everyday movements.</em></p>
+                    <p>Every six minutes, someone in the United States is diagnosed with Parkinson's Disease. That's
+                        over
+                        90,000 people each year facing a future with this progressive neurological disorder. For many,
+                        including beloved figures like Michael J. Fox and Muhammad Ali, the journey with Parkinson's is
+                        a
+                        public one, but for countless others, it's a personal battle fought with courage and resilience.
+                        This project is inspired by the need to bring greater understanding to a condition that touches
+                        so
+                        many lives, often silently at first.</p>
+                    <h3>Our Research Question</h3>
+                    <p>How can interactive data visualizations make the complex motor symptoms of Parkinson's Disease,
+                        particularly those detectable through fine motor tasks like hand movements and typing, more
+                        tangible
+                        and understandable for a general audience, thereby fostering empathy and awareness?</p>
+
                 </div>
-            
+
                 <div class="image-column">
-                    <img src="images/diamond.jpg" alt="Image of Neil Diamond">
-                    <img src="images/mcfly.jpg" alt="Image of Marty McFly">
+                    <img src="images/diamond.jpg" alt="Image of Neil Diamond, who has Parkinson's">
+                    <img src="images/mcfly.jpg" alt="Image of Michael J. Fox, who has Parkinson's">
                 </div>
             </div>
         </section>
@@ -55,10 +76,35 @@
             <div class="two-column-layout">
                 <div class="column text-column">
                     <h2>Motor Symptoms & The Hand</h2>
-                    <p>Parkinson's disease is well-known for its impact on motor control. Symptoms such as tremors, rigidity (stiffness), bradykinesia (slowness of movement), and postural instability can significantly affect daily activities.</p>
-                    <p>The hands are often one of the first areas to show signs. Fine motor skills required for writing, buttoning clothes, or eating can become challenging. The interactive 3D model on the right highlights how different parts of the hand can be affected. Hover over the model to learn more.</p>
+                    <p>The symptoms you explore here – changes in hand function – are not just data points; they
+                        translate into daily challenges. Difficulty with writing can make signing documents or writing
+                        notes frustrating. Tremors or rigidity can make buttoning a shirt, using utensils, or holding a
+                        cup a slow and arduous process, impacting independence. These seemingly small motor changes can
+                        accumulate, affecting one's ability to perform daily activities.</p>
+
+                    <h3>How to Use This Visualization</h3>
+                    <ul>
+                        <li><strong>Explore the Model:</strong> Use your mouse to rotate the 3D hand model. Zoom in and
+                            out using your scroll wheel or pinch gestures.</li>
+                        <li><strong>Hover for Info:</strong> Move your cursor over different parts of the hand (fingers,
+                            palm, wrist). Highlighted areas will display a tooltip with information about how
+                            Parkinson's can affect that specific part.</li>
+                        <li><strong>What to Look For:</strong> Notice which areas are commonly impacted. Think about how
+                            these specific effects (e.g., tremor in the thumb, rigidity in the wrist) might translate to
+                            difficulties with daily tasks like writing or gripping objects.</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><em>The way Parkinson's affects the hands gives us a glimpse into its
+                            impact on fine motor control. But what about other everyday actions that require similar
+                            precision, like typing? The rhythm of our keystrokes can also tell a subtle story. Let's
+                            explore how these digital fingerprints can change, drawing upon our understanding of
+                            Parkinson's medications.</em></p>
                 </div>
                 <div class="column viz-column">
+                    <div id="loading-overlay"
+                        style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 10; justify-content: center; align-items: center; text-align: center; flex-direction: column;">
+                        <div class="spinner"></div> <!-- Re-using global spinner style -->
+                        <p style="margin-top: 10px; font-size: 1rem; color: #333;">Loading 3D Model...</p>
+                    </div>
                     <div id="hand-container"></div>
                     <div id="hand-tooltip"></div> <!-- Tooltip for hand.js -->
                 </div>
@@ -69,7 +115,9 @@
             <div class="two-column-layout">
                 <div class="column viz-column pulse-column-left">
                     <h2>Typing Rhythm & Medication</h2>
-                    <p>The consistency of motor actions, like typing, can be altered by Parkinson's. This interactive "pulse" demonstrates representative typing rhythms. Select a medication category to see how treatment might influence these patterns.</p>
+                    <p>The consistency of motor actions, like typing, can be altered by Parkinson's. This interactive
+                        "pulse" demonstrates representative typing rhythms. Select a medication category to see how
+                        treatment might influence these patterns.</p>
                     <div id="med-buttons">
                         <button class="med-btn" data-med="Levadopa">Levadopa</button>
                         <button class="med-btn" data-med="DA">DA</button>
@@ -90,13 +138,33 @@
                     </div>
                 </div>
                 <div class="column text-column pulse-column-right">
-                    <h3>Interpreting the Pulse</h3>
-                    <p>The "PULSE" button simulates the rhythm of typing, specifically focusing on:</p>
+                    <h3>How to Use This Visualization</h3>
                     <ul>
-                        <li><strong>Hold Time:</strong> The duration a key is pressed.</li>
-                        <li><strong>Flight Time:</strong> The time between releasing one key and pressing the next.</li>
+                        <li><strong>Select Medication:</strong> Click on the medication buttons ("Levodopa," "DA," etc.)
+                            to load representative typing rhythm data for individuals on different treatments, or those
+                            with no medication. This draws from the Tappy Keystroke Dataset.</li>
+                        <li><strong>Observe the PULSE:</strong> The large "PULSE" button will animate to simulate
+                            keystrokes.
+                            <ul>
+                                <li>The <strong>duration it stays lit</strong> represents "Hold Time" (how long a key is
+                                    pressed).</li>
+                                <li>The <strong>time between illuminations</strong> represents "Flight Time" (the delay
+                                    between one key release and the next key press).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Adjust Tempo:</strong> Use the "Tempo" slider to speed up or slow down the
+                            simulation. This can help you better perceive the rhythm.</li>
+                        <li><strong>Information Box:</strong> The box below the pulse will display the Hold Time and
+                            Flight Time values for the current simulated keystroke.</li>
+                        <li><strong>What to Look For:</strong> Pay attention to the consistency of the hold times and
+                            flight times. Are they regular, or do they vary significantly? How does the rhythm change
+                            when you select different medication categories, reflecting the information discussed in
+                            "Understanding Parkinson's Medications"?</li>
                     </ul>
-                    <p>Variability in these timings can be a subtle indicator of changes in motor control. Common Parkinson's medications like Levodopa, Dopamine Agonists (DA), and MAO-B inhibitors aim to manage these motor symptoms, and their effects can sometimes be observed in fine motor tasks like typing.</p>
+                    <p style="margin-top: 15px;"><em>We've seen a simulation of how typing rhythms can differ. Now, you
+                            have the chance to (simulatively) compare your own typing patterns against a representative
+                            example from the Tappy dataset, illustrating how technology might one day help us understand
+                            these nuances even better.</em></p>
                 </div>
             </div>
         </section>
@@ -104,16 +172,40 @@
         <section id="quote-page" class="section">
             <div class="content-wrapper narrow-content">
                 <blockquote class="large-quote">
-                "I have Parkinson's disease. I am not Parkinson's disease. My identity is not based on the illness, but on who I am as a person. It is a part of my life, not the entirety of it."
-                <footer>— Michael J. Fox (paraphrased)</footer>
+                    "I have Parkinson's disease. I am not Parkinson's disease. My identity is not based on the illness,
+                    but on who I am as a person. It is a part of my life, not the entirety of it."
+                    <footer>— Michael J. Fox (paraphrased)</footer>
                 </blockquote>
             </div>
         </section>
 
         <section id="typing-test-page" class="section">
             <div class="content-wrapper typing-test-wrapper">
-                <h2>Analyze Your Typing</h2>
-                <p>This interactive test allows you to compare your typing characteristics, such as key hold times and the latency between keystrokes, against generalized patterns. Type a sentence in the box below to see your data visualized.</p>
+                <h2>Analyze Your Typing Patterns</h2>
+                <p>Changes in typing speed and accuracy can be a significant hurdle for those with Parkinson's who rely
+                    on computers. Simple tasks like sending an email or navigating a smartphone may take longer and
+                    require more effort. This interactive test allows you to explore these nuances.</p>
+                <h3>How to Use This Visualization</h3>
+                <ul>
+                    <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a de-identified
+                        persona whose typing data (representing a pattern seen in some individuals with Parkinson's from
+                        the Tappy dataset) will be compared against yours.</li>
+                    <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear. Type
+                        the displayed sentence; your typing will appear over the prompt.</li>
+                    <li><strong>View Real-time Chart:</strong> As you type, a line chart will plot your latency (time
+                        between keystrokes) in one color, and the selected persona's latency in another.</li>
+                    <li><strong>Interpret the Chart:</strong>
+                        <ul>
+                            <li>The <strong>X-axis</strong> shows the character index (which keystroke in the sequence).
+                            </li>
+                            <li>The <strong>Y-axis</strong> shows the latency in milliseconds (ms).</li>
+                        </ul>
+                    </li>
+                    <li><strong>What to Look For:</strong> Compare your line to the persona's line. Is your average
+                        latency generally higher or lower? Is your line smoother or more "spiky" (variable)?</li>
+                    <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
+                        comparison persona.</li>
+                </ul>
 
                 <div id="options">
                     <select id="person-select">
@@ -140,28 +232,648 @@
                 <div id="test-container">
                     <div id="blur-overlay">Click to start</div>
                     <div id="sentence"></div>
-                    <input type="text" id="input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                    <input type="text" id="input" autocomplete="off" autocorrect="off" autocapitalize="off"
+                        spellcheck="false" />
                 </div>
 
                 <div id="result"></div>
             </div>
         </section>
+
+        <section id="conclusion-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Key Takeaways & Conclusion</h2>
+                <h3>One Clear, Memorable Message</h3>
+                <p>Technology offers powerful new lenses to understand and potentially detect subtle changes in motor
+                    function, highlighting that even everyday actions like typing can hold valuable insights into
+                    neurological health.</p>
+                <h3>Why Our Visualizations Demonstrate This</h3>
+                <p>Our interactive hand model makes the physical impact of Parkinson's tangible, while the typing rhythm
+                    simulation and analysis tool directly connect a common digital interaction to the underlying motor
+                    control challenges. By allowing users to see, feel, and even contribute their own (simulated) data,
+                    these visualizations powerfully illustrate how technology, using datasets like Tappy, can decode the
+                    nuanced language of movement.</p>
+                <h3>Call to Action: Learn More & Take Action</h3>
+                <p>Empower yourself with knowledge. Explore the resources linked in the next section to learn more about
+                    Parkinson's Disease, support research, or find help if you or a loved one are affected. Consider how
+                    technology in your own life might be leveraged for health awareness and discuss any concerns about
+                    motor symptoms with a healthcare professional. Early understanding and action can make a significant
+                    difference.</p>
+            </div>
+        </section>
+
+        <section id="writeup-title-page" class="section"> <!-- Changed ID -->
+            <div class="content-wrapper">
+                <h1>Write Up</h1>
+            </div>
+        </section>
+
+        <section id="hook-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Understanding Parkinson's Disease</h2>
+                <p><strong>Brief medical overview:</strong> Parkinson's Disease (PD) is a progressive
+                    neurodegenerative disorder. This means it's a condition where cells in a specific part of the
+                    brain gradually break down and are lost. Primarily, Parkinson's affects dopamine-producing
+                    neurons (nerve cells) in an area of the brain called the substantia nigra. Dopamine is a crucial
+                    neurotransmitter that plays a vital role in regulating movement, motivation, and mood. As these
+                    dopamine-producing cells die off, the brain receives less dopamine, leading to the
+                    characteristic symptoms of the disease.</p>
+
+                <p><strong>Who it affects:</strong> Parkinson's Disease can affect anyone, but it is more common in
+                    older adults, with the average age of onset being around 60 years old. Men are slightly more
+                    likely to develop Parkinson's than women. While it's less common, early-onset Parkinson's can
+                    occur before the age of 50. Globally, millions of people live with Parkinson's, and as the
+                    population ages, the number of individuals affected is expected to increase. It's estimated that
+                    nearly one million people are living with PD in the U.S. alone.</p>
+
+                <p><strong>Why early detection matters:</strong> While there is currently no cure for Parkinson's
+                    Disease, early detection and diagnosis are crucial. Initiating treatment and therapeutic
+                    interventions (like physical and occupational therapy) sooner can help manage symptoms more
+                    effectively, potentially improve quality of life, and slow the progression of some
+                    complications. Furthermore, an early diagnosis allows individuals and their families more time
+                    to understand the condition, plan for the future, and build a strong support network. Research
+                    into new therapies also often benefits from the participation of individuals in the early stages
+                    of the disease.</p>
+
+                <h3>Why This Project? The Motivation</h3>
+                <p><strong>Why this visualization approach is better than existing explanations:</strong> Reading
+                    about Parkinson's symptoms like bradykinesia (slowness of movement) or tremors can be
+                    informative, but often abstract. Static diagrams and text descriptions can only go so far. Our
+                    interactive visualizations transform these concepts into dynamic experiences. Instead of just
+                    reading about how hand movements are affected, you can <em>see</em> and <em>interact</em> with a
+                    model that demonstrates these changes. Instead of just learning that typing patterns can alter,
+                    you can <em>feel</em> a simulated rhythm and even test your own.</p>
+                <p><strong>What your interactive experience enables that static resources don't:</strong> Static
+                    resources provide information; interactive experiences foster engagement and intuition. With
+                    this project, you're not just a passive recipient of facts. You can actively explore how
+                    specific hand areas are impacted, compare different medication effects on motor rhythm, and even
+                    analyze your own typing data. This direct engagement allows for a more personal and memorable
+                    understanding of how Parkinson's manifests.</p>
+                <p><strong>The gap your project fills in Parkinson's education:</strong> While many excellent
+                    resources explain the medical aspects of Parkinson's, there's a gap in providing intuitive,
+                    experiential learning tools for the general public, patients, and their families. This project
+                    aims to bridge that gap by translating complex data and symptoms into accessible visual
+                    narratives. It's about making the invisible, or subtly visible, symptoms of Parkinson's more
+                    concrete, promoting earlier awareness and deeper empathy.</p>
+            </div>
+        </section>
+
+        <section id="dataset-info-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Dataset: The Tappy Keystroke Dataset</h2>
+                <p>This project utilizes the Tappy Keystroke Dataset, a comprehensive collection of typing behavior data
+                    published on PhysioNet in October 2017. The dataset contains keystroke logs from over 200
+                    participants, both with and without Parkinson's Disease, collected over periods ranging from weeks
+                    to months as they typed naturally on their personal computers.</p>
+                <h3>Data Collection Process</h3>
+                <p>Participants from the United States, Canada, United Kingdom, and Australia installed a custom
+                    keystroke recording application called "Tappy" that captured their typing behavior during everyday
+                    computer use—including email, word processing, and web browsing. The software recorded key press and
+                    release timestamps with millisecond precision, providing detailed timing information for each
+                    keystroke event.</p>
+                <h3>Key Measurements</h3>
+                <ul>
+                    <li><strong>Hold Time:</strong> Duration between key press and release (in milliseconds)</li>
+                    <li><strong>Flight Time:</strong> Time between releasing one key and pressing the next</li>
+                    <li><strong>Latency:</strong> Time between pressing consecutive keys</li>
+                    <li><strong>Hand Transitions:</strong> Patterns of left-right hand movement during typing</li>
+                </ul>
+                <h3>Participant Information</h3>
+                <p>Each participant provided demographic and medical information including age, gender, Parkinson's
+                    diagnosis status, symptom severity, medication usage (Levodopa, Dopamine Agonists, MAO-B
+                    inhibitors), and self-reported impact on daily activities. This rich metadata enables analysis of
+                    how different factors influence typing patterns.</p>
+                <h3>Research Significance</h3>
+                <p>This dataset supports groundbreaking research demonstrating that routine computer interactions can
+                    detect early-stage motor changes in Parkinson's Disease. The findings suggest that digital
+                    biomarkers derived from everyday typing could potentially serve as accessible screening tools,
+                    making this dataset particularly valuable for understanding the subtle ways neurological conditions
+                    manifest in daily activities.</p>
+            </div>
+        </section>
+
+        <section id="science-behind-symptoms-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>The Science Behind the Symptoms</h2>
+                <h3>How Dopamine Loss Affects Movement</h3>
+                <p>Dopamine acts like a messenger in the brain, facilitating smooth, coordinated muscle movement. Think
+                    of it as the oil that keeps the gears of your motor system running efficiently. When dopamine levels
+                    decrease due to the loss of dopaminergic neurons in the substantia nigra, the brain's ability to
+                    control movement is impaired. This doesn't mean a person can't move, but movements become less
+                    automatic, slower, and more difficult to initiate and control. This disruption leads to the hallmark
+                    motor symptoms of Parkinson's like tremors, rigidity, and bradykinesia.</p>
+                <h3>Connection Between Brain Changes and Observable Symptoms</h3>
+                <p>The substantia nigra is part of a larger network in the brain called the basal ganglia, which is
+                    critical for motor control, learning, and habit formation. As dopamine-producing cells in the
+                    substantia nigra degenerate, this entire network is disrupted.</p>
+                <ul>
+                    <li><strong>Tremors (shaking):</strong> Often start in a limb, frequently the hand or fingers,
+                        especially at rest. This is thought to be due to irregular signaling in the basal ganglia.</li>
+                    <li><strong>Bradykinesia (slowness of movement):</strong> Makes simple tasks time-consuming and
+                        difficult. Everyday actions like walking, dressing, or even speaking can become slow and
+                        labored.</li>
+                    <li><strong>Rigidity (stiffness):</strong> Can occur in any part of the body, limiting the range of
+                        motion and causing pain.</li>
+                    <li><strong>Postural instability (impaired balance):</strong> Can lead to problems with balance and
+                        coordination, increasing the risk of falls.</li>
+                </ul>
+                <p>These observable symptoms are direct outward manifestations of the underlying dopamine deficiency and
+                    its impact on brain circuits.</p>
+                <h3>Why Typing/Motor Tasks Reveal These Changes</h3>
+                <p>Fine motor tasks, such as typing, writing, or buttoning a shirt, require precise coordination and
+                    rapid, sequential movements – all heavily reliant on the dopamine-dependent motor pathways.</p>
+                <ul>
+                    <li><strong>Typing:</strong> Involves quick, repetitive finger movements, precise timing between
+                        keystrokes (flight time), and consistent pressure (hold time). Parkinson's can lead to slower
+                        typing speed, increased variability in the time taken to press a key or move between keys, and
+                        sometimes a "freezing" or hesitation during typing.</li>
+                    <li><strong>Handwriting:</strong> Often becomes smaller (micrographia) and more cramped.</li>
+                </ul>
+                <p>These tasks act as sensitive indicators because they push the motor system to perform at a high level
+                    of precision, making even subtle dysfunctions due to dopamine loss more apparent.</p>
+            </div>
+        </section>
+
+        <section id="medications-explained-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Understanding Parkinson's Medications</h2>
+                <p>Parkinson's disease treatment focuses on managing symptoms by addressing the underlying dopamine
+                    deficiency in the brain. Different medications work through various mechanisms, each with unique
+                    effects on motor control and typing patterns observable in our dataset.</p>
+                <h3>Levodopa (L-DOPA)</h3>
+                <p>Levodopa remains the gold standard treatment for Parkinson's disease. This medication crosses the
+                    blood-brain barrier and converts to dopamine, directly replenishing what the brain can no longer
+                    produce adequately. Patients on Levodopa often experience significant improvement in motor symptoms,
+                    including more consistent typing rhythms and reduced tremor-related keystroke variability. However,
+                    long-term use can lead to "wearing-off" periods and dyskinesias (involuntary movements), which may
+                    create distinct patterns in typing data as medication levels fluctuate throughout the day.</p>
+                <h3>Dopamine Agonists (DA)</h3>
+                <p>These medications mimic dopamine's action by directly stimulating dopamine receptors in the brain.
+                    Unlike Levodopa, dopamine agonists don't require conversion and provide more steady symptom control.
+                    In typing patterns, patients on dopamine agonists may show more consistent hold times and flight
+                    times compared to those experiencing Levodopa fluctuations. Common dopamine agonists include
+                    pramipexole, ropinirole, and rotigotine patches, each with slightly different timing profiles that
+                    can influence daily typing rhythm variations.</p>
+                <h3>MAO-B Inhibitors</h3>
+                <p>Monoamine oxidase-B inhibitors work by blocking the enzyme that breaks down dopamine, effectively
+                    extending the life of available dopamine in the brain. Medications like selegiline and rasagiline
+                    are often used in early-stage Parkinson's or as adjuncts to other treatments. Patients on MAO-B
+                    inhibitors typically show more subtle improvements in typing consistency, with less dramatic
+                    fluctuations in keystroke timing compared to those on Levodopa alone.</p>
+                <h3>Other Medications</h3>
+                <p>This category encompasses various treatments including COMT inhibitors (which extend Levodopa's
+                    effectiveness), anticholinergics (which help with tremor), and amantadine (which can reduce
+                    dyskinesias). Each medication class contributes differently to motor control, creating unique
+                    fingerprints in typing behavior that researchers can identify and analyze.</p>
+                <h3>Medication Timing and Motor Fluctuations</h3>
+                <p>The timing of medication doses significantly impacts motor symptoms and, consequently, typing
+                    patterns. Many patients experience "on" periods (when medication is working well) and "off" periods
+                    (when symptoms return). These fluctuations are particularly evident in keystroke data, where typing
+                    speed, rhythm consistency, and error rates can vary dramatically within the same day. Understanding
+                    these patterns helps both patients and physicians optimize medication timing for better quality of
+                    life.</p>
+                <h3>Personalized Treatment Approaches</h3>
+                <p>No two patients respond identically to Parkinson's medications. Factors including age at diagnosis,
+                    symptom severity, other health conditions, and individual brain chemistry all influence treatment
+                    effectiveness. The keystroke data in our dataset reflects this diversity, showing how the same
+                    medication can produce different typing pattern improvements across individuals. This
+                    personalization aspect makes keystroke analysis particularly valuable for monitoring treatment
+                    response and adjusting medication regimens.</p>
+            </div>
+        </section>
+
+        <section id="living-with-pd-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Living with Parkinson's</h2>
+                <p>The journey with Parkinson's Disease is unique for every individual, but understanding its broader
+                    impact and the resources available can provide strength and hope.</p>
+
+                <h3>How Technology and Data Can Help Patients and Doctors</h3>
+                <p>Technology is becoming an increasingly powerful ally in understanding and managing Parkinson's
+                    Disease.</p>
+                <ul>
+                    <li><strong>Objective Measurement:</strong> Wearable sensors and apps (like those that could analyze
+                        typing patterns, voice, or gait) can provide objective, continuous data on motor symptoms,
+                        offering a more detailed picture than infrequent clinical visits.</li>
+                    <li><strong>Early Detection Research:</strong> Researchers are exploring how data from everyday
+                        interactions (like typing) could potentially contribute to identifying early warning signs of
+                        PD, even before more obvious symptoms appear.</li>
+                    <li><strong>Personalized Treatment:</strong> By tracking symptoms and medication responses more
+                        closely, doctors may be able to better tailor treatment plans to an individual's specific needs.
+                    </li>
+                    <li><strong>Remote Monitoring:</strong> Technology allows for remote monitoring of patients, which
+                        can be especially helpful for those in rural areas or with mobility challenges.</li>
+                    <li><strong>Assistive Technologies:</strong> From specialized computer mice to voice-activated
+                        software, technology offers tools to help people with PD navigate daily tasks.</li>
+                </ul>
+
+                <h3>Hope and Treatment Advances</h3>
+                <p>While a cure for Parkinson's remains the ultimate goal, the landscape of treatment and research is
+                    continually evolving, offering significant hope.</p>
+                <ul>
+                    <li><strong>Symptom Management:</strong> Current medications, like Levodopa, can effectively manage
+                        motor symptoms for many years, dramatically improving quality of life. New drug delivery systems
+                        and formulations are being developed to provide more consistent symptom control and reduce side
+                        effects.</li>
+                    <li><strong>Deep Brain Stimulation (DBS):</strong> For some individuals with advanced PD whose
+                        symptoms are not adequately controlled by medication, DBS surgery can be a life-altering option.
+                    </li>
+                    <li><strong>Disease-Modifying Therapies:</strong> The most exciting area of research focuses on
+                        therapies that could slow, stop, or even reverse the progression of Parkinson's by targeting the
+                        underlying disease processes. Clinical trials are underway for various promising approaches,
+                        including gene therapies and neuroprotective agents.</li>
+                    <li><strong>Focus on Non-Motor Symptoms:</strong> There's increasing recognition and research into
+                        managing the often-debilitating non-motor symptoms of PD, such as sleep disorders, depression,
+                        and cognitive changes.</li>
+                </ul>
+                <p>The global research community is actively working on multiple fronts, bringing us closer to new
+                    breakthroughs every year.</p>
+                <p style="margin-top: 20px;"><em>Now that we've explored the science and human impact of Parkinson's,
+                        let's dive into the interactive visualizations themselves to see these concepts in action.</em>
+                </p>
+            </div>
+        </section>
+
+        <section id="interpreting-visualizations-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Understanding the Data: Interpreting Visualizations</h2>
+                <h3>What the Visualizations Show and Why It Matters</h3>
+                <ul>
+                    <li><strong>Hand Visualization:</strong> This 3D model highlights areas of the hand commonly
+                        affected by Parkinson's motor symptoms like tremor and rigidity. Hovering over different parts
+                        provides information on how these symptoms manifest. It matters because it makes the abstract
+                        concept of "motor impairment" tangible and relatable to everyday hand function.</li>
+                    <li><strong>Pulse Visualization (Typing Rhythm):</strong> This simulates the rhythm of keystrokes
+                        based on 'Hold Time' (how long a key is pressed) and 'Flight Time' (time between releasing one
+                        key and pressing the next), using data patterns from the Tappy Keystroke Dataset. It
+                        demonstrates how these timings can become more variable or prolonged in individuals with PD,
+                        even varying with medication. This matters because it illustrates a subtle, quantifiable way
+                        motor control can be affected.</li>
+                    <li><strong>Typing Test & Analysis:</strong> This section allows you to see a visual representation
+                        (line chart) of your own keystroke latencies compared to a representative Parkinson's patient's
+                        pattern from the Tappy dataset. It matters because it provides a direct comparison, showing how
+                        technology can potentially identify these subtle motor biomarkers.</li>
+                </ul>
+                <h3>How to Interpret the Patterns Users See</h3>
+                <ul>
+                    <li><strong>Hand Model:</strong> Areas that light up represent common sites of PD symptoms. The
+                        descriptions aim to connect these to functional difficulties.</li>
+                    <li><strong>Pulse Visualization:</strong>
+                        <ul>
+                            <li><strong>Longer/Shorter Pulses (Hold Time):</strong> The "PULSE" button's illumination
+                                duration represents hold time. Notice if it's consistently long, short, or varies
+                                greatly.</li>
+                            <li><strong>Longer/Shorter Gaps (Flight Time):</strong> The time between pulses represents
+                                flight time. Observe the rhythm – is it steady, or are there irregular pauses?</li>
+                            <li><strong>Variability:</strong> Increased inconsistency in either hold or flight times can
+                                be a key indicator.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Typing Test Line Chart:</strong>
+                        <ul>
+                            <li><strong>Your Line (e.g., Blue):</strong> Shows your latency (time between successive
+                                keystrokes) for each character you type.</li>
+                            <li><strong>Comparison Line (e.g., Red/Dashed):</strong> Shows a representative pattern from
+                                a dataset of an individual with Parkinson's.</li>
+                            <li><strong>Look for:</strong> Differences in average latency (is one line generally
+                                higher?), variability (is one line much 'spikier' or more erratic than the other?), and
+                                overall trends.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <h3>Limitations and Considerations</h3>
+                <ul>
+                    <li><strong>Generalization:</strong> The "Parkinson's patterns" shown are representative examples
+                        from datasets and do not reflect every individual's experience with PD. Parkinson's symptoms
+                        vary greatly from person to person.</li>
+                    <li><strong>Not a Diagnostic Tool:</strong> These visualizations are for educational and awareness
+                        purposes only. They are <strong>not</strong> diagnostic tools. Any concerns about motor symptoms
+                        or potential Parkinson's should be discussed with a qualified healthcare professional.</li>
+                    <li><strong>Data Simplification:</strong> For clarity, some complexities of the data (like specific
+                        key transitions or exact pressure) are simplified in these visualizations.</li>
+                    <li><strong>Typing Style:</strong> Individual typing habits, fatigue, and even keyboard type can
+                        influence typing patterns, independent of any medical condition.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="typing-data-deep-dive-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Interpretation Guide: A Deeper Dive into Typing Data</h2>
+                <h3>What "Normal" vs. "Atypical" Patterns Look Like (in Typing Data)</h3>
+                <ul>
+                    <li><strong>"Normal" or Control Patterns:</strong> Typically, individuals without motor impairments
+                        exhibit relatively consistent and faster keystroke latencies and hold times. On a line chart,
+                        this might look like a line that is generally lower (faster) and less "spiky" (more consistent).
+                        The rhythm in the pulse visualization would appear more regular.</li>
+                    <li><strong>"Atypical" Patterns (suggestive of PD-related changes, for educational
+                            illustration):</strong>
+                        <ul>
+                            <li><strong>Increased Latency/Flight Time:</strong> The time taken to move between keys may
+                                be longer on average. The line chart for latency might be generally higher. The "pulse"
+                                may have longer gaps.</li>
+                            <li><strong>Increased Hold Time:</strong> Keys might be held down for longer durations. The
+                                "pulse" might stay lit longer.</li>
+                            <li><strong>Increased Variability:</strong> This is a key characteristic. Both latency and
+                                hold times might fluctuate more significantly from one keystroke to the next. The line
+                                chart would appear more "spiky" or erratic. The "pulse" rhythm would be less steady.
+                            </li>
+                            <li><strong>Bradykinesia Effect:</strong> Overall slowness can manifest as generally higher
+                                values for both hold and flight times.</li>
+                            <li><strong>Freezing/Hesitation:</strong> May appear as unusually long latencies or flight
+                                times at certain points.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <h3>Why Variations Occur</h3>
+                <ul>
+                    <li><strong>Individual Differences:</strong> Everyone has a unique typing style, speed, and rhythm,
+                        even without any medical condition.</li>
+                    <li><strong>Parkinson's Heterogeneity:</strong> PD affects individuals differently. The type,
+                        severity, and combination of motor symptoms vary widely.</li>
+                    <li><strong>Medication Effects:</strong> As seen in the "Pulse Visualization," medications can alter
+                        motor performance, sometimes improving consistency and speed, but effects can fluctuate
+                        ("on-off" periods).</li>
+                    <li><strong>Task Complexity:</strong> The specific keys being pressed (e.g., common vs. rare
+                        transitions, same hand vs. alternating hands) can influence timing.</li>
+                    <li><strong>Fatigue/Attention:</strong> Like anyone, individuals with PD may experience changes in
+                        performance due to fatigue or lapses in attention.</li>
+                    <li><strong>Disease Progression:</strong> Symptoms typically change over time as the disease
+                        progresses.</li>
+                </ul>
+                <h3>Clinical Significance of the Measurements (Hold Time, Latency/Flight Time)</h3>
+                <p>While this project is not for diagnosis, these metrics are of interest in clinical research for
+                    several reasons:</p>
+                <ul>
+                    <li><strong>Objective Biomarkers:</strong> Keystroke dynamics offer a way to collect objective,
+                        quantifiable data about motor function, which can be more reliable than subjective assessments
+                        alone.</li>
+                    <li><strong>Sensitivity to Subtle Changes:</strong> Typing can reveal subtle motor impairments that
+                        might not be obvious in gross motor tasks, potentially aiding in earlier detection research.
+                    </li>
+                    <li><strong>Monitoring Disease Progression:</strong> Changes in these metrics over time could
+                        potentially help track how Parkinson's is progressing in an individual.</li>
+                    <li><strong>Assessing Treatment Efficacy:</strong> Researchers can use these measures to evaluate
+                        how well different treatments or interventions are working to improve motor control.</li>
+                    <li><strong>Non-Invasive and Accessible:</strong> Typing data can be collected easily and
+                        non-invasively using standard keyboards, making it a practical tool for research and potentially
+                        for remote patient monitoring in the future.</li>
+                </ul>
+                <p><strong>Important Note:</strong> The interpretation of these metrics in a clinical setting is complex
+                    and requires sophisticated analysis by trained professionals, considering a wide range of factors.
+                </p>
+            </div>
+        </section>
+
+
+        <section id="methodology-notes-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Methodology Notes</h2>
+                <h3>Data Collection (Underlying PD Patterns)</h3>
+                <p>The representative Parkinson's patterns and data shown in these visualizations are based on
+                    anonymized datasets, primarily the Tappy Keystroke Dataset, from research studies involving
+                    individuals with Parkinson's Disease and control participants. In these studies, participants
+                    typically perform standardized typing tasks or have their natural typing recorded on computer
+                    keyboards. Specialized software records the precise timing of each keystroke, including when a key
+                    is pressed down and when it's released. Demographic and clinical information (like medication status
+                    and symptom severity, where ethically permissible and consented) is also often collected.</p>
+                <h3>Why These Specific Metrics Were Chosen (Hold Time, Latency/Flight Time)</h3>
+                <ul>
+                    <li><strong>Hold Time (Duration of Key Press):</strong> This metric can reflect aspects of motor
+                        control such as bradykinesia (slowness in completing a movement) or rigidity (stiffness
+                        affecting the ability to release a key quickly).</li>
+                    <li><strong>Latency/Flight Time (Time Between Key Presses):</strong> This measures the speed and
+                        coordination of initiating the next movement. It can be affected by bradykinesia, tremor
+                        (interfering with smooth transitions), and difficulties with sequencing movements.</li>
+                </ul>
+                <p>These metrics are relatively straightforward to measure, have been shown in research to differ
+                    between individuals with PD and controls, and can be intuitively understood in the context of typing
+                    rhythm.</p>
+                <h3>Reliability and Validity Considerations</h3>
+                <ul>
+                    <li><strong>Reliability:</strong> Keystroke dynamics have shown good test-retest reliability in
+                        research settings, meaning individuals tend to produce similar patterns when tested multiple
+                        times under similar conditions (though natural variation always exists).</li>
+                    <li><strong>Validity:</strong> Studies have demonstrated that these metrics can validly
+                        differentiate between groups (e.g., PD vs. controls) and can correlate with clinical measures of
+                        motor impairment. However, their predictive validity for individual diagnosis or fine-grained
+                        tracking is still an active area of research.</li>
+                    <li><strong>Confounding Factors:</strong> It's important to acknowledge that factors like age,
+                        typing skill, fatigue, keyboard type, and even mood can influence these metrics. Research
+                        methodologies aim to control for or account for these variables. The data presented here is
+                        simplified for educational purposes.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="resources-support-page" class="section">
+            <div class="content-wrapper narrow-content">
+                <h2>Resources and Support</h2>
+                <h3>Links to Parkinson's Organizations</h3>
+                <ul>
+                    <li><strong>Parkinson's Foundation:</strong> <a href="https://www.parkinson.org" target="_blank"
+                            rel="noopener noreferrer">www.parkinson.org</a> - Comprehensive information, resources, and
+                        support for patients and families.</li>
+                    <li><strong>The Michael J. Fox Foundation for Parkinson's Research:</strong> <a
+                            href="https://www.michaeljfox.org" target="_blank"
+                            rel="noopener noreferrer">www.michaeljfox.org</a> - Leading research initiatives and patient
+                        advocacy.</li>
+                    <li><strong>American Parkinson Disease Association (APDA):</strong> <a
+                            href="https://www.apdaparkinson.org" target="_blank"
+                            rel="noopener noreferrer">www.apdaparkinson.org</a> - Support, education, and research
+                        programs.</li>
+                </ul>
+                <h3>Further Reading and Research</h3>
+                <ul>
+                    <li>Explore the "Understanding Parkinson's" section on the Parkinson's Foundation website.</li>
+                    <li>Search for "keystroke dynamics Parkinson's disease" on Google Scholar or PubMed for research
+                        articles.</li>
+                    <li>Visit the National Institute of Neurological Disorders and Stroke (NINDS) Parkinson's Disease
+                        Information Page.</li>
+                    <li><strong>Tappy Keystroke Dataset on PhysioNet:</strong> For those interested in the source data:
+                        <a href="https://physionet.org/content/tappy/1.0.0/" target="_blank"
+                            rel="noopener noreferrer">https://physionet.org/content/tappy/1.0.0/</a>
+                    </li>
+                </ul>
+                <h3>Support Resources for Patients and Families</h3>
+                <ul>
+                    <li><strong>Helplines:</strong> Many Parkinson's organizations offer toll-free helplines for
+                        information and support.
+                        <ul>
+                            <li>Parkinson's Foundation Helpline: 1-800-4PD-INFO (473-4636)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Support Groups:</strong> Local and online support groups provide a valuable way to
+                        connect with others affected by Parkinson's. Check the websites of the major organizations for
+                        listings.</li>
+                    <li><strong>Educational Materials:</strong> Brochures, webinars, and articles are widely available
+                        from the organizations listed above.</li>
+                </ul>
+            </div>
+        </section>
+
     </main>
 
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script type="module" src="hand.js"></script>
-    <script type="module" src="typing.js"></script>
-    <script type="module" src="typing-test.js"></script>
+    <!-- Navigation Arrows -->
+    <button id="prev-section" class="nav-arrow prev-arrow"><</button>
+            <button id="next-section" class="nav-arrow next-arrow">></button>
 
-    <!-- Optional: Force scroll to top if removing autofocus is not enough -->
-    
-    <script>
-        window.addEventListener('load', () => {
-        document.getElementById('fullpage-container').scrollTop = 0;
-        // Alternatively, for browsers that might not immediately respect scrollTop on the container:
-        // document.documentElement.scrollTop = 0; 
-        // document.body.scrollTop = 0; // For older browsers
-        });
-    </script>
+            <!-- Navigation Dots -->
+            <div id="nav-dots-container"></div>
+
+            <script src="https://d3js.org/d3.v7.min.js"></script>
+            <script type="module" src="hand.js"></script>
+            <script type="module" src="typing.js"></script>
+            <script type="module" src="typing-test.js"></script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    // New Navigation Logic
+                    const sections = document.querySelectorAll('.section');
+                    const prevArrow = document.getElementById('prev-section');
+                    const nextArrow = document.getElementById('next-section');
+                    const dotsContainer = document.getElementById('nav-dots-container');
+                    const globalLoader = document.getElementById('loader');
+                    let currentSectionIndex = 0;
+
+                    function initializeVisualization(section) {
+                        if (section.id === 'hand-viz-page' && !section.dataset.handVizInitialized) {
+                            if (typeof window.initializeHandVisualization === 'function') {
+                                window.initializeHandVisualization();
+                                section.dataset.handVizInitialized = 'true';
+                            }
+                        } else if (section.id === 'pulse-viz-page' && !section.dataset.pulseVizInitialized) {
+                            if (typeof window.initializePulseVisualization === 'function') {
+                                window.initializePulseVisualization(); // This also handles the globalLoader hiding
+                                section.dataset.pulseVizInitialized = 'true';
+                            }
+                        }
+                        // typing-test.js initializes itself based on data fetching, may not need explicit call here
+                        // If other visualizations need deferred init, add them here.
+                    }
+
+
+                    function showSection(index) {
+                        if (index < 0 || index >= sections.length) return;
+
+                        sections.forEach((section, i) => {
+                            if (i === index) {
+                                section.classList.add('active');
+                                section.scrollTop = 0; // Scroll to top of new section
+                                initializeVisualization(section); // Initialize viz if needed
+                            } else {
+                                section.classList.remove('active');
+                            }
+                        });
+                        updateDots(index);
+                        updateArrowVisibility(index);
+                        currentSectionIndex = index;
+                        localStorage.setItem('currentSectionIndex', index);
+                    }
+
+                    function updateDots(activeIndex) {
+                        if (!dotsContainer) return;
+                        const dots = dotsContainer.querySelectorAll('.nav-dot');
+                        dots.forEach((dot, i) => {
+                            if (i === activeIndex) {
+                                dot.classList.add('active');
+                            } else {
+                                dot.classList.remove('active');
+                            }
+                        });
+                    }
+
+                    function updateArrowVisibility(index) {
+                        if (!prevArrow || !nextArrow) return;
+                        prevArrow.style.display = index === 0 ? 'none' : 'flex'; // use flex for centering
+                        nextArrow.style.display = index === sections.length - 1 ? 'none' : 'flex';
+                    }
+
+                    function createDots() {
+                        if (!dotsContainer) return;
+                        dotsContainer.innerHTML = ''; // Clear existing dots
+                        sections.forEach((_, i) => {
+                            const dot = document.createElement('div');
+                            dot.classList.add('nav-dot');
+                            dot.addEventListener('click', () => showSection(i));
+                            dotsContainer.appendChild(dot);
+                        });
+                    }
+
+                    if (prevArrow) {
+                        prevArrow.addEventListener('click', () => {
+                            if (currentSectionIndex > 0) {
+                                showSection(currentSectionIndex - 1);
+                            }
+                        });
+                    }
+
+                    if (nextArrow) {
+                        nextArrow.addEventListener('click', () => {
+                            if (currentSectionIndex < sections.length - 1) {
+                                showSection(currentSectionIndex + 1);
+                            }
+                        });
+                    }
+
+                    document.addEventListener('keydown', (event) => {
+                        const activeElement = document.activeElement;
+                        const isTyping = activeElement.tagName === 'INPUT' ||
+                            activeElement.tagName === 'TEXTAREA' ||
+                            activeElement.isContentEditable ||
+                            activeElement.closest('#typing-test-page');
+
+                        if (isTyping && (event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'PageUp' || event.key === 'PageDown')) {
+                            if (activeElement.tagName === 'INPUT' && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) return;
+                            if (activeElement.closest('#typing-test-page') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) return;
+                            if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA' || activeElement.isContentEditable) return;
+
+                        }
+
+
+                        if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+                            if (currentSectionIndex < sections.length - 1) {
+                                showSection(currentSectionIndex + 1);
+                            }
+                            event.preventDefault();
+                        } else if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+                            if (currentSectionIndex > 0) {
+                                showSection(currentSectionIndex - 1);
+                            }
+                            event.preventDefault();
+                        }
+                    });
+
+                    // Initial setup
+                    const storedIndex = localStorage.getItem('currentSectionIndex');
+                    if (storedIndex !== null && !isNaN(parseInt(storedIndex))) {
+                        currentSectionIndex = parseInt(storedIndex);
+                        if (currentSectionIndex >= sections.length || currentSectionIndex < 0) {
+                            currentSectionIndex = 0;
+                        }
+                    } else {
+                        currentSectionIndex = 0;
+                    }
+
+                    if (sections.length > 0) {
+                        createDots();
+                        showSection(currentSectionIndex);
+                    }
+
+                    const firstSection = sections[currentSectionIndex];
+                    if (globalLoader && (!firstSection || firstSection.id !== 'pulse-viz-page' || !firstSection.dataset.pulseVizInitialized)) {
+                        if (typeof window.initializePulseVisualization !== 'function' || sections[currentSectionIndex].id !== 'pulse-viz-page') {
+                            if (!document.getElementById('pulse-viz-page') || document.getElementById('pulse-viz-page').classList.contains('active') === false || !document.getElementById('pulse-viz-page').dataset.pulseVizInitialized) {
+                                globalLoader.style.display = 'none';
+                            }
+                        } else if (sections[currentSectionIndex].id === 'pulse-viz-page' && !sections[currentSectionIndex].dataset.pulseVizInitialized) {
+                            // If it IS pulse viz page but not yet initialized (e.g. data still loading), don't hide loader here.
+                        } else {
+                            globalLoader.style.display = 'none';
+                        }
+                    }
+                });
+            </script>
 </body>
+
 </html>

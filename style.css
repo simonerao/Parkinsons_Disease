@@ -4,54 +4,168 @@ html {
     padding: 0;
     font-family: 'Open Sans', sans-serif;
     background-color: #f0f2f5;
-    /* A light background for the page */
+    /* Fallback background */
     color: #333;
-    overflow-x: hidden;
-    /* Prevent horizontal scroll */
+    overflow: hidden;
+    /* Prevent body scrollbars */
 }
 
 #fullpage-container {
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
+    overflow: hidden;
+    /* No scroll on the main container */
     height: 100vh;
     width: 100vw;
+    position: relative;
+    /* For positioning nav elements */
 }
 
 .section {
     height: 100vh;
     width: 100vw;
-    scroll-snap-align: start;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    /* Align content to the top */
     align-items: center;
-    padding: 40px;
-    box-sizing: border-box;
-    position: relative;
-    overflow: hidden;
-    /* Prevent content overflow from breaking layout */
+    /* Center content horizontally */
+
+    overflow-y: auto;
+    /* Section itself scrolls if content overflows */
+
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    /* Smoother transition */
+    z-index: 0;
+}
+
+.section.active {
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
 }
 
 /* Section-specific backgrounds and styles */
 #title-page {
-    background: linear-gradient(135deg, #4A90E2 0%, #50E3C2 100%);
-    /* A calming gradient */
+    /* background-image: url('https://cdn.dribbble.com/userupload/20255086/file/original-8dc949cfe3d32a38ebd66be432aa165d.gif'); */
+    /* background-size: cover; */
+    /* background-position: center; */
+    /* background-repeat: no-repeat; */
+    background-color: #1a1a1a;
+    /* Added a dark background color */
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#title-page h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+.title-page-content-wrapper {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 90%;
+    /* Allow it to be wider */
 }
 
-#intro-page {
+.masked-main-title {
+    font-family: 'Roboto', sans-serif;
+    /* Example: A bolder font */
+    font-size: 15rem;
+    /* Made significantly larger */
+    font-weight: 900;
+    /* Very bold */
+    text-transform: uppercase;
+    line-height: 0.8;
+    margin-bottom: 25px;
+    margin-top: 0px;
+    background-image: url('https://cdn.dribbble.com/userupload/20255086/file/original-8dc949cfe3d32a38ebd66be432aa165d.gif');
+    background-size: cover;
+    /* Ensure GIF covers the text area */
+    background-position: center;
+    /* Center the GIF within text */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Makes the text itself transparent to show background */
+    /* Optional: add a subtle stroke if the mask is hard to read on some parts of GIF */
+    /* -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1); */
+    /* text-stroke: 1px rgba(255, 255, 255, 0.1); */
+}
+
+.fading-subtext {
+    opacity: 0;
+    animation: fadeInSubtext 1.5s ease-in-out 0.5s forwards;
+    /* Delay to let main title appear */
+}
+
+@keyframes fadeInSubtext {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title-page-subtitle {
+    font-size: 2rem;
+    /* Adjust as needed */
+    color: white;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.title-page-teamname {
+    font-size: 1.5rem;
+    /* Adjust as needed */
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    font-weight: 300;
+    /* Lighter weight for team name */
+    margin-top: 5px;
+}
+
+
+/* Remove or comment out old title animation styles if they were specific */
+/*
+#title-page h1 { ... old styles ... }
+#animated-title-container { ... }
+#animated-title-prefix, #animated-title-suffix { ... }
+#title-cursor { ... }
+.title-fade-in { ... }
+@keyframes blink-animation { ... }
+*/
+
+#hook-page,
+#intro-page,
+#dataset-info-page,
+#science-behind-symptoms-page,
+#medications-explained-page,
+#living-with-pd-page,
+#interpreting-visualizations-page,
+#typing-data-deep-dive-page,
+#conclusion-page,
+#methodology-notes-page,
+#resources-support-page {
     background-color: #ffffff;
 }
 
-#hand-viz-page {
+#hand-viz-page,
+#typing-test-page {
     background-color: #e9eef2;
-    /* Light grayish blue */
 }
 
 #pulse-viz-page {
@@ -60,12 +174,28 @@ html {
 
 #quote-page {
     background-color: #384E77;
-    /* Dark blue */
     color: #f0f2f5;
+    display: flex;
+    /* For centering blockquote */
+    justify-content: center;
+    align-items: center;
 }
 
-#typing-test-page {
-    background-color: #e9eef2;
+#writeup-title-page {
+    background-color: #2c3e50;
+    /* Dark blue-grey */
+    color: white;
+    display: flex;
+    /* For centering content */
+    justify-content: center;
+    align-items: center;
+}
+
+#writeup-title-page h1 {
+    font-size: 3.5rem;
+    /* Prominent title */
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -73,88 +203,123 @@ html {
     max-width: 900px;
     width: 100%;
     text-align: center;
-    padding: 20px;
+    padding: 10px 20px;
+    /* Reduced padding slightly */
+    box-sizing: border-box;
+    margin-top: 10px;
+    /* Adjust top margin */
+    margin-bottom: 30px;
+    /* Ensure space at the bottom for scrolling */
 }
 
 .content-wrapper.narrow-content {
     max-width: 700px;
 }
 
-.content-wrapper h2, .two-column-layout h2 {
+.content-wrapper h2,
+.two-column-layout h2 {
     font-family: 'Roboto', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    margin-top: 10px;
+    /* Adjust top margin for headings */
     margin-bottom: 20px;
     color: #2c3e50;
-    /* Darker heading color */
 }
 
-#title-page .content-wrapper h1 {
-    color: white;
+/* Specific centering for requested headings */
+#intro-page .text-column>h2,
+#hand-viz-page .text-column>h2 {
+    text-align: center;
+    width: 100%;
+    /* Ensure it takes full width of column to center text */
 }
+
+/* Pulse viz h2 is already centered by its parent .pulse-column-left */
+
+
+.content-wrapper h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.6rem;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+/* #title-page .content-wrapper h1, */
+/* #title-page .content-wrapper h2 { */
+/* color: white; */
+/* Ensure text is white over GIF - Handled by new title specific classes */
+/* } */
+
 
 #quote-page .content-wrapper h2 {
+    /* If there was an H2 on quote page */
     color: #f0f2f5;
 }
 
-
 .content-wrapper p,
 .two-column-layout p,
+.content-wrapper li,
 .two-column-layout li {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 15px;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    text-align: left;
 }
 
-/* Two-column layout */
+.content-wrapper ul {
+    padding-left: 20px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
 .two-column-layout {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: stretch;
-    /* Stretch columns to equal height */
+    align-items: flex-start;
     width: 100%;
     max-width: 1200px;
-    /* Max width for the two-column content */
-    height: 90%;
-    /* Take up most of the section height */
     gap: 30px;
-    /* Space between columns */
+    padding: 10px 0;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .column {
     flex: 1;
-    /* Each column takes equal space */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    /* Center content vertically */
-    padding: 20px;
+    justify-content: flex-start;
+    padding: 15px;
+    /* Reduced padding */
     box-sizing: border-box;
-    overflow-y: auto;
-    /* Allow scrolling within column if content overflows */
 }
 
 .text-column {
     text-align: left;
 }
 
-.text-column h2 {
+.text-column h2,
+/* General h2 in text-column */
+.text-column h3 {
     margin-top: 0;
 }
 
+
 .viz-column {
     align-items: center;
-    /* Center visualization horizontally */
+    justify-content: center;
 }
 
-/* Pulse visualization specific */
 .pulse-column-left {
     align-items: center;
-    /* Center items in this column */
     text-align: center;
 }
 
 .pulse-column-left h2 {
+    /* This h2 is already centered */
     text-align: center;
 }
 
@@ -169,7 +334,6 @@ html {
     padding-left: 20px;
     text-align: left;
 }
-
 
 #med-buttons {
     margin-bottom: 15px;
@@ -197,7 +361,6 @@ html {
 
 .med-btn.active {
     background-color: #2c3e50;
-    /* Darker color for active */
     color: white;
 }
 
@@ -218,12 +381,10 @@ html {
 
 #big-button {
     width: 150px;
-    /* Adjusted size */
     height: 150px;
     border-radius: 50%;
     border: none;
     background: #4A90E2;
-    /* Primary accent */
     color: white;
     font-size: 1.3rem;
     font-weight: bold;
@@ -250,7 +411,6 @@ html {
     width: 220px;
     text-align: left;
     visibility: hidden;
-    /* Initially hidden */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -265,15 +425,17 @@ html {
     color: #2c3e50;
 }
 
-/* Quote page specific */
 .large-quote {
     font-size: 1.8rem;
     font-style: italic;
     line-height: 1.6;
     margin: 20px auto;
+    /* This centers the blockquote element */
     max-width: 700px;
     position: relative;
     padding-left: 40px;
+    text-align: left;
+    /* Text inside quote remains left-aligned */
 }
 
 .large-quote:before {
@@ -283,7 +445,6 @@ html {
     left: 0px;
     top: -10px;
     color: #50E3C2;
-    /* Accent color for quote mark */
 }
 
 .large-quote footer {
@@ -294,85 +455,198 @@ html {
     color: #bdc3c7;
 }
 
-/* Typing test specific */
 .typing-test-wrapper {
     background-color: white;
-    padding: 30px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    max-height: 90vh;
-    overflow-y: auto;
+    width: 100%;
+    max-width: 800px;
 }
 
 .typing-test-wrapper h2 {
     margin-top: 0;
+    text-align: center;
 }
 
-#viz1-container-typing label {
-    font-size: 1rem;
-    margin-right: 10px;
+.typing-test-wrapper>p,
+.typing-test-wrapper>ul {
+    text-align: left;
 }
 
-#metric-select-typing {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+.typing-test-wrapper ul {
+    padding-left: 20px;
+}
+
+.typing-test-wrapper ul ul {
+    padding-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.typing-test-wrapper ul li {
+    margin-bottom: 8px;
+}
+
+#options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+    gap: 10px;
+}
+
+#person-select,
+#reset {
+    padding: 8px 12px;
     font-size: 0.9rem;
-}
-
-#typing-box {
-    width: 80%;
-    max-width: 600px;
-    padding: 12px;
-    margin-top: 15px;
-    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 1rem;
 }
 
-#reset-button {
-    padding: 10px 20px;
-    font-size: 0.9rem;
+#person-select {
+    border: 1px solid #ccc;
+}
+
+#reset {
     background-color: #e74c3c;
-    /* Reddish color for reset */
     color: white;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-#reset-button:hover {
+#reset:hover {
     background-color: #c0392b;
 }
 
-#typing-viz {
-    margin-top: 10px;
-    background-color: #fdfdfd;
+#test-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    font-size: 1.2em;
+    line-height: 1.5em;
+    margin: 20px auto;
+    white-space: pre-wrap;
+    font-family: monospace;
+    user-select: none;
+    padding: 10px;
     border: 1px solid #eee;
-    border-radius: 4px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
-#typing-stats {
-    margin-top: 10px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #34495e;
+#blur-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    color: #333;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-/* Legend styling (specific to typing-viz) */
-#legend text {
-    font-family: 'Open Sans', sans-serif;
+#sentence {
+    position: relative;
+    width: 100%;
+    height: auto;
+    word-wrap: break-word;
+    font-family: monospace;
+    color: #ccc;
 }
 
+#sentence span.correct {
+    color: green;
+}
 
-/* Responsive adjustments */
+#sentence span.incorrect {
+    color: red;
+}
+
+#input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    font: inherit;
+    color: transparent;
+    background: transparent;
+    border: none;
+    caret-color: transparent;
+    z-index: -1;
+}
+
+#input:focus {
+    outline: none;
+}
+
+.caret {
+    display: inline-block;
+    position: absolute;
+    width: 2px;
+    background: black;
+    height: 1.2em;
+    pointer-events: none;
+}
+
+.caret#start {
+    animation: blink 1s linear infinite;
+}
+
+.ghost-caret {
+    display: inline-block;
+    position: absolute;
+    width: 1px;
+    height: 1.2em;
+    background: steelblue;
+    pointer-events: none;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+#result {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 15px;
+}
+
+#result svg {
+    max-width: 100%;
+    height: auto;
+}
+
 @media (max-width: 768px) {
     .section {
-        padding: 20px;
+        padding: 15px 20px;
     }
 
-    #title-page h1 {
+    .masked-main-title {
+        font-size: 4rem;
+        /* Adjust for smaller screens */
+    }
+
+    .title-page-subtitle {
+        font-size: 1.5rem;
+    }
+
+    .title-page-teamname {
+        font-size: 1.2rem;
+    }
+
+
+    #writeup-title-page h1 {
         font-size: 2.5rem;
     }
 
@@ -381,10 +655,16 @@ html {
         font-size: 1.8rem;
     }
 
+    .content-wrapper h3 {
+        font-size: 1.4rem;
+    }
+
     .content-wrapper p,
     .two-column-layout p,
+    .content-wrapper li,
     .two-column-layout li {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
     }
 
     .large-quote {
@@ -393,164 +673,110 @@ html {
 
     .two-column-layout {
         flex-direction: column;
-        height: auto;
-        /* Allow height to adjust to content */
-        max-height: 90vh;
-        /* Still constrain within viewport */
-        overflow-y: auto;
-        /* Allow scrolling for the whole layout on small screens */
+        /* Stack columns on smaller screens */
     }
 
     .column {
-        flex: none;
-        /* Disable flex-grow */
         width: 100%;
-        height: auto;
-        padding: 15px;
+        padding: 10px;
+        /* Adjust padding for stacked columns */
     }
 
     #hand-container {
         height: 300px;
-        /* Fixed height for smaller screens */
         min-height: 250px;
-    }
-
-    #typing-viz {
-        width: 100%;
-        /* Make SVG responsive */
-        max-width: 500px;
-        /* Limit max width if needed */
-        height: auto;
     }
 
     .typing-test-wrapper {
         padding: 15px;
     }
 
-    #typing-box {
-        width: 95%;
-    }
-
     #test-container {
-        position: relative;
-        width: 100%;
-        width: 600px;
-        height: auto;
-        font-size: 1.5em;
-        line-height: 1.5em;
-        margin: auto;
-        white-space: pre-wrap;
-        font-family: monospace;
-        user-select: none;
+        font-size: 1em;
     }
 
     #blur-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        backdrop-filter: blur(5px);
-        background-color: rgba(255, 255, 255, 0.6);
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5em;
-        color: #333;
-        cursor: pointer;
-    }
-
-    #sentence {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
-        word-wrap: break-word;
-        font-family: monospace;
-        color: #ccc;
-    }
-
-    #sentence span.correct {
-        color: green;
-    }
-    #sentence span.incorrect {
-        color: red;
-    }
-
-    #input {
-        width: 0;
-        height: 0;
-        font: inherit;
-        color: transparent;
-        background: transparent;
-        border: none;
-        caret-color: transparent;
-        z-index: 1;
-    }
-
-    #input:focus {
-        outline: none;
-    }
-
-    .caret {
-        display: inline-block;
-        position: absolute;
-        width: 2px;
-        background: black;
-        height: 1.2em;
-        pointer-events: none;
-    }
-
-    .caret#start {
-        animation: blink 1s linear infinite;
-    }
-
-    .ghost-caret {
-        display: inline-block;
-        position: absolute;
-        width: 1px;
-        height: 1.2em;
-        background: steelblue;
-        pointer-events: none;
-    }
-
-    @keyframes blink {
-        50% { opacity: 0; }
-    }
-
-    #result {
-        display: flex;
-        justify-content: center;
-        text-align: center;
+        font-size: 1em;
     }
 }
 
-/* In your style.css file */
+@media (max-width: 480px) {
+    .masked-main-title {
+        font-size: 3rem;
+        /* Further adjust for very small screens */
+    }
+
+    .title-page-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .title-page-teamname {
+        font-size: 1rem;
+    }
+}
+
 
 #hand-container {
-    position: relative; /* THIS IS CRUCIAL FOR ABSOLUTE CHILDREN */
-    width: 100%; /* Or set a fixed width */
-    height: 500px; /* Or set a fixed height that fits your design */
-    /* Add any other styling for your container */
-    display: flex; /* Often useful if your canvas is dynamically sized */
-    justify-content: center; /* Center the canvas if it's smaller than container */
-    align-items: center; /* Center the canvas if it's smaller than container */
+    position: relative;
+    width: 100%;
+    height: 450px;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #hand-tooltip {
-    position: absolute; /* This allows left/top to be relative to #hand-container */
-    pointer-events: none; /* VERY IMPORTANT: Allows mouse events to pass through to the canvas */
-    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.75);
     color: white;
-    padding: 8px;
+    padding: 8px 12px;
     border-radius: 4px;
-    font-size: 0.9em;
-    max-width: 200px;
-    z-index: 1000; /* Ensures it appears above the canvas */
-    visibility: hidden; /* Initial state, controlled by JS */
-    /* Add any other specific styling for your tooltip */
+    font-size: 0.85em;
+    max-width: 220px;
+    z-index: 10001;
+    /* Ensure it's above nav arrows/tooltips if any */
+    visibility: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    line-height: 1.4;
+}
+
+#loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(233, 238, 242, 0.9);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+#loading-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#loading-overlay .spinner {
+    border: 6px solid #d0d8de;
+    border-top: 6px solid #4A90E2;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+#loading-overlay p {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #2c3e50;
 }
 
 #loader {
@@ -562,13 +788,12 @@ html {
     width: 100%;
     height: 100%;
     background: white;
-    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 99999;
+    /* Highest z-index for initial load */
 }
 
-/* Spinner animation */
 .spinner {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #3498db;
@@ -579,25 +804,36 @@ html {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .three-column-layout {
     display: flex;
-    gap: 30px;
+    gap: 20px;
     align-items: flex-start;
+    /* Changed from stretch for natural height */
     justify-content: center;
-    flex-wrap: wrap;
-    max-width: 1200px;
+    flex-wrap: nowrap;
+    max-width: 1300px;
     margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+    /* Height is determined by content, scrolling handled by .section */
 }
 
 .three-column-layout .image-column {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    flex: 1;
-    max-width: 250px;
+    gap: 15px;
+    flex: 0 1 220px;
+    max-width: 220px;
+    /* No overflow-y here, section scrolls */
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+    border-radius: 5px;
 }
 
 .three-column-layout .image-column img {
@@ -607,12 +843,151 @@ html {
     object-fit: cover;
 }
 
-.text-column {
-    flex: 2;
+.three-column-layout .text-column {
+    flex: 1 1 50%;
     min-width: 300px;
-    max-width: 600px;
-    text-align: center;              /* <-- This centers the text */
+    max-width: 700px;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    /* No overflow-y here, section scrolls */
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.three-column-layout .text-column h2 {
+    /* This h2 is targeted by specific centering rules if needed */
+    /* text-align: center; */
+    /* Removed general center, apply specifically */
+    margin-top: 0;
+}
+
+.three-column-layout .text-column p,
+.three-column-layout .text-column h3,
+.three-column-layout .text-column ul {
+    text-align: left;
+}
+
+.three-column-layout .text-column h3 {
+    margin-top: 20px;
+}
+
+@media (max-width: 1024px) {
+    .three-column-layout {
+        flex-wrap: wrap;
+    }
+
+    .three-column-layout .image-column {
+        flex: 1 1 45%;
+        max-width: none;
+        margin-bottom: 15px;
+    }
+
+    .three-column-layout .text-column {
+        flex: 1 1 100%;
+        order: -1;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .three-column-layout .image-column {
+        flex: 1 1 100%;
+    }
+}
+
+a {
+    color: #4A90E2;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.content-wrapper ul li a,
+.column ul li a {
+    word-break: break-all;
+}
+
+/* Navigation Arrows */
+.nav-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    padding: 0;
+    /* Remove padding, use width/height and flex for centering icon */
+    font-size: 28px;
+    /* Adjust icon size */
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    /* Ensure above section content but below modals/tooltips if any */
+    border-radius: 50%;
+    width: 44px;
+    /* Circular button */
+    height: 44px;
     display: flex;
-    flex-direction: column;
-    align-items: center;             /* <-- This centers all child elements */
+    /* Changed to flex by JS, ensure it's always flex */
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, opacity 0.3s;
+    line-height: 1;
+    /* For better vertical centering of text character */
+    opacity: 0.7;
+}
+
+.nav-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 1;
+}
+
+.prev-arrow {
+    left: 20px;
+}
+
+.next-arrow {
+    right: 20px;
+}
+
+/* Navigation Dots */
+#nav-dots-container {
+    position: fixed;
+    bottom: 25px;
+    /* Slightly more space from bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    /* Slightly more gap */
+    z-index: 1000;
+    /* Same as arrows */
+    padding: 5px;
+    /* Add padding for a subtle background effect if needed */
+    /* background-color: rgba(255, 255, 255, 0.3); Optional: subtle background */
+    /* border-radius: 15px; */
+}
+
+.nav-dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(204, 204, 204, 0.7);
+    /* Lighter, semi-transparent */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+}
+
+.nav-dot:hover {
+    background-color: rgba(170, 170, 170, 0.9);
+    transform: scale(1.1);
+}
+
+.nav-dot.active {
+    background-color: #4A90E2;
+    border-color: #4A90E2;
+    transform: scale(1.1);
 }
