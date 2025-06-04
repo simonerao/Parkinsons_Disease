@@ -191,12 +191,17 @@
                     require more effort. This interactive test allows you to explore these nuances.</p>
                 <h3>How to Use This Visualization</h3>
                 <ul>
-                    <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a de-identified
-                        persona whose typing data (representing a pattern seen in some individuals with Parkinson's from
-                        the Tappy dataset) will be compared against yours.</li>
+                    <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
+                        persona with Parkinson's. Their typing data will be compared against yours.</li>
+                </ul>
+                    <div id="persona-note">
+                        <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
+                        an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
+                    </div>
+                <ul>
                     <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear. Type
                         the displayed sentence; your typing will appear over the prompt.</li>
-                    <li><strong>View Real-time Chart:</strong> As you type, a line chart will plot your latency (time
+                    <li><strong>View Real-time Chart:</strong> Once you or the persona finishes, a line chart will appear, plotting your latency (time
                         between keystrokes) in one color, and the selected persona's latency in another.</li>
                     <li><strong>Interpret the Chart:</strong>
                         <ul>
@@ -213,22 +218,15 @@
 
                 <div id="options">
                     <select id="person-select">
-                        <option value="5USOYSDCXB">Person 1, 76M</option>
-                        <option value="8TEUUGQBYB">Person 2, 81M</option>
-                        <option value="E0TBSMYHQI">Person 3, 68M</option>
-                        <option value="I3U47MF5UF">Person 4, 69F</option>
-                        <option value="IDZHIUK2W2">Person 5, 73F</option>
-                        <option value="JHBOKKHOQW">Person 6, 77F</option>
-                        <option value="LIOUUNGQ8Q">Person 7, 59M</option>
-                        <option value="LSQWWDXEYO">Person 8, 65M</option>
-                        <option value="QEYNMBJ8T0">Person 9, 77M</option>
-                        <option value="SGT8K5GXG0">Person 10, 74M</option>
-                        <option value="TL2XHTLK1T">Person 11, 70M</option>
-                        <option value="UDCY90VKYN">Person 12, 78M</option>
-                        <option value="V2SZVYXBOD">Person 13, 75F</option>
-                        <option value="VCTVD6LMPK">Person 14, 83F</option>
-                        <option value="WDNE1Q9EHT">Person 15, 75F</option>
-                        <option value="XWAX2IHF3O">Person 16, 46F</option>
+                        <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
+                        <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
+                        <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
+                        <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
+                        <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
+                    </select>
+                    <select id="word-count">
+                        <option value="10">10 words</option>
+                        <option value="25">25 words</option>
                     </select>
                     <button id="reset">Reset</button>
                 </div>
@@ -241,6 +239,66 @@
                 </div>
 
                 <div id="result"></div>
+            </div>
+        </section>
+
+        <section id="typing-test-page-2" class="section">
+            <div class="content-wrapper typing-test-wrapper">
+                <h2>What It Feels Like to Type with Parkinson's</h2>
+                <p>Most likely in the previous typing test, you typed faster than the simulated persona with Parkinson's. Now, let's simulate the experience
+                    of <i>actually typing as that persona</i> with Parkinson's.
+                </p>
+                <h3>How to Use This Visualization</h3>
+                <ul>
+                    <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
+                        persona with Parkinson's. Their typing data will be be used to simulate the rate at which you type.</li>
+                </ul>
+                <div id="persona-note">
+                    <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
+                    an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
+                </div>
+                <ul>
+                    <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear, but <u><i>this time, you won't be able to type the letters until 
+                        they are shaded black</i></u>, imitating the pace of your selected persona.</li>
+                    <li><strong>View Real-time Chart:</strong> Once you finish, a line chart will appear, comparing the duration you spent typing with the restriction, 
+                        and the most recent test when you typed without any restrictions.</li>
+                    <li><strong>Interpret the Chart:</strong>
+                        <ul>
+                            <li>The <strong>X-axis</strong> shows the character index (which keystroke in the sequence).
+                            </li>
+                            <li>The <strong>Y-axis</strong> shows the duration of the test in seconds (s).</li>
+                        </ul>
+                    </li>
+                    <li><strong>What to Look For:</strong> Look at the difference between the "Restriction" line for this test and the line for the "No Restriction" test. 
+                        How did it feel to type at the pace of someone with Parkinson's?</li>
+                    <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
+                        comparison persona.</li>
+                </ul>
+
+                <div id="options-2">
+                    <select id="person-select-2">
+                        <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
+                        <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
+                        <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
+                        <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
+                        <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
+                    </select>
+                    <select id="word-count-2">
+                        <option value="10">10 words</option>
+                        <option value="25">25 words</option>
+                    </select>
+                    <button id="reset-2">Reset</button>
+                </div>
+
+                <div id="test-container-2">
+                    <div id="blur-overlay-2">Click to start</div>
+                    <div id="sentence-2"></div>
+                    <input type="text" id="input-2" autocomplete="off" autocorrect="off" autocapitalize="off"
+                        spellcheck="false" />
+                    <div id="typing-test-tooltip"></div>
+                </div>
+
+                <div id="result-2"></div>
             </div>
         </section>
 
@@ -739,6 +797,7 @@
             <script type="module" src="hand.js"></script>
             <script type="module" src="typing.js"></script>
             <script type="module" src="typing-test.js"></script>
+            <script type="module" src="typing-test-2.js"></script>
 
             <script>
                 document.addEventListener('DOMContentLoaded', () => {

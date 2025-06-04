@@ -1,19 +1,18 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+import { latencies as oldLatencies } from './typing-test.js';
 
 let words;
 
 let personid = "8TEUUGQBYB";
-d3.select('#person-select')
+d3.select('#person-select-2')
     .on('change', (event) => {
-        console.log(1);
         personid = event.target.value;
         resetTest(words);
     });
 
 let wordcount = parseInt("10");
-d3.select('#word-count')
+d3.select('#word-count-2')
     .on('change', (event) => {
-        console.log(2);
         wordcount = parseInt(event.target.value);
         resetTest(words);
     });
@@ -23,24 +22,21 @@ function getWords(text) {
 }
 
 function resetTest(words) {
-    d3.select("#input").property("value", "");
-    d3.select('#blur-overlay').style('display', 'flex')
+    d3.select("#input-2").property("value", "");
+    d3.select('#blur-overlay-2').style('display', 'flex')
 
     // Clear results and latency chart
-    d3.select("#result").text("");
-    d3.select("#latency-line-chart").html("");
+    d3.select("#result-2").text("");
+    d3.select("#time-taken-line").html("");
 
     // Clear sentence and caret
-    d3.select("#sentence").html("");
-    d3.select(".ghost-caret").remove();
+    d3.select("#sentence-2").html("");
 
     // Reset state variables (if global)
-    ghostLatencies = [];
     latencies = [];
     timestamps = [];
-
-    // stop ghost caret
-    clearTimeout(timeout);
+    ghostIndex = 0;
+    currentUnlockedIndex = 0;
 
     // Recreate test with a new sentence
     createTypingTest(words);
@@ -97,63 +93,73 @@ function generateRandomSentence(words, n_words) {
     return sentence_words.join(' ');
 }
 
-let ghostLatencies;
+let latencies;
 let timestamps;
-export let latencies;
-let timeout;
 
-function moveGhostCaret(spans, delayArray, ghostIndex) {
-    if (!d3.select('#latency-line').empty()) { createResults() };
-    const ghostDelay = delayArray[ghostIndex] * (Math.random() / 2 + 1); // ms between keystrokes
-    const ghostCaret = d3.select('.ghost-caret');
-    
-    if (ghostIndex >= spans.length) {
-        clearTimeout(timeout);
-        createResults();
-        return;
-    }
+let currentUnlockedIndex = 0;
 
-    if (ghostIndex < spans.length) {
-            spans[ghostIndex].after(ghostCaret.node());
-        } else {
-            spans[spans.length - 1].after(ghostCaret.node());
+function unlockNextLetter(ghostIndex, delayArray, sentence, spans) {
+    currentUnlockedIndex++;
+
+    if (currentUnlockedIndex < sentence.length) {
+        const span = spans[currentUnlockedIndex];
+        if (span) {
+            span.classList.remove('locked');
+            span.classList.add('unlocked');
         }
 
-    ghostIndex++;
-    ghostLatencies.push(ghostDelay);
-    timeout = setTimeout(moveGhostCaret, ghostDelay, spans, delayArray, ghostIndex);
+        const ghostDelay = delayArray[ghostIndex] * (Math.random() / 2 + 1);
+        ghostIndex++;
+
+        setTimeout(() => unlockNextLetter(ghostIndex, delayArray, sentence, spans), ghostDelay);
+    }
 }
 
-function plotLatencyLine() {
-    const data = latencies.map((latency, i) => ({ index: i + 1, latency }));
-    const ghostData = ghostLatencies.map((latency, i) => ({ index: i + 1, latency }));
+function plotTimeTakenLine() {
+    const rollingLatencies = [];
+    let oldRollingLatencies = [];
+
+    let sum = 0;
+    for (let i = 0; i < latencies.length; i++) {
+        sum += latencies[i];
+        rollingLatencies.push(sum);
+    }
+    const data = rollingLatencies.map((latency, i) => ({ index: i + 1, latency: latency / 1000 }));
+
+    if (oldLatencies !== undefined) {
+        sum = 0;
+        for (let i = 0; i < oldLatencies.length; i++) {
+            sum += oldLatencies[i];
+            oldRollingLatencies.push(sum);
+        }
+    }
+    const oldData = oldRollingLatencies.map((latency, i) => ({ index: i + 1, latency: latency / 1000 }));
 
     const margin = { top: 10, right: 20, bottom: 60, left: 60 };
     const width = 700 - margin.left - margin.right;
     const height = 250;
 
-    const svg = d3.select("#result")
+    const svg = d3.select("#result-2")
         .html("") // Clear previous chart
         .append("svg")
         .attr("id", "latency-line")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
     const x = d3.scaleLinear()
-        .domain([1, d3.max([data.length, ghostData.length])])
-        .range([0, width - 55]);
+        .domain([1, d3.max([data.length, oldData.length])])
+        .range([0, width - 80]);
 
     const y = d3.scaleLinear()
-        .domain([0, d3.max(ghostData, d => d.latency)])
+        .domain([0, d3.max(data, d => d.latency)])
         .nice()
         .range([height, 0]);
 
     const line = d3.line()
         .x(d => x(d.index))
-        .y(d => y(d.latency))
-        .curve(d3.curveCatmullRom);
+        .y(d => y(d.latency));
 
     const colors = ['lightsteelblue', 'moccasin'];
 
@@ -163,7 +169,7 @@ function plotLatencyLine() {
         .call(d3.axisBottom(x).ticks(Math.min(10, data.length)))
         .append("text")
         .attr("class", "x label")
-        .attr("x", (width - 55) / 2)
+        .attr("x", (width - 65) / 2)
         .attr("y", 40)
         .attr("fill", "#000")
         .attr("text-anchor", "middle")
@@ -180,19 +186,19 @@ function plotLatencyLine() {
         .attr("dy", "0.71em")
         .attr("fill", "#000")
         .attr("text-anchor", "middle")
-        .text("Latency (ms)");
+        .text("Time Taken (s)");
 
     svg.append("g")
-        .attr("class", "grid")
-        .call(
-            d3.axisLeft(y)
-                .ticks(5)  // adjust as needed
-                .tickSize(-width + 55)  // full-width lines
-                .tickFormat("")    // no text
-        );
+            .attr("class", "grid")
+            .call(
+                d3.axisLeft(y)
+                    .ticks(5)  // adjust as needed
+                    .tickSize(-width + 80)  // full-width lines
+                    .tickFormat("")    // no text
+            );
 
     // Draw lines
-    [data, ghostData].forEach((points, i) => {
+    [data, oldData].forEach((points, i) => {
         svg.append("path")
             .datum(points)
             .attr("fill", "none")
@@ -202,12 +208,12 @@ function plotLatencyLine() {
     });
 
     const legendData = [
-        { label: "You", color: colors[0] },
-        { label: "Persona", color: colors[1] }
+        { label: "Restriction", color: colors[0] },
+        { label: "No Restriction", color: colors[1] }
     ];
 
     const legend = svg.append("g")
-        .attr("transform", `translate(${width - 40}, 0)`);  // Adjust position as needed
+        .attr("transform", `translate(${width - 65}, 0)`);  // Adjust position as needed
 
     legendData.forEach((entry, i) => {
         const legendRow = legend.append("g")
@@ -228,40 +234,49 @@ function plotLatencyLine() {
 }
 
 function createResults() {
-    plotLatencyLine();
+    plotTimeTakenLine();
 }
+
+let ghostIndex;
 
 function createTypingTest(words) {
     const sentence = generateRandomSentence(words, wordcount);
     console.log(sentence);
 
-    let sentenceDiv = d3.select('#sentence');
-    const input = d3.select('#input').property("value", "");
-    const overlay = d3.select('#blur-overlay');
+    let sentenceDiv = d3.select('#sentence-2');
+    const input = d3.select('#input-2').property("value", "");
+    const overlay = d3.select('#blur-overlay-2');
+
+    currentUnlockedIndex = 0; // Reset unlock index
+    ghostIndex = 0;
 
     overlay.on('click', () => {
         overlay.style('display', 'none');
-        input.node().focus(); // Focus the hidden input so typing starts immediately
-        ghostLatencies = [];
+        input.node().focus();
         latencies = [];
         timestamps = [];
     });
 
-    sentenceDiv.selectAll('span')
-        .data(sentence.split(''))
-        .join('span')
-        .text(d => d);
+    sentenceDiv.html('');
+    sentence.split('').forEach((char, i) => {
+        sentenceDiv.append('span')
+            .attr('id', `letter-${i}`)
+            .attr('data-char', char)
+            .attr('class', i === 0 ? 'unlocked' : 'locked')
+            .text(char);
+    });
 
-    const spans = sentenceDiv.selectAll('span').nodes();
+    let spans = sentenceDiv.selectAll('span').nodes();
 
-    const caretSpan = d3.select('#test-container')
+    const caretSpan = d3.select('#test-container-2')
         .append('span')
-        .attr('class', 'caret')
+        .attr('class', 'caret-2')
         .attr('id', 'start');
-    spans[0].before(caretSpan.node())
+    spans[0].before(caretSpan.node());
 
     let startTime = null;
     let ended = false;
+    let delayArray;
 
     input.on("keydown", (event) => {
         const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
@@ -274,15 +289,34 @@ function createTypingTest(words) {
         const now = performance.now();
 
         if (event.key === "Backspace") {
+            if (ghostIndex > 0) ghostIndex--;
+
+            // Handle latency arrays
             if (timestamps.length > 1) {
-                // Remove last timestamp and latency
                 timestamps.pop();
                 latencies.pop();
             } else if (timestamps.length === 1) {
                 timestamps.pop();
             }
+
+            // Revert the span at the deleted position
+            const deletedIndex = input.property("value").length - 1;
+            const span = d3.select(`#letter-${deletedIndex}`).node();
+
+            if (span) {
+                span.classList.remove('correct', 'incorrect');
+                if (deletedIndex <= currentUnlockedIndex) {
+                    span.classList.add('unlocked');
+                } else {
+                    span.classList.add('locked');
+                }
+
+                // Restore original character (handle space + underscore)
+                const originalChar = span.dataset.char || span.textContent;
+                span.textContent = originalChar === ' ' ? ' ' : originalChar;
+            }
         } else {
-            // Only record if it's a character key (optional filter)
+            // Record timing
             timestamps.push(now);
             if (timestamps.length > 1) {
                 const diff = timestamps[timestamps.length - 1] - timestamps[timestamps.length - 2];
@@ -294,38 +328,37 @@ function createTypingTest(words) {
     input.on("input", () => {
         const typed = input.property("value");
 
-        if (!startTime) {
-            startTime = new Date();
-            d3.select('#test-container')
-                .append('span')
-                .attr('class', 'ghost-caret');
-            let ghostIndex = 0;
-            const delayArray = calculateDelayArray(sentence.split(''), personid);
-            moveGhostCaret(spans, delayArray, ghostIndex);
+        // Prevent typing ahead of unlocked letters
+        if (typed.length - 1 > currentUnlockedIndex) {
+            input.property("value", typed.slice(0, currentUnlockedIndex + 1));
+            return;
         }
 
-        // Reset all spans
-        spans.forEach(span => span.className = '');
-        d3.selectAll('.caret').remove();
+        if (!startTime) {
+            startTime = new Date();
+            ghostIndex = 1;
+            delayArray = calculateDelayArray(sentence.split(''), personid);
+            unlockNextLetter(ghostIndex, delayArray, sentence, spans);
+        }
 
-        // Mark correctness
+        // Mark correctness without overriding unlocked/locked classes
         spans.forEach((span, i) => {
-            const expected = span.textContent === '_' ? ' ' : span.dataset.char || span.textContent;
+            const expected = span.dataset.char;
             const actual = typed[i];
 
             if (actual == null) {
-                span.className = '';
-                span.textContent = expected; // restore space if it was replaced with _
+                // Do not remove locked/unlocked class
+                span.textContent = expected;
                 return;
             }
 
             if (actual === expected) {
-                span.className = 'correct';
+                span.classList.add('correct');
                 span.textContent = expected;
             } else {
-                span.className = 'incorrect';
+                span.classList.add('incorrect');
                 if (expected === ' ') {
-                    span.textContent = '_'; // show red underscore
+                    span.textContent = '_'; // red underscore
                 } else {
                     span.textContent = expected;
                 }
@@ -334,17 +367,19 @@ function createTypingTest(words) {
 
         // Add caret
         const caretIndex = typed.length;
+        d3.selectAll('.caret-2').remove();
         caretSpan.attr('id', 'typing...');
 
         if (caretIndex < spans.length) {
-            spans[caretIndex - 1].after(caretSpan.node());
+            spans[caretIndex].before(caretSpan.node());
         } else {
             spans[spans.length - 1].after(caretSpan.node());
         }
 
-        if (!d3.select('#latency-line').empty()) { createResults() };
+        if (!d3.select('#time-taken-line').empty()) {
+            plotTimeTakenLine();
+        }
 
-        // End condition
         if (typed.length === sentence.length && !ended) {
             ended = true;
             input.node().blur();
@@ -357,7 +392,7 @@ await fetch('data/words.txt')
     .then(response => response.text())
     .then((text) => {
         words = getWords(text);
-        d3.select('#reset')
+        d3.select('#reset-2')
             .on('click', () => {
                 resetTest(words);
             });

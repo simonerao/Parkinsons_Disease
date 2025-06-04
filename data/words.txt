@@ -15,7 +15,6 @@ on
 are
 with
 as
-I
 his
 they
 be
@@ -972,7 +971,6 @@ proper
 bar
 offer
 segment
-slave
 duck
 instant
 market
