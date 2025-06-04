@@ -483,7 +483,7 @@ html {
     margin-bottom: 8px;
 }
 
-#options {
+#options, #options-2 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -491,29 +491,31 @@ html {
     gap: 10px;
 }
 
-#person-select,
-#reset {
+#person-select, #person-select-2, #word-count, #word-count-2 {
+    border: 1px solid #ccc;
     padding: 8px 12px;
     font-size: 0.9rem;
     border-radius: 4px;
 }
 
-#person-select {
-    border: 1px solid #ccc;
-}
-
-#reset {
+#reset, #reset-2 {
     background-color: #e74c3c;
     color: white;
     border: none;
     cursor: pointer;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 4px;
 }
 
-#reset:hover {
+#reset:hover, #reset-2:hover {
     background-color: #c0392b;
 }
 
-#test-container {
+#test-container, #test-container-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 100%;
     max-width: 600px;
@@ -530,7 +532,7 @@ html {
     background-color: #f9f9f9;
 }
 
-#blur-overlay {
+#blur-overlay, #blur-overlay-2 {
     position: absolute;
     top: 0;
     left: 0;
@@ -548,24 +550,33 @@ html {
     border-radius: 5px;
 }
 
-#sentence {
+#sentence, #sentence-2 {
     position: relative;
     width: 100%;
     height: auto;
     word-wrap: break-word;
     font-family: monospace;
     color: #ccc;
+    cursor: none;
 }
 
-#sentence span.correct {
+#sentence span.locked, #sentence-2 span.locked {
+    color: lightgray;
+}
+
+#sentence span.unlocked, #sentence-2 span.unlocked {
+    color: black;
+}
+
+#sentence span.correct, #sentence-2 span.correct {
     color: green;
 }
 
-#sentence span.incorrect {
+#sentence span.incorrect, #sentence-2 span.incorrect {
     color: red;
 }
 
-#input {
+#input, #input-2 {
     position: absolute;
     opacity: 0;
     width: 0;
@@ -578,20 +589,20 @@ html {
     z-index: -1;
 }
 
-#input:focus {
+#input:focus, #input-2:focus {
     outline: none;
 }
 
-.caret {
+.caret, .caret-2 {
     display: inline-block;
     position: absolute;
-    width: 2px;
+    width: 1px;
     background: black;
     height: 1.2em;
     pointer-events: none;
 }
 
-.caret#start {
+.caret#start, .caret-2#start {
     animation: blink 1s linear infinite;
 }
 
@@ -610,16 +621,26 @@ html {
     }
 }
 
-#result {
+#result, #result-2 {
     display: flex;
     justify-content: center;
     text-align: center;
     margin-top: 15px;
 }
 
-#result svg {
+#result svg, #result-2 svg {
     max-width: 100%;
     height: auto;
+}
+
+.grid line {
+    stroke: #ddd;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+}
+
+.grid path {
+    stroke-width: 0;
 }
 
 @media (max-width: 768px) {
@@ -975,4 +996,14 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#persona-note {
+    border: 2px solid black;
+    text-align: center;
+    padding: 16px;
+    border-radius: 4px;
+    margin: auto;
+    background-color: #384E77;
+    color: #f0f2f5;
 }
