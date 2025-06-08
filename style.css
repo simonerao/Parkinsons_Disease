@@ -169,22 +169,16 @@ html {
     /* CSS transition for fade-in */
 }
 
-#hook-page,
 #intro-page,
-#dataset-info-page,
-#science-behind-symptoms-page,
-#medications-explained-page,
-#living-with-pd-page,
-#interpreting-visualizations-page,
-#typing-data-deep-dive-page,
 #conclusion-page,
-#methodology-notes-page,
-#resources-support-page {
+#resources-support-page,
+#writeup-combined-page { /* Added writeup-combined-page */
     background-color: #ffffff;
 }
 
 #hand-viz-page,
-#typing-test-page {
+#typing-test-page,
+#typing-test-page-2 { /* Added typing-test-page-2 */
     background-color: #e9eef2;
 }
 
@@ -192,28 +186,13 @@ html {
     background-color: #ffffff;
 }
 
-#quote-page {
+#quote-page, #quote-page2 { /* Combined quote page styles */
     background-color: #384E77;
     color: #f0f2f5;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-#writeup-title-page {
-    background-color: #2f4861;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#writeup-title-page h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-}
-
 
 .content-wrapper {
     max-width: 900px;
@@ -252,7 +231,8 @@ html {
     color: #2c3e50;
 }
 
-#quote-page .content-wrapper h2 {
+#quote-page .content-wrapper h2,
+#quote-page2 .content-wrapper h2 { /* Applied to both quote pages */
     color: #f0f2f5;
 }
 
@@ -763,11 +743,6 @@ html {
         min-height: 1.6rem;
     }
 
-
-    #writeup-title-page h1 {
-        font-size: 2.5rem;
-    }
-
     .content-wrapper h2,
     .two-column-layout h2 {
         font-size: 1.8rem;
@@ -799,21 +774,18 @@ html {
     }
 
     #hand-container {
-        /* height will be 100% of its parent column, so fixed height here is less relevant unless for specific cases.
-           min-height is still useful. */
         min-height: 250px;
-        /* Adjusted min-height for smaller screens */
     }
 
     .typing-test-wrapper {
         padding: 15px;
     }
 
-    #test-container {
+    #test-container, #test-container-2 { /* Applied to both */
         font-size: 1em;
     }
 
-    #blur-overlay {
+    #blur-overlay, #blur-overlay-2 { /* Applied to both */
         font-size: 1em;
     }
 }
@@ -839,9 +811,7 @@ html {
     position: relative;
     width: 100%;
     height: 100%;
-    /* Changed from 450px to 100% */
     min-height: 300px;
-    /* Keeps a minimum sensible height */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1091,14 +1061,6 @@ a:hover {
     transform: scale(1.1);
 }
 
-#quote-page2 {
-    background-color: #384E77;
-    color: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #persona-note {
     border: 2px solid black;
     text-align: center;
@@ -1126,4 +1088,117 @@ a:hover {
 .directions {
     overflow: hidden;
     height: 0;
+}
+
+/* Styles for Tabbed Write-Up Section */
+.writeup-tabs-container {
+    max-width: 950px; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 40px); /* Adjust to prevent overflow of the whole section */
+    margin-top: 20px; /* Space from top of section */
+    margin-bottom: 20px; /* Space from bottom of section */
+}
+
+.writeup-tabs-container h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.5rem; 
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+    flex-shrink: 0; /* Prevent h1 from shrinking */
+}
+
+.tabs {
+    width: 100%;
+    margin-bottom: 0; /* Remove bottom margin, border handled by tab-content */
+    border-bottom: 2px solid #dee2e6;
+    flex-shrink: 0; /* Prevent tabs bar from shrinking */
+}
+
+.tab-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+
+.tab-list li {
+    margin-bottom: -2px; 
+}
+
+.tab-list li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #4A90E2;
+    border: 2px solid transparent;
+    border-bottom: none; 
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+.tab-list li a:hover {
+    color: #3a7ac0;
+    border-color: #e9ecef #e9ecef transparent; 
+}
+
+.tab-list li.active a {
+    color: #2c3e50; 
+    background-color: #fff; 
+    border-color: #dee2e6 #dee2e6 transparent;
+    border-bottom: 2px solid #fff; 
+    font-weight: 700;
+}
+
+.tab-content {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 .25rem .25rem;
+    flex-grow: 1; 
+    overflow-y: auto; 
+    /* max-height: calc(100vh - 250px); Example: Adjust based on header/tab height and padding */
+    /* Height will be constrained by .writeup-tabs-container and flex properties */
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.tab-pane h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.8rem; 
+    margin-top: 0; 
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+.tab-pane h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.4rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #2c3e50;
+}
+.tab-pane p, .tab-pane li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    text-align: left;
+}
+.tab-pane ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+    text-align: left;
 }
