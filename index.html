@@ -86,18 +86,20 @@
                         cup a slow and arduous process, impacting independence. These seemingly small motor changes can
                         accumulate, affecting one's ability to perform daily activities.</p>
 
-                    <h3>How to Use This Visualization</h3>
-                    <ul>
-                        <li><strong>Explore the Model:</strong> Use your mouse to rotate the 3D hand model. Zoom in and
-                            out using your scroll wheel or pinch gestures.</li>
-                        <li><strong>Hover for Info:</strong> Move your cursor over different parts of the hand (fingers,
-                            palm, wrist). Highlighted areas will display a tooltip with information about how
-                            Parkinson's can affect that specific part.</li>
-                        <li><strong>What to Look For:</strong> Notice which areas are commonly impacted. Think about how
-                            these specific effects (e.g., tremor in the thumb, rigidity in the wrist) might translate to
-                            difficulties with daily tasks like writing or gripping objects.</li>
-                    </ul>
-                    <p style="margin-top: 15px;"><em>The way Parkinson's affects the hands gives us a glimpse into its
+                    <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
+                    <div class="directions collapsed">
+                        <ul>
+                            <li><strong>Explore the Model:</strong> Use your mouse to rotate the 3D hand model. Zoom in and
+                                out using your scroll wheel or pinch gestures.</li>
+                            <li><strong>Hover for Info:</strong> Move your cursor over different parts of the hand (fingers,
+                                palm, wrist). Highlighted areas will display a tooltip with information about how
+                                Parkinson's can affect that specific part.</li>
+                            <li><strong>What to Look For:</strong> Notice which areas are commonly impacted. Think about how
+                                these specific effects (e.g., tremor in the thumb, rigidity in the wrist) might translate to
+                                difficulties with daily tasks like writing or gripping objects.</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top: 15px; box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;"><em>The way Parkinson's affects the hands gives us a glimpse into its
                             impact on fine motor control. But what about other everyday actions that require similar
                             precision, like typing? The rhythm of our keystrokes can also tell a subtle story. Let's
                             explore how these digital fingerprints can change, drawing upon our understanding of
@@ -116,92 +118,97 @@
         </section>
 
         <section id="pulse-viz-page" class="section">
-            <div class="two-column-layout">
-                <div class="column viz-column pulse-column-left">
-                    <h2>Typing Rhythm & Medication</h2>
-                    <p>The consistency of motor actions, like typing, can be altered by Parkinson's. This interactive
-                        "pulse" demonstrates representative typing rhythms. Select a medication category to see how
-                        treatment might influence these patterns. Below, a line chart visualizes Hold or Flight Times for a sequence of keystrokes.</p>
-                    <div id="med-buttons">
-                        <button class="med-btn" data-med="Levadopa">Levadopa</button>
-                        <button class="med-btn" data-med="DA">DA</button>
-                        <button class="med-btn" data-med="MAOB">MAOB</button>
-                        <button class="med-btn" data-med="Other">Other</button>
-                        <button class="med-btn" data-med="No Med">No Med</button>
-                    </div>
-                    <div id="tempo-control">
-                        Tempo: <input type="range" id="tempo-slider" min="0.5" max="3" step="0.1" value="1">
-                        <span id="tempo-value">1x</span>
-                    </div>
-                    <div id="button-viz-container">
-                        <button id="big-button">PULSE</button>
-                    </div>
-                    <div id="pulse-info-box">
-                        <p>Hold Time: <span id="pulse-hold-time">-</span> ms</p>
-                        <p>Flight Time: <span id="pulse-flight-time">-</span> ms</p>
+            <div>
+                <div class="two-column-layout">
+                    <div class="column viz-column pulse-column-left">
+                        <h2>Typing Rhythm & Medication</h2>
+                        <div id="med-buttons">
+                            <button class="med-btn" data-med="Levadopa">Levadopa</button>
+                            <button class="med-btn" data-med="DA">DA</button>
+                            <button class="med-btn" data-med="MAOB">MAOB</button>
+                            <button class="med-btn" data-med="Other">Other</button>
+                            <button class="med-btn" data-med="No Med">No Med</button>
+                        </div>
+                        <div id="tempo-control">
+                            Tempo: <input type="range" id="tempo-slider" min="0.5" max="3" step="0.1" value="1">
+                            <span id="tempo-value">1x</span>
+                        </div>
+                        <div id="button-viz-container">
+                            <button id="big-button">PULSE</button>
+                        </div>
+                        <div id="pulse-info-box">
+                            <p>Hold Time: <span id="pulse-hold-time">-</span> ms</p>
+                            <p>Flight Time: <span id="pulse-flight-time">-</span> ms</p>
+                        </div>
+
+                        <div id="medication-line-chart-controls">
+                            <div id="chart-metric-toggle">
+                                <strong>Chart Metric:</strong>
+                                <label><input type="radio" name="chartMetric" value="Hold" checked> Hold Time</label>
+                                <label><input type="radio" name="chartMetric" value="Flight"> Flight Time</label>
+                            </div>
+                            <div id="chart-medication-toggles">
+                                <strong>Show on Chart:</strong>
+                                <!-- Medication toggles will be populated by typing.js -->
+                            </div>
+                        </div>
+
+                        <div id="medication-line-chart-container">
+                            <div id="chart-loading-overlay" class="chart-loader-class" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <div class="spinner"></div>
+                                <p style="margin-top: 10px; font-size: 0.9rem; color: #333;">Loading chart data...</p>
+                            </div>
+                            <!-- D3 line chart will be rendered here -->
+                        </div>
                     </div>
 
-                    <div id="medication-line-chart-controls">
-                        <div id="chart-metric-toggle">
-                            <strong>Chart Metric:</strong>
-                            <label><input type="radio" name="chartMetric" value="Hold" checked> Hold Time</label>
-                            <label><input type="radio" name="chartMetric" value="Flight"> Flight Time</label>
+                    <div class="column text-column pulse-column-right">
+                        <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
+                        <div class="directions collapsed">
+                            <ul>
+                                <li><strong>Select Medication (for PULSE):</strong> Click on the medication buttons ("Levodopa," "DA," etc.)
+                                    to load representative typing rhythm data for the "PULSE" animation for individuals on different treatments, or those
+                                    with no medication. This draws from the Tappy Keystroke Dataset.</li>
+                                <li><strong>Observe the PULSE:</strong> The large "PULSE" button will animate to simulate
+                                    keystrokes based on your selection.
+                                    <ul>
+                                        <li>The <strong>duration it stays lit</strong> represents "Hold Time" (how long a key is
+                                            pressed).</li>
+                                        <li>The <strong>time between illuminations</strong> represents "Flight Time" (the delay
+                                            between one key release and the next key press).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Adjust Tempo:</strong> Use the "Tempo" slider to speed up or slow down the
+                                    simulation. This can help you better perceive the rhythm.</li>
+                                <li><strong>Information Box:</strong> The box below the pulse will display the Hold Time and
+                                    Flight Time values for the current simulated keystroke from your selection.</li>
+                                <li><strong>Interpret the Line Chart:</strong>
+                                    <ul>
+                                        <li>The chart below the PULSE button displays either Hold Times or Flight Times for a sequence of keystrokes.
+                                            Use the "Chart Metric" toggles to switch between them.</li>
+                                        <li>Use the "Show on Chart" checkboxes to select which medication lines are visible.</li>
+                                        <li>Each colored line represents a different medication category.</li>
+                                        <li>The <strong>X-axis</strong> shows the keystroke event index.</li>
+                                        <li>The <strong>Y-axis</strong> shows the selected metric (Hold Time or Flight Time) in milliseconds (ms).</li>
+                                        <li>When the "PULSE" button animates, a marker will appear on the chart highlighting the current data point for the active medication's line (if visible).</li>
+                                        <li>Observe how patterns (level, variability) differ across medications and metrics.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>What to Look For:</strong> Pay attention to the consistency of the hold times and
+                                    flight times in the PULSE animation. Are they regular, or do they vary significantly? How does the rhythm change
+                                    when you select different medication categories for the PULSE? Compare this to the overall trends and variability visible in the line chart.
+                                </li>
+                            </ul>
                         </div>
-                        <div id="chart-medication-toggles">
-                            <strong>Show on Chart:</strong>
-                            <!-- Medication toggles will be populated by typing.js -->
-                        </div>
-                    </div>
-
-                    <div id="medication-line-chart-container">
-                        <div id="chart-loading-overlay" class="chart-loader-class" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                            <div class="spinner"></div>
-                            <p style="margin-top: 10px; font-size: 0.9rem; color: #333;">Loading chart data...</p>
-                        </div>
-                        <!-- D3 line chart will be rendered here -->
+                        <p style="text-align: center; margin: auto; box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">The consistency of motor actions, like typing, can be altered by Parkinson's. This interactive
+                            "pulse" demonstrates representative typing rhythms. Select a medication category to see how
+                            treatment might influence these patterns. Below, a line chart visualizes Hold or Flight Times for a sequence of keystrokes.</p>
                     </div>
                 </div>
-                <div class="column text-column pulse-column-right">
-                    <h3>How to Use This Visualization</h3>
-                    <ul>
-                        <li><strong>Select Medication (for PULSE):</strong> Click on the medication buttons ("Levodopa," "DA," etc.)
-                            to load representative typing rhythm data for the "PULSE" animation for individuals on different treatments, or those
-                            with no medication. This draws from the Tappy Keystroke Dataset.</li>
-                        <li><strong>Observe the PULSE:</strong> The large "PULSE" button will animate to simulate
-                            keystrokes based on your selection.
-                            <ul>
-                                <li>The <strong>duration it stays lit</strong> represents "Hold Time" (how long a key is
-                                    pressed).</li>
-                                <li>The <strong>time between illuminations</strong> represents "Flight Time" (the delay
-                                    between one key release and the next key press).</li>
-                            </ul>
-                        </li>
-                        <li><strong>Adjust Tempo:</strong> Use the "Tempo" slider to speed up or slow down the
-                            simulation. This can help you better perceive the rhythm.</li>
-                        <li><strong>Information Box:</strong> The box below the pulse will display the Hold Time and
-                            Flight Time values for the current simulated keystroke from your selection.</li>
-                        <li><strong>Interpret the Line Chart:</strong>
-                            <ul>
-                                <li>The chart below the PULSE button displays either Hold Times or Flight Times for a sequence of keystrokes.
-                                    Use the "Chart Metric" toggles to switch between them.</li>
-                                <li>Use the "Show on Chart" checkboxes to select which medication lines are visible.</li>
-                                <li>Each colored line represents a different medication category.</li>
-                                <li>The <strong>X-axis</strong> shows the keystroke event index.</li>
-                                <li>The <strong>Y-axis</strong> shows the selected metric (Hold Time or Flight Time) in milliseconds (ms).</li>
-                                <li>When the "PULSE" button animates, a marker will appear on the chart highlighting the current data point for the active medication's line (if visible).</li>
-                                <li>Observe how patterns (level, variability) differ across medications and metrics.</li>
-                            </ul>
-                        </li>
-                        <li><strong>What to Look For:</strong> Pay attention to the consistency of the hold times and
-                            flight times in the PULSE animation. Are they regular, or do they vary significantly? How does the rhythm change
-                            when you select different medication categories for the PULSE? Compare this to the overall trends and variability visible in the line chart.
-                        </li>
-                    </ul>
-                    <p style="margin-top: 15px;"><em>We've seen a simulation of how typing rhythms can differ. Now, you
-                            have the chance to (simulatively) compare your own typing patterns against a representative
-                            example from the Tappy dataset, illustrating how technology might one day help us understand
-                            these nuances even better.</em></p>
-                </div>
+                <p style="text-align: center; margin: auto; width: 65%"><em>We've seen a simulation of how typing rhythms can differ. Now, you 
+                    have the chance to compare your own typing patterns (in a simulation) against a representative 
+                    example from the Tappy dataset, illustrating how technology might one day help us understand 
+                    these nuances even better.</em></p>
             </div>
         </section>
 
@@ -221,40 +228,43 @@
                 <p>Changes in typing speed and accuracy can be a significant hurdle for those with Parkinson's who rely
                     on computers. Simple tasks like sending an email or navigating a smartphone may take longer and
                     require more effort. This interactive test allows you to explore these nuances.</p>
-                <h3>How to Use This Visualization</h3>
-                <ul>
-                    <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
-                        persona with Parkinson's. Their typing data will be compared against yours.</li>
-                </ul>
-                    <div id="persona-note">
-                        <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
-                        an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
-                    </div>
-                <ul>
-                    <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear. Type
-                        the displayed sentence; your typing will appear over the prompt.</li>
-                    <li><strong>View Real-time Chart:</strong> Once you or the persona finishes, a line chart will appear, plotting your latency (time
-                        between keystrokes) in one color, and the selected persona's latency in another.</li>
-                    <li><strong>Interpret the Chart:</strong>
-                        <ul>
-                            <li>The <strong>X-axis</strong> shows the character index (which keystroke in the sequence).
-                            </li>
-                            <li>The <strong>Y-axis</strong> shows the latency in milliseconds (ms).</li>
-                        </ul>
-                    </li>
-                    <li><strong>What to Look For:</strong> Compare your line to the persona's line. Is your average
-                        latency generally higher or lower? Is your line smoother or more "spiky" (variable)?</li>
-                    <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
-                        comparison persona.</li>
-                </ul>
+                <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
+                <div class="directions collapsed">
+                    <ul>
+                        <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
+                            persona with Parkinson's. Their typing data will be compared against yours. 
+                            The dropdown menu is sorted by slowest (top) to fastest (bottom) simulated typing speed.</li>
+                    </ul>
+                        <div id="persona-note">
+                            <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
+                            an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
+                        </div>
+                    <ul>
+                        <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear. Type
+                            the displayed sentence; your typing will appear over the prompt.</li>
+                        <li><strong>View Real-time Chart:</strong> Once you or the persona finishes, a line chart will appear, plotting your latency (time
+                            between keystrokes) in a dark blue, and the selected persona's latency in a golden yellow.</li>
+                        <li><strong>Interpret the Chart:</strong>
+                            <ul>
+                                <li>The <strong>X-axis</strong> shows the character index (which keystroke in the sequence).
+                                </li>
+                                <li>The <strong>Y-axis</strong> shows the latency in milliseconds (ms).</li>
+                            </ul>
+                        </li>
+                        <li><strong>What to Look For:</strong> Compare your line to the persona's line. Is your average
+                            latency generally higher or lower? Ignoring stark outliers, does your line vary more than the persona's?</li>
+                        <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
+                            comparison persona.</li>
+                    </ul>
+                </div>
 
-                <div id="options">
+                <div id="options" style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">
                     <select id="person-select">
-                        <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
-                        <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
                         <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
-                        <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
+                        <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
                         <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
+                        <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
+                        <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
                     </select>
                     <select id="word-count">
                         <option value="10">10 words</option>
@@ -280,40 +290,43 @@
                 <p>Most likely in the previous typing test, you typed faster than the simulated persona with Parkinson's. Now, let's simulate the experience
                     of <i>actually typing as that persona</i> with Parkinson's.
                 </p>
-                <h3>How to Use This Visualization</h3>
-                <ul>
-                    <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
-                        persona with Parkinson's. Their typing data will be be used to simulate the rate at which you type.</li>
-                </ul>
-                <div id="persona-note">
-                    <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
-                    an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
+                <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
+                <div class="directions collapsed">
+                    <ul>
+                        <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
+                            persona with Parkinson's. Their typing data will be compared against yours. 
+                            The dropdown menu is sorted by slowest (top) to fastest (bottom) simulated typing speed.</li>
+                    </ul>
+                    <div id="persona-note">
+                        <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
+                        an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
+                    </div>
+                    <ul>
+                        <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear, <u><i>but this time you won't be able to type the letters until 
+                            they are shaded black</i></u>, imitating the pace of your selected persona.</li>
+                        <li><strong>View Real-time Chart:</strong> Once you finish, a line chart will appear, showing the duration you spent typing with the restriction in golden yellow, 
+                            and the most recent test when you typed without any restrictions in dark blue.</li>
+                        <li><strong>Interpret the Chart:</strong>
+                            <ul>
+                                <li>The <strong>X-axis</strong> shows the character index (which keystroke in the sequence).
+                                </li>
+                                <li>The <strong>Y-axis</strong> shows the duration of the test in seconds (s).</li>
+                            </ul>
+                        </li>
+                        <li><strong>What to Look For:</strong> Look at the difference between the "Restriction" line for this test and the line for the "No Restriction" test. 
+                            How did it feel to type at the pace of someone with Parkinson's?</li>
+                        <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
+                            comparison persona.</li>
+                    </ul>
                 </div>
-                <ul>
-                    <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear, but <u><i>this time, you won't be able to type the letters until 
-                        they are shaded black</i></u>, imitating the pace of your selected persona.</li>
-                    <li><strong>View Real-time Chart:</strong> Once you finish, a line chart will appear, comparing the duration you spent typing with the restriction, 
-                        and the most recent test when you typed without any restrictions.</li>
-                    <li><strong>Interpret the Chart:</strong>
-                        <ul>
-                            <li>The <strong>X-axis</strong> shows the character index (which keystroke in the sequence).
-                            </li>
-                            <li>The <strong>Y-axis</strong> shows the duration of the test in seconds (s).</li>
-                        </ul>
-                    </li>
-                    <li><strong>What to Look For:</strong> Look at the difference between the "Restriction" line for this test and the line for the "No Restriction" test. 
-                        How did it feel to type at the pace of someone with Parkinson's?</li>
-                    <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
-                        comparison persona.</li>
-                </ul>
 
-                <div id="options-2">
+                <div id="options-2" style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">
                     <select id="person-select-2">
-                        <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
-                        <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
                         <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
-                        <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
+                        <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
                         <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
+                        <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
+                        <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
                     </select>
                     <select id="word-count-2">
                         <option value="10">10 words</option>
@@ -327,7 +340,6 @@
                     <div id="sentence-2"></div>
                     <input type="text" id="input-2" autocomplete="off" autocorrect="off" autocapitalize="off"
                         spellcheck="false" />
-                    <div id="typing-test-tooltip"></div>
                 </div>
 
                 <div id="result-2"></div>
