@@ -176,6 +176,12 @@ html {
     background-color: #ffffff;
 }
 
+.highlighted-line {
+    color: #007BA7;
+    font-weight: 500;
+  }
+  
+
 #hand-viz-page,
 #typing-test-page,
 #typing-test-page-2 { /* Added typing-test-page-2 */
@@ -214,7 +220,7 @@ html {
     font-size: 2.2rem;
     margin-top: 10px;
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: #5fc0ce;
 }
 
 #intro-page .text-column>h2,
