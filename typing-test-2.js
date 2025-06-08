@@ -142,7 +142,7 @@ function plotTimeTakenLine() {
     const svg = d3.select("#result-2")
         .html("") // Clear previous chart
         .append("svg")
-        .attr("id", "latency-line")
+        .attr("id", "time-taken-line")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -161,7 +161,7 @@ function plotTimeTakenLine() {
         .x(d => x(d.index))
         .y(d => y(d.latency));
 
-    const colors = ['lightsteelblue', 'moccasin'];
+    const colors = ['#FFC857', '#384E77'];
 
     // Draw X axis
     svg.append("g")
@@ -203,7 +203,7 @@ function plotTimeTakenLine() {
             .datum(points)
             .attr("fill", "none")
             .attr("stroke", colors[i])
-            .attr("stroke-width", 2)
+            .attr("stroke-width", 2.5)
             .attr("d", line);
     });
 
@@ -241,7 +241,6 @@ let ghostIndex;
 
 function createTypingTest(words) {
     const sentence = generateRandomSentence(words, wordcount);
-    console.log(sentence);
 
     let sentenceDiv = d3.select('#sentence-2');
     const input = d3.select('#input-2').property("value", "");

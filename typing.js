@@ -1,6 +1,59 @@
 // file_path: typing.js
 // Ensure d3 is available (it's loaded via script tag in HTML)
 
+function dropdownTriangle() {
+    const dropdownSvgs = d3.selectAll('.dropdown')
+        .attr('width', 19)
+        .attr('height', 19);
+
+    dropdownSvgs.append("polygon")
+        .attr('class', 'unclicked')
+        .attr("points", "5,15 10,6.34 15,15") // upward triangle
+        .attr("fill", "#384E77")
+        .style("cursor", "pointer")
+        .style('stroke-width', 1)
+        .style('stroke', 'black');
+
+    d3.selectAll('.directions-title')
+        .style('cursor', 'pointer')
+        .on('click', function () { toggleDropdown.call(this); }); // fix is here
+}
+
+function toggleDropdown() {
+    const directions = d3.select(this.nextElementSibling);
+    const node = directions.node();
+    const isOpen = node.style.height !== "0px" && node.offsetHeight > 0;
+
+    if (isOpen) {
+        const currentHeight = node.scrollHeight;
+
+        directions
+        .style("height", currentHeight + "px")
+        .transition()
+        .duration(800)
+        .style("height", "0px");
+    } else {
+        const fullHeight = node.scrollHeight;
+
+        directions
+        .style("height", "0px")
+        .transition()
+        .duration(800)
+        .style("height", fullHeight + "px")
+        .on("end", () => {
+            directions.style("height", "auto");
+        });
+    }
+
+    // Optional: rotate the triangle
+    const triangle = d3.selectAll(this.querySelector('svg polygon'));
+    triangle.transition()
+        .duration(800)
+        .attr("transform", isOpen ? null : "rotate(180, 10, 10)"); // rotate around center
+}
+
+dropdownTriangle();
+
 // --- VISUALIZATION 6: PULSE VISUALIZATION & MEDICATION LINE CHART ---
 function initializePulseVisualization() {
   const vizContainer = document.getElementById('pulse-viz-page');

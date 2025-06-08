@@ -29,7 +29,7 @@ html {
 
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: safe center;
     /* Align content to the top */
     align-items: center;
     /* Center content horizontally */
@@ -627,7 +627,7 @@ html {
     white-space: pre-wrap;
     font-family: monospace;
     user-select: none;
-    padding: 10px;
+    padding: 30px 10px;
     border: 1px solid #eee;
     border-radius: 5px;
     background-color: #f9f9f9;
@@ -1107,4 +1107,23 @@ a:hover {
     margin: auto;
     background-color: #384E77;
     color: #f0f2f5;
+}
+
+.dropdown {
+    width: auto;
+    height: auto;
+}
+
+.directions-title {
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 6px 0;
+}
+
+.directions {
+    overflow: hidden;
+    height: 0;
 }
