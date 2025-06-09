@@ -169,10 +169,12 @@ html {
     /* CSS transition for fade-in */
 }
 
-#intro-page,
+/* Original intro-page, conclusion-page, resources-support-page, writeup-combined-page had background-color: #ffffff; */
+/* parkinsons-deep-dive-section is set to #ffffff inline */
+/* conclusion-page, resources-support-page, writeup-combined-page will use this */
 #conclusion-page,
 #resources-support-page,
-#writeup-combined-page { /* Added writeup-combined-page */
+#writeup-combined-page { 
     background-color: #ffffff;
 }
 
@@ -181,16 +183,12 @@ html {
     font-weight: 500;
   }
   
+/* Original hand-viz-page, typing-test-page, typing-test-page-2 had background-color: #e9eef2; */
+/* combined-typing-tests-section is set to #e9eef2 inline */
 
-#hand-viz-page,
-#typing-test-page,
-#typing-test-page-2 { /* Added typing-test-page-2 */
-    background-color: #e9eef2;
-}
 
-#pulse-viz-page {
-    background-color: #ffffff;
-}
+/* Original pulse-viz-page had background-color: #ffffff; (covered by parkinsons-deep-dive-section) */
+
 
 #quote-page, #quote-page2 { /* Combined quote page styles */
     background-color: #384E77;
@@ -223,11 +221,7 @@ html {
     color: #5fc0ce;
 }
 
-#intro-page .text-column>h2,
-#hand-viz-page .text-column>h2 {
-    text-align: center;
-    width: 100%;
-}
+/* Removed specific #intro-page, #hand-viz-page h2 centering rule, relying on general styles */
 
 .content-wrapper h3 {
     font-family: 'Roboto', sans-serif;
@@ -265,12 +259,14 @@ html {
     align-items: stretch;
     /* Changed from flex-start to stretch */
     width: 100%;
-    max-width: 1200px;
+    max-width: 1200px; /* Ensures the layout itself doesn't exceed this, good for combined sections */
     gap: 30px;
-    padding: 10px 0;
+    padding: 10px 0; /* Adjusted padding, original section had more */
     box-sizing: border-box;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-left: auto; /* Center the layout block if section is wider */
+    margin-right: auto; /* Center the layout block */
+    /* margin-top: 10px; Removed, handle spacing between combined parts directly */
+    /* margin-bottom: 20px; Removed */
 }
 
 .column {
@@ -543,7 +539,8 @@ html {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 800px;
+    max-width: 800px; /* This will be centered by section's align-items: center */
+    /* margin: 0 auto; /* Ensured by section's align-items: center for the block */
 }
 
 .typing-test-wrapper h2 {
@@ -911,9 +908,11 @@ html {
     justify-content: center;
     flex-wrap: nowrap;
     max-width: 1300px;
-    margin: 0 auto;
-    padding: 10px;
+    margin-left: auto; /* Center the layout block */
+    margin-right: auto; /* Center the layout block */
+    padding: 10px; /* Minimal padding for the layout itself */
     box-sizing: border-box;
+    width: 100%; /* Take full width up to max-width */
 }
 
 .three-column-layout .image-column {
@@ -947,6 +946,7 @@ html {
 
 .three-column-layout .text-column h2 {
     margin-top: 0;
+    text-align: center; /* Ensure H2 is centered in this column */
 }
 
 .three-column-layout .text-column p,
