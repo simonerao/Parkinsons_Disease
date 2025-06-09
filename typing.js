@@ -20,10 +20,8 @@ function dropdownTriangle() {
         .attr('class', 'dropdown-arrow-polygon') // Added a class for easier selection if needed
         .attr("points", "5,6.34 10,15 15,6.34") // downward triangle
         .attr("fill", "#384E77")
-        // .style("cursor", "pointer") // Cursor is on the parent .directions-title
         .style('stroke-width', 1)
         .style('stroke', 'black');
-        // Initial transform is "rotate(0)" by default (points down)
 
     d3.selectAll('.directions-title')
         .style('cursor', 'pointer') // Set cursor on the entire title for better UX
@@ -33,37 +31,40 @@ function dropdownTriangle() {
 function toggleDropdown() {
     const directionsDiv = d3.select(this.nextElementSibling); // The div with class 'directions'
     const node = directionsDiv.node();
-    // Check if it's currently open (height is not 0px and offsetHeight is greater than 0)
     const isOpen = node.style.height !== "0px" && node.style.height !== "" && node.offsetHeight > 0;
 
-    if (isOpen) { // If currently open, we are closing it
+    if (isOpen) {
         const currentHeight = node.scrollHeight;
         directionsDiv
-            .style("height", currentHeight + "px") // Set to current scrollHeight to start transition from
+            .style("height", currentHeight + "px")
             .transition()
             .duration(800)
-            .style("height", "0px"); // Transition to 0px
-    } else { // If currently closed, we are opening it
+            .style("height", "0px");
+    } else {
         const fullHeight = node.scrollHeight;
         directionsDiv
-            .style("height", "0px") // Start from 0px
+            .style("height", "0px")
             .transition()
             .duration(800)
-            .style("height", fullHeight + "px") // Transition to full scrollHeight
+            .style("height", fullHeight + "px")
             .on("end", () => {
-                // Set to auto after transition to accommodate dynamic content,
-                // but only if it was actually opened to fullHeight (not interrupted)
                 if (parseFloat(directionsDiv.style("height")) === fullHeight) {
                     directionsDiv.style("height", "auto");
                 }
             });
     }
 
-    // Optional: rotate the triangle
-    d3.select(this)
-        .selectAll('.dropdown-triangles')
-        .attr("transform", isOpen ? null : "rotate(180, 10, 10.67)"); // rotate around center
+    const trianglePolygon = d3.select(this)
+        .select('svg.dropdown')
+        .select('polygon.dropdown-arrow-polygon');
+
+    if (!trianglePolygon.empty()) {
+        trianglePolygon.transition()
+            .duration(300)
+            .attr("transform", isOpen ? "rotate(0, 9.5, 10.67)" : "rotate(-180, 9.5, 10.67)");
+    }
 }
+
 
 function enableTabInteraction() {
     const tabs = document.querySelectorAll('.typing-tab');
@@ -71,12 +72,9 @@ function enableTabInteraction() {
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-        // Remove active class from all tabs
         tabs.forEach(t => t.classList.remove('active'));
-        // Hide all content
         contents.forEach(c => c.classList.add('hidden'));
 
-        // Activate clicked tab
         tab.classList.add('active');
         const target = tab.dataset.tab;
         document.getElementById(target).classList.remove('hidden');
@@ -90,22 +88,22 @@ dropdownTriangle();
 // --- VISUALIZATION 6: PULSE VISUALIZATION & MEDICATION LINE CHART ---
 function initializePulseVisualization() {
   console.log("initializePulseVisualization called");
-  const vizContainer = document.getElementById('pulse-viz-page');
-  if (!vizContainer) {
-    console.error("Pulse viz container not found");
+  const pulseVizContentArea = document.getElementById('pulse-viz-content-area');
+  if (!pulseVizContentArea) {
+    console.error("#pulse-viz-content-area not found. Pulse visualization cannot be initialized.");
     return;
   }
 
   console.log("Attempting to set tooltips for med buttons...");
-  const medButtons = d3.selectAll('#pulse-viz-page .med-btn');
+  const medButtons = d3.selectAll('#pulse-viz-content-area .med-btn');
   console.log("Found medButtons selection:", medButtons);
   console.log("Number of medButtons found:", medButtons.size());
 
   if (medButtons.empty()) {
-      console.warn("No medication buttons found with selector '#pulse-viz-page .med-btn'");
+      console.warn("No medication buttons found with selector '#pulse-viz-content-area .med-btn'");
   }
 
-  medButtons.each(function(d, i) {
+  medButtons.each(function() {
       const buttonNode = this;
       const medName = buttonNode.dataset.med;
 
@@ -139,29 +137,34 @@ function initializePulseVisualization() {
   const chartContainer = d3.select("#medication-line-chart-container");
   const medicationTogglesContainer = d3.select('#chart-medication-toggles');
 
-  meds.forEach(med => {
-    const label = medicationTogglesContainer.append('label');
-    label.append('input')
-      .attr('type', 'checkbox')
-      .attr('name', 'medToggle')
-      .attr('value', med.name)
-      .property('checked', true)
-      .on('change', function() {
-        if (this.checked) {
-          visibleMedications.add(med.name);
-        } else {
-          visibleMedications.delete(med.name);
-        }
-        renderMedicationLineChart();
+  if (medicationTogglesContainer.empty()) {
+      console.warn("#chart-medication-toggles container not found.");
+  } else {
+      medicationTogglesContainer.html(''); // Clear previous toggles if any
+      meds.forEach(med => {
+        const label = medicationTogglesContainer.append('label');
+        label.append('input')
+          .attr('type', 'checkbox')
+          .attr('name', 'medToggle')
+          .attr('value', med.name)
+          .property('checked', true)
+          .on('change', function() {
+            if (this.checked) {
+              visibleMedications.add(med.name);
+            } else {
+              visibleMedications.delete(med.name);
+            }
+            renderMedicationLineChart();
+          });
+        label.append('span').text(med.name);
       });
-    label.append('span').text(med.name);
-  });
+  }
 
-  // --- NEW: Medication Info Tabs Logic ---
-  const medTabsNavContainer = d3.select('#pulse-viz-page .med-tabs-nav');
-  const medTabDescriptionContent = d3.select('#pulse-viz-page .med-tab-description-content');
+  const medTabsNavContainer = d3.select('#pulse-viz-content-area .med-tabs-nav');
+  const medTabDescriptionContent = d3.select('#pulse-viz-content-area .med-tab-description-content');
 
   if (!medTabsNavContainer.empty() && !medTabDescriptionContent.empty()) {
+    medTabsNavContainer.html(''); // Clear previous tabs
     meds.forEach((med, index) => {
       medTabsNavContainer.append('button')
         .attr('class', `med-tab-btn ${index === 0 ? 'active' : ''}`)
@@ -169,24 +172,20 @@ function initializePulseVisualization() {
         .text(med.name)
         .on('click', function() {
           const selectedMedName = d3.select(this).attr('data-med-tab');
-
           medTabsNavContainer.selectAll('.med-tab-btn').classed('active', false);
           d3.select(this).classed('active', true);
-
           const description = medDescriptions[selectedMedName] || "Description not available.";
           medTabDescriptionContent.html(`<p><em>${description}</em></p>`);
         });
     });
-
     if (meds.length > 0) {
       const firstMedName = meds[0].name;
       const firstDescription = medDescriptions[firstMedName] || "Description not available.";
       medTabDescriptionContent.html(`<p><em>${firstDescription}</em></p>`);
     }
   } else {
-    console.warn("Medication info tab containers (.med-tabs-nav or .med-tab-description-content) not found on pulse-viz-page.");
+    console.warn("Medication info tab containers (.med-tabs-nav or .med-tab-description-content) not found within #pulse-viz-content-area.");
   }
-  // --- END: Medication Info Tabs Logic ---
 
   d3.selectAll('input[name="chartMetric"]').on('change', function() {
     currentChartMetric = this.value;
@@ -194,6 +193,8 @@ function initializePulseVisualization() {
   });
 
   if (chartLoader) chartLoader.style.display = 'flex';
+  else console.warn("#chart-loading-overlay not found.");
+
 
   const dataPromises = meds.map(m =>
     d3.csv(m.file, d => ({
@@ -208,20 +209,24 @@ function initializePulseVisualization() {
   );
 
   Promise.all(dataPromises).then(datasets => {
-    allMedicationData = datasets;
+    allMedicationData = datasets.filter(ds => ds && ds.length > 0);
 
     if (chartLoader) chartLoader.style.display = 'none';
-    if (globalLoader) globalLoader.style.display = 'none';
+    // Hide global loader only after this crucial data loading step for this viz
+    if (globalLoader && document.getElementById('combined-viz-page').classList.contains('active')) {
+        globalLoader.style.display = 'none';
+    }
 
-    if (allMedicationData.every(ds => ds.length === 0)) {
-      console.error("No data loaded for pulse visualization or line chart.");
+
+    if (allMedicationData.length === 0) {
+      console.error("No data successfully loaded for pulse visualization or line chart.");
       const pulseInfoBox = document.getElementById('pulse-info-box');
       if (pulseInfoBox) {
         pulseInfoBox.innerHTML = "<p>Error: Could not load data.</p>";
         pulseInfoBox.style.visibility = 'visible';
       }
-      if (chartContainer) {
-        chartContainer.html("<p>Error: Could not load data for the chart.</p>");
+      if (!chartContainer.empty()) {
+        chartContainer.html("<p style='text-align:center; padding-top: 20px;'>Error: Could not load data for the chart.</p>");
       }
       return;
     }
@@ -243,12 +248,12 @@ function initializePulseVisualization() {
       d3.select('#tempo-value').text(tempo + 'x');
     });
 
-    d3.selectAll('#pulse-viz-page .med-btn').on('click', function () {
+    d3.selectAll('#pulse-viz-content-area .med-btn').on('click', function () {
       stopSignal = true;
       if (animationTimeout) clearTimeout(animationTimeout);
       d3.select(".pulsing-point").remove();
 
-      d3.selectAll('#pulse-viz-page .med-btn').classed('active', false);
+      d3.selectAll('#pulse-viz-content-area .med-btn').classed('active', false);
       d3.select(this).classed('active', true);
 
       currentPulseMedicationName = d3.select(this).attr('data-med');
@@ -256,6 +261,7 @@ function initializePulseVisualization() {
       currentEventsForAnimation = activeDataset || [];
 
       if (currentEventsForAnimation.length === 0) {
+        console.warn(`No animation data found for ${currentPulseMedicationName}`);
         if (pulseInfoBoxEl) pulseInfoBoxEl.style.visibility = 'hidden';
         return;
       }
@@ -270,7 +276,8 @@ function initializePulseVisualization() {
         return;
       }
       const ev = currentEventsForAnimation[i];
-      if (!ev || typeof ev[currentChartMetric] !== 'number' || isNaN(ev[currentChartMetric])) {
+      if (!ev || typeof ev.Hold !== 'number' || isNaN(ev.Hold) || typeof ev.Flight !== 'number' || isNaN(ev.Flight)) {
+        console.warn("Skipping invalid event data at index", i, ev);
         animationTimeout = setTimeout(() => playEvents(i + 1), 50);
         return;
       }
@@ -304,7 +311,7 @@ function initializePulseVisualization() {
     }
 
   }).catch(err => {
-    console.error("Error processing pulse visualization data:", err);
+    console.error("Error processing pulse visualization data promises:", err);
     if (chartLoader) chartLoader.style.display = 'none';
     if (globalLoader) globalLoader.style.display = 'none';
     const pulseInfoBox = document.getElementById('pulse-info-box');
@@ -312,24 +319,38 @@ function initializePulseVisualization() {
       pulseInfoBox.innerHTML = "<p>Error: Could not load data.</p>";
       pulseInfoBox.style.visibility = 'visible';
     }
-    if (chartContainer) {
-        chartContainer.html("<p>Error: Could not load data for the chart.</p>");
+    if (!chartContainer.empty()) {
+        chartContainer.html("<p style='text-align:center; padding-top: 20px;'>Error: Could not load data for the chart.</p>");
     }
   });
 
   let chartSvg, xScale, yScale;
 
   function renderMedicationLineChart() {
-    if (allMedicationData.length === 0) return;
+    if (allMedicationData.length === 0) {
+        console.log("renderMedicationLineChart: No data to render (allMedicationData is empty).");
+        if (!chartContainer.empty()) {
+            chartContainer.select("svg").remove();
+             chartContainer.html("<p style='text-align:center; padding-top: 20px;'>No data available to display.</p>");
+        }
+        return;
+    }
 
     chartContainer.select("svg").remove();
 
     const margin = { top: 30, right: 150, bottom: 50, left: 60 };
-    const containerWidth = chartContainer.node().getBoundingClientRect().width || 600;
+    const containerNode = chartContainer.node();
+    const containerWidth = containerNode ? (containerNode.getBoundingClientRect().width || 600) : 600;
     const containerHeight = 350;
 
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
+
+    if (width <=0 || height <=0) {
+        console.warn("Chart dimensions are invalid. Skipping render.", {width, height});
+        chartContainer.html("<p style='text-align:center; padding-top: 20px;'>Chart area too small to render.</p>");
+        return;
+    }
 
     chartSvg = chartContainer.append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -338,6 +359,13 @@ function initializePulseVisualization() {
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     const dataToPlot = allMedicationData.filter(ds => ds.length > 0 && visibleMedications.has(ds[0].medication));
+
+    if (dataToPlot.length === 0) {
+        console.log("renderMedicationLineChart: No data to plot after filtering for visible medications.");
+        chartContainer.select("svg").remove();
+        chartContainer.html("<p style='text-align:center; padding-top: 20px;'>No data for selected medications.</p>");
+        return;
+    }
 
     let maxEvents = 0;
     dataToPlot.forEach(ds => {
@@ -351,7 +379,9 @@ function initializePulseVisualization() {
         const currentMaxY = d3.max(slicedDs, d => d[currentChartMetric]);
         if (currentMaxY > maxYValue) maxYValue = currentMaxY;
     });
-    if (maxYValue === 0 || isNaN(maxYValue)) maxYValue = (currentChartMetric === 'Hold') ? 500 : 1000;
+    if (maxYValue === 0 || isNaN(maxYValue) || !isFinite(maxYValue)) {
+        maxYValue = (currentChartMetric === 'Hold') ? 500 : 1000;
+    }
 
     xScale = d3.scaleLinear()
       .domain([0, displayMaxEvents > 0 ? displayMaxEvents - 1 : 1])
@@ -365,7 +395,7 @@ function initializePulseVisualization() {
     const line = d3.line()
       .x((d, i) => xScale(i))
       .y(d => yScale(d[currentChartMetric]))
-      .defined(d => d[currentChartMetric] != null && !isNaN(d[currentChartMetric]));
+      .defined(d => d[currentChartMetric] != null && !isNaN(d[currentChartMetric]) && isFinite(d[currentChartMetric]));
 
     chartSvg.append("g")
       .attr("transform", `translate(0,${height})`)
@@ -423,7 +453,7 @@ function initializePulseVisualization() {
   }
 
   function showPulsePointOnChart(index, value, color) {
-    if (!chartSvg || !xScale || !yScale || isNaN(value) || value === null) return;
+    if (!chartSvg || !xScale || !yScale || isNaN(value) || value === null || !isFinite(value)) return;
 
     d3.select(".pulsing-point").remove();
 

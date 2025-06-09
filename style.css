@@ -169,9 +169,6 @@ html {
     /* CSS transition for fade-in */
 }
 
-/* Original intro-page, conclusion-page, resources-support-page, writeup-combined-page had background-color: #ffffff; */
-/* parkinsons-deep-dive-section is set to #ffffff inline */
-/* conclusion-page, resources-support-page, writeup-combined-page will use this */
 #conclusion-page,
 #resources-support-page,
 #writeup-combined-page { 
@@ -183,7 +180,7 @@ html {
     font-weight: 500;
   }
   
-#quote-page, #quote-page2 { /* Combined quote page styles */
+#quote-page, #quote-page2 { 
     background-color: #384E77;
     color: #f0f2f5;
     display: flex;
@@ -211,16 +208,15 @@ html {
     font-size: 2.2rem;
     margin-top: 10px;
     margin-bottom: 20px;
-    color: #5fc0ce;
+    color: #5fc0ce; /* This is the general color for h2 inside .content-wrapper */
 }
 
-#intro-page .text-column>h2 {
-    margin-left: auto;
-    text-align: right;
-    width: 300px;
+#intro-page .text-column>h2 { 
+    /* Adjust if #intro-page structure changes */
 }
 
-#hand-viz-page .text-column>h2 {
+/* Specific h2 styling for hand viz part */
+#hand-viz-content-area .text-column > h2 {
     text-align: center;
     width: 100%;
 }
@@ -234,7 +230,7 @@ html {
 }
 
 #quote-page .content-wrapper h2,
-#quote-page2 .content-wrapper h2 { /* Applied to both quote pages */
+#quote-page2 .content-wrapper h2 { 
     color: #f0f2f5;
 }
 
@@ -258,14 +254,14 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start; /* MODIFIED from stretch */
+    align-items: flex-start; 
     width: 100%;
-    max-width: 1200px; /* Ensures the layout itself doesn't exceed this, good for combined sections */
+    max-width: 1200px; 
     gap: 30px;
-    padding: 10px 0; /* Adjusted padding, original section had more */
+    padding: 10px 0; 
     box-sizing: border-box;
-    margin-left: auto; /* Center the layout block if section is wider */
-    margin-right: auto; /* Center the layout block */
+    margin-left: auto; 
+    margin-right: auto; 
 }
 
 .column {
@@ -278,8 +274,12 @@ html {
 }
 
 .text-column {
+    /* text-align: right; */
+}
+#intro #intro > div > p, #intro #intro > div > h2, #intro #intro > div > h3 { 
     text-align: right;
 }
+
 
 .text-column h2,
 .text-column h3 {
@@ -297,7 +297,7 @@ html {
     text-align: center;
 }
 
-.pulse-column-left h2 {
+.pulse-column-left h2 { 
     text-align: center;
 }
 
@@ -458,24 +458,24 @@ html {
     position: relative; /* For chart loading overlay */
 }
 
-.chart-loader-class { /* Renamed from #chart-loading-overlay for specificity */
+.chart-loader-class { 
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(253, 253, 253, 0.9); /* Match container background */
-    z-index: 10; /* Above chart content, below modal popups if any */
+    background: rgba(253, 253, 253, 0.9); 
+    z-index: 10; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-radius: 5px; /* Match parent container */
+    border-radius: 5px; 
 }
 
-.chart-loader-class .spinner { /* Use existing spinner style */
-    border-width: 6px; /* Slightly smaller for context */
+.chart-loader-class .spinner { 
+    border-width: 6px; 
     width: 40px;
     height: 40px;
 }
@@ -533,7 +533,7 @@ html {
 }
 
 .typing-test-wrapper {
-    background-color: transparent;
+    background-color: transparent; 
 }
 
 .typing-test-wrapper h2 {
@@ -541,7 +541,7 @@ html {
     text-align: center;
 }
 
-.typing-test-wrapper>p,
+.typing-test-wrapper>p, 
 .typing-test-wrapper>ul {
     text-align: left;
 }
@@ -722,8 +722,15 @@ html {
 
 @media (max-width: 768px) {
     .section {
+        padding: 15px 20px; /* Default section padding */
+    }
+    #combined-viz-page { /* Override for combined page */
+        padding: 0;
+    }
+    .content-part { /* Padding for parts within combined page */
         padding: 15px 20px;
     }
+
 
     .masked-main-title {
         font-size: 6rem;
@@ -765,23 +772,28 @@ html {
     }
 
     .column {
-        width: 100%;
+        width: 100%; /* Columns stack and take full width */
         padding: 10px;
     }
 
-    #hand-container {
-        min-height: 700px;
+    #hand-container { 
+        min-height: 300px; 
     }
+     #hand-viz-content-area > .two-column-layout {
+        height: auto; 
+        align-items: center; 
+    }
+
 
     .typing-test-wrapper {
         padding: 15px;
     }
 
-    #test-container, #test-container-2 { /* Applied to both */
+    #test-container, #test-container-2 { 
         font-size: 1em;
     }
 
-    #blur-overlay, #blur-overlay-2 { /* Applied to both */
+    #blur-overlay, #blur-overlay-2 { 
         font-size: 1em;
     }
 }
@@ -802,20 +814,66 @@ html {
     }
 }
 
-#hand-viz-page .two-column-layout {
-    height: 90%; 
-    align-items: stretch;
+/* Styles for the new combined visualization page */
+#combined-viz-page {
+    padding: 0; 
+    align-items: stretch; 
+    justify-content: flex-start; 
 }
 
+.content-part {
+    width: 100%; 
+    padding: 20px 40px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+#hand-viz-content-area {
+    min-height: 95vh; 
+    justify-content: center; 
+}
+
+#hand-viz-content-area > .two-column-layout {
+    width: 100%; 
+    max-width: 1200px; 
+    height: 90%; 
+    align-items: stretch; 
+}
+
+#hand-viz-content-area > .two-column-layout > .viz-column {
+    flex-grow: 1; 
+}
 #hand-container {
     position: relative;
     width: 100%;
-    height: 100%;
-    min-height: 300px;
+    height: 100%; 
+    min-height: 300px; 
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+
+#pulse-viz-content-area {
+    padding-top: 0px;
+    padding-bottom: 40px; 
+    margin-top: 0px;
+}
+
+#pulse-viz-content-area > div { 
+    width: 100%;
+    max-width: 1200px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+#pulse-viz-content-area > div > .two-column-layout {
+    width: 100%; 
+}
+
 
 #hand-tooltip {
     position: fixed;
@@ -832,25 +890,25 @@ html {
     line-height: 1.4;
 }
 
-#loading-overlay {
+#loading-overlay { 
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(233, 238, 242, 0.9);
-    z-index: 10;
-    display: flex;
+    background: rgba(233, 238, 242, 0.9); 
+    z-index: 10; 
+    display: flex; 
     justify-content: center;
     align-items: center;
     text-align: center;
     flex-direction: column;
-    opacity: 0;
+    opacity: 0; 
     transition: opacity 0.5s ease-in-out;
-    pointer-events: none;
+    pointer-events: none; 
 }
 
-#loading-overlay.active {
+#loading-overlay.active { 
     opacity: 1;
     pointer-events: auto;
 }
@@ -869,7 +927,7 @@ html {
     color: #2c3e50;
 }
 
-#loader {
+#loader { 
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -883,7 +941,7 @@ html {
     z-index: 99999;
 }
 
-.spinner {
+.spinner { 
     border: 8px solid #f3f3f3;
     border-top: 8px solid #3498db;
     border-radius: 50%;
@@ -898,86 +956,6 @@ html {
     }
 }
 
-.three-column-layout {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    justify-content: center;
-    flex-wrap: nowrap;
-    max-width: 1300px;
-    margin-left: auto; /* Center the layout block */
-    margin-right: auto; /* Center the layout block */
-    padding: 10px; /* Minimal padding for the layout itself */
-    box-sizing: border-box;
-    width: 100%; /* Take full width up to max-width */
-}
-
-.three-column-layout .image-column {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    flex: 0 1 220px;
-    max-width: 220px;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-}
-
-.three-column-layout .image-column img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
-}
-
-.three-column-layout .text-column {
-    flex: 1 1 50%;
-    width: 50%;
-    padding: 15px 20px;
-    box-sizing: border-box;
-    background-color: #fff;
-    border-radius: 5px;
-}
-
-.three-column-layout .text-column h2 {
-    margin-top: 0;
-    text-align: center; /* Ensure H2 is centered in this column */
-}
-
-.three-column-layout .text-column p,
-.three-column-layout .text-column h3,
-.three-column-layout .text-column ul {
-    text-align: right;
-}
-
-.three-column-layout .text-column h3 {
-    margin-top: 20px;
-}
-
-@media (max-width: 1024px) {
-    .three-column-layout {
-        flex-wrap: wrap;
-    }
-
-    .three-column-layout .image-column {
-        flex: 1 1 45%;
-        max-width: none;
-        margin-bottom: 15px;
-    }
-
-    .three-column-layout .text-column {
-        flex: 1 1 100%;
-        order: -1;
-        margin-bottom: 15px;
-    }
-}
-
-@media (max-width: 600px) {
-    .three-column-layout .image-column {
-        flex: 1 1 100%;
-    }
-}
 
 a {
     color: #4A90E2;
@@ -1068,7 +1046,7 @@ a:hover {
     text-align: center;
     padding: 16px;
     border-radius: 4px;
-    margin: auto;
+    margin: auto; 
     background-color: #384E77;
     color: #f0f2f5;
 }
@@ -1093,6 +1071,7 @@ a:hover {
     height: 0;
 }
 
+
 #intro {
     display: flex;
     flex-direction: column;
@@ -1101,30 +1080,33 @@ a:hover {
     margin-left: auto;
     text-wrap: balance;
     gap: 24px;
-
-    h2 {
-        font-family: serif;
-        font-size: 48px;
-        margin-bottom: 16px;
-    }
-
-    h3 {
-        font-family: serif;
-        font-size: 30px;
-        margin-bottom: 16px;
-    }
-
-    p {
-        font-size: 18px;
-        line-height: 2em;
-    }
 }
+#intro h2 { 
+    font-family: serif;
+    font-size: 48px;
+    margin-bottom: 16px;
+    color: #2c3e50; 
+    text-align: right;
+}
+#intro h3 { 
+    font-family: serif;
+    font-size: 30px;
+    margin-bottom: 16px;
+    color: #2c3e50;
+    text-align: right;
+}
+#intro p { 
+    font-size: 18px;
+    line-height: 2em;
+    text-align: right;
+}
+
 
 .typing-tabs {
     display: flex;
     position: relative;
     height: 3em;
-    gap: -5px;
+    gap: -5px; 
     top: 2px;
 }
 
@@ -1152,9 +1134,9 @@ a:hover {
     width: 100%;
     display: flex;
     flex-direction: column;
-    height: calc(100% - 40px); /* Adjust to prevent overflow of the whole section */
-    margin-top: 20px; /* Space from top of section */
-    margin-bottom: 20px; /* Space from bottom of section */
+    height: calc(100% - 40px); 
+    margin-top: 20px; 
+    margin-bottom: 20px; 
 }
 
 .writeup-tabs-container h1 {
@@ -1163,14 +1145,14 @@ a:hover {
     margin-bottom: 20px;
     color: #2c3e50;
     text-align: center;
-    flex-shrink: 0; /* Prevent h1 from shrinking */
+    flex-shrink: 0; 
 }
 
 .tabs {
     width: 100%;
-    margin-bottom: 0; /* Remove bottom margin, border handled by tab-content */
+    margin-bottom: 0; 
     border-bottom: 2px solid #dee2e6;
-    flex-shrink: 0; /* Prevent tabs bar from shrinking */
+    flex-shrink: 0; 
 }
 
 .tab-list {
@@ -1226,15 +1208,14 @@ a:hover {
   display: none;
 }
   
-.tab-content {
+.tab-content { /* For writeup tabs */
     background-color: #fff;
     border: 1px solid #dee2e6;
     border-top: none;
     border-radius: 0 0 .25rem .25rem;
     flex-grow: 1; 
     overflow-y: auto; 
-    /* max-height: calc(100vh - 250px); Example: Adjust based on header/tab height and padding */
-    /* Height will be constrained by .writeup-tabs-container and flex properties */
+    padding: 20px;
 }
 
 .tab-pane {
@@ -1272,8 +1253,8 @@ a:hover {
 }
 
 .medication-info-tabs-container {
-    margin-top: 25px; /* Space above this new section */
-    margin-bottom: 20px; /* Space below before the next paragraph */
+    margin-top: 25px; 
+    margin-bottom: 20px; 
     padding: 15px;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
@@ -1294,7 +1275,7 @@ a:hover {
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
-    margin-bottom: -1px; /* To make active tab border connect */
+    margin-bottom: -1px; 
     padding-bottom: 0;
 }
 
@@ -1304,7 +1285,7 @@ a:hover {
     background-color: #e9eef2;
     color: #333;
     border: 1px solid #ccc;
-    border-bottom: 1px solid #ddd; /* Default bottom border */
+    border-bottom: 1px solid #ddd; 
     border-radius: 4px 4px 0 0;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -1316,29 +1297,188 @@ a:hover {
 }
 
 .med-tab-btn.active {
-    background-color: #ffffff; /* Same as description background */
+    background-color: #ffffff; 
     color: #2c3e50;
     border-color: #ddd;
-    border-bottom: 1px solid #ffffff; /* To make it look connected to content */
+    border-bottom: 1px solid #ffffff; 
     font-weight: bold;
     position: relative;
-    z-index: 2; /* Ensure active tab is above the description border */
+    z-index: 2; 
 }
 
 .med-tab-description-content {
     padding: 15px;
     background-color: #ffffff;
     border: 1px solid #ddd;
-    border-radius: 0 0 4px 4px; /* Rounded corners for bottom */
-    min-height: 100px; /* Ensure some space for description */
+    border-radius: 0 0 4px 4px; 
+    min-height: 100px; 
     text-align: left;
     font-size: 0.9rem;
     line-height: 1.5;
     position: relative;
-    z-index: 1; /* Below active tab */
+    z-index: 1; 
 }
 
 .med-tab-description-content p {
     margin: 0;
     color: #333;
+}
+
+/* Scroll Down Animation */
+.scroll-down-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 175px; 
+    margin-bottom: 20px; 
+    width: 100%; 
+}
+
+.mouse-icon {
+    width: 28px; 
+    height: 48px; 
+    border: 2px solid #333; 
+    border-radius: 15px; 
+    position: relative;
+    display: flex;
+    justify-content: center; 
+}
+
+.mouse-wheel {
+    width: 6px; 
+    height: 6px; 
+    background-color: #333; 
+    border-radius: 50%; 
+    position: absolute;
+    top: 8px; 
+    animation: scroll-wheel-animation 2s infinite ease-out;
+}
+
+@keyframes scroll-wheel-animation {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% { 
+        transform: translateY(20px); 
+        opacity: 1;
+    }
+    100% { 
+        transform: translateY(20px);
+        opacity: 0;
+    }
+}
+
+.scroll-text {
+    margin-top: 8px;
+    font-size: 0.8em;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Animated Divider */
+.animated-divider-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0; 
+    box-sizing: border-box;
+    margin-top: -48px;
+}
+
+.dot-container {
+    display: flex;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: #5fc0ce; 
+    border-radius: 50%;
+    margin: 0 8px; 
+    animation: bounce-dot 1.8s infinite ease-in-out;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce-dot {
+    0%, 60%, 100% { 
+        transform: translateY(0);
+    }
+    30% { 
+        transform: translateY(-15px); 
+    }
+}
+
+/* Blinking Cursor for Typed Text */
+.typing-cursor {
+    display: inline-block;
+    width: 2px; 
+    height: 0.9em; 
+    background-color: white; 
+    margin-left: 2px; 
+    vertical-align: baseline; 
+    position: relative; 
+    top: 0.12em; 
+    animation: blink-caret-animation 1s step-end infinite;
+}
+
+.typing-cursor.typing-cursor-active {
+    background-color: white; 
+    animation: none; 
+}
+
+@keyframes blink-caret-animation {
+    0%, 100% { background-color: transparent; } 
+    50% { background-color: white; }          
+}
+
+/* MODIFIED RULE for .title-page-extra-subtitle */
+.title-page-content-wrapper .title-page-extra-subtitle { /* Increased specificity */
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #ffffff; /* Pure white */
+    font-style: italic;
+    font-weight: 300;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    min-height: 1.8rem;
+    padding: 0 10px;
+    box-sizing: border-box;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Adjust media queries if needed for this new subtitle's font size */
+@media (max-width: 768px) {
+    .typing-cursor {
+        height: 1.7rem; 
+    }
+    .title-page-content-wrapper .title-page-extra-subtitle { /* MODIFIED selector */
+        font-size: 1.3rem;
+        min-height: 1.6rem;
+    }
+}
+@media (max-width: 480px) {
+    .typing-cursor {
+        height: 1.4rem; 
+    }
+    .title-page-content-wrapper .title-page-extra-subtitle { /* MODIFIED selector */
+        font-size: 1.1rem;
+        min-height: 1.4rem;
+    }
 }
