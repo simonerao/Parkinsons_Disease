@@ -831,7 +831,7 @@ html {
 }
 
 #hand-viz-content-area {
-    min-height: 95vh; 
+    min-height: 100vh; 
     justify-content: center; 
 }
 
