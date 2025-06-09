@@ -48,18 +48,22 @@ function toggleDropdown() {
             .duration(800)
             .style("height", fullHeight + "px")
             .on("end", () => {
-                if (parseFloat(directionsDiv.style("height")) === fullHeight) {
+                // Check if the transition completed to the full height
+                // parseFloat is important as style.height might be "XXX.YYYpx"
+                if (Math.abs(parseFloat(directionsDiv.style("height")) - fullHeight) < 1) { // Allow for small floating point discrepancies
                     directionsDiv.style("height", "auto");
                 }
             });
     }
 
-    const trianglePolygon = d3.select(this)
-        .select('svg.dropdown')
+    // Select ALL svg.dropdown elements within the clicked .directions-title,
+    // then select the polygon within each of them.
+    const trianglePolygons = d3.select(this)
+        .selectAll('svg.dropdown')
         .select('polygon.dropdown-arrow-polygon');
 
-    if (!trianglePolygon.empty()) {
-        trianglePolygon.transition()
+    if (!trianglePolygons.empty()) {
+        trianglePolygons.transition()
             .duration(300)
             .attr("transform", isOpen ? "rotate(0, 9.5, 10.67)" : "rotate(-180, 9.5, 10.67)");
     }
