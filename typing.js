@@ -55,8 +55,8 @@ function toggleDropdown() {
     }
 
     const trianglePolygon = d3.select(this)
-        .select('svg.dropdown')
-        .select('polygon.dropdown-arrow-polygon');
+        .selectAll('svg.dropdown')
+        .selectAll('polygon.dropdown-arrow-polygon');
 
     if (!trianglePolygon.empty()) {
         trianglePolygon.transition()
