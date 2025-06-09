@@ -244,19 +244,20 @@
                     <button class="typing-tab" data-tab="tab2">Oh, How the Tables Have Turned</button>
                 </div>
                 <div class="typing-tab-content" id="tab1">
-                    <h2 style="margin: 16px auto;">Typing Showdown</h2>
+                    <!-- Changed || to | -->
+                    <h2 style="margin: 16px auto;">Typing Showdown<span class="flashing-cursor"></span></h2>
                     <p style="text-align: center; text-wrap: balance;">Changes in typing speed and accuracy can be a significant hurdle for those with Parkinson's who rely
                     on computers. Simple tasks like sending an email or navigating a smartphone may take longer and
                     require more effort. <b>This typing test allows you to race against a simulated persona with Parkinson's.</b></p>
                     <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
                     <div class="directions collapsed">
                         <ul>
-                            <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
-                                persona with Parkinson's. Their typing data will be compared against yours. 
+                            <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous
+                                persona with Parkinson's. Their typing data will be compared against yours.
                                 The dropdown menu is sorted by slowest (top) to fastest (bottom) simulated typing speed.</li>
                         </ul>
                             <div id="persona-note">
-                                <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
+                                <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in
                                 an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
                             </div>
                         <ul>
@@ -281,7 +282,7 @@
                     <div id="options" style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">
                         <select id="person-select">
                             <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
-                            <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
+                            <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option>
                             <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
                             <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
                             <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
@@ -304,24 +305,25 @@
                 </div>
 
                 <div class="typing-tab-content hidden" id="tab2">
-                    <h2 style="margin: 16px auto;">Oh, How the Tables Have Turned</h2>
+                    <!-- Changed || to | -->
+                    <h2 style="margin: 16px auto;">Oh, How the Tables Have Turned<span class="flashing-cursor"></span></h2>
                     <p style="text-align: center; text-wrap: balance;">Comparing your speed is one thing. But truly understanding the frustration requires a different perspective. Let's simulate what it feels like to type with the motor challenges associated with Parkinson's. <b>This typing test limits you from typing too fast, mimicking the rate of the Parkinson's persona.</b>
                     </p>
                     <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
                     <div class="directions collapsed">
                         <ul>
-                            <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
-                                persona with Parkinson's. Their typing data will be compared against yours. 
+                            <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous
+                                persona with Parkinson's. Their typing data will be compared against yours.
                                 The dropdown menu is sorted by slowest (top) to fastest (bottom) simulated typing speed.</li>
                         </ul>
                         <div id="persona-note">
-                            <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
+                            <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in
                             an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
                         </div>
                         <ul>
-                            <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear, <u><i>but this time you won't be able to type the letters until 
+                            <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear, <u><i>but this time you won't be able to type the letters until
                                 they are shaded black</i></u>, imitating the pace of your selected persona.</li>
-                            <li><strong>View Real-time Chart:</strong> Once you finish, a line chart will appear, showing <i><u>the duration you spent typing with the restriction in golden yellow</i></u>, 
+                            <li><strong>View Real-time Chart:</strong> Once you finish, a line chart will appear, showing <i><u>the duration you spent typing with the restriction in golden yellow</i></u>,
                                 and <i><u>your most recent test duration in "Race Mode" in dark blue.</i></u></li>
                             <li><strong>Interpret the Chart:</strong>
                                 <ul>
@@ -330,7 +332,7 @@
                                     <li>The <strong>y-axis</strong> shows the duration of the test in seconds (s).</li>
                                 </ul>
                             </li>
-                            <li><strong>What to Look For:</strong> Look at the difference between the "Restriction" line for this test and the line for the "No Restriction" test. 
+                            <li><strong>What to Look For:</strong> Look at the difference between the "Restriction" line for this test and the line for the "No Restriction" test.
                                 How did it feel to type at the pace of someone with Parkinson's?</li>
                             <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
                                 comparison persona.</li>
@@ -340,7 +342,7 @@
                     <div id="options-2" style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">
                         <select id="person-select-2">
                             <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
-                            <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
+                            <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option>
                             <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
                             <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
                             <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>

@@ -1486,3 +1486,33 @@ a:hover {
 .spotlight-text {
     color: #4c98a4;; /* A standard blue color, or choose your preferred blue */
 }
+
+
+/* style.css */
+
+/* style.css */
+
+.flashing-cursor {
+    display: inline-block;
+    /* Remove background-color and width/height from here */
+    /* width: 2px; */
+    /* height: 1em; */
+    /* background-color: currentColor; */
+
+    border-right: 2px solid currentColor; /* Creates a solid right border as the cursor */
+    height: 1em; /* Still maintain height relative to parent text */
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink-caret 0.75s step-end infinite;
+    box-sizing: border-box; /* Ensures padding/border are included in total width/height */
+}
+
+/* Keyframes remain the same */
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent; /* Makes the border (cursor) transparent */
+    }
+    50% {
+        border-color: currentColor; /* Makes the border (cursor) visible */
+    }
+}
