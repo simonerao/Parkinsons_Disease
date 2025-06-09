@@ -214,6 +214,17 @@ html {
     color: #5fc0ce;
 }
 
+#intro-page .text-column>h2 {
+    margin-left: auto;
+    text-align: right;
+    width: 300px;
+}
+
+#hand-viz-page .text-column>h2 {
+    text-align: center;
+    width: 100%;
+}
+
 .content-wrapper h3 {
     font-family: 'Roboto', sans-serif;
     font-size: 1.6rem;
@@ -267,7 +278,7 @@ html {
 }
 
 .text-column {
-    text-align: left;
+    text-align: right;
 }
 
 .text-column h2,
@@ -522,13 +533,7 @@ html {
 }
 
 .typing-test-wrapper {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 800px; /* This will be centered by section's align-items: center */
-    /* margin: 0 auto; /* Ensured by section's align-items: center for the block */
+    background-color: transparent;
 }
 
 .typing-test-wrapper h2 {
@@ -928,8 +933,7 @@ html {
 
 .three-column-layout .text-column {
     flex: 1 1 50%;
-    min-width: 300px;
-    max-width: 700px;
+    width: 50%;
     padding: 15px 20px;
     box-sizing: border-box;
     background-color: #fff;
@@ -944,7 +948,7 @@ html {
 .three-column-layout .text-column p,
 .three-column-layout .text-column h3,
 .three-column-layout .text-column ul {
-    text-align: left;
+    text-align: right;
 }
 
 .three-column-layout .text-column h3 {
@@ -1080,6 +1084,7 @@ a:hover {
     padding: 6px;
     justify-content: center;
     align-items: center;
+    text-align: center;
     margin: 0 0 6px 0;
 }
 
@@ -1087,6 +1092,58 @@ a:hover {
     overflow: hidden;
     height: 0;
 }
+
+#intro {
+    display: flex;
+    flex-direction: column;
+    width: 60%; 
+    text-align: right; 
+    margin-left: auto;
+    text-wrap: balance;
+    gap: 24px;
+
+    h2 {
+        font-family: serif;
+        font-size: 48px;
+        margin-bottom: 16px;
+    }
+
+    h3 {
+        font-family: serif;
+        font-size: 30px;
+        margin-bottom: 16px;
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 2em;
+    }
+}
+
+.typing-tabs {
+    display: flex;
+    position: relative;
+    height: 3em;
+    gap: -5px;
+    top: 2px;
+}
+
+.typing-tab {
+    flex: 1;
+    background: white;
+    opacity: 0.3;
+    border: 2px solid #ccc;
+    border-bottom: none;
+    padding: 8px 16px;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.typing-tab.active {
+    background: white;
+    opacity: 1;
+    z-index: 1;
 
 /* Styles for Tabbed Write-Up Section */
 .writeup-tabs-container {
@@ -1155,8 +1212,20 @@ a:hover {
     font-weight: 700;
 }
 
-.tab-content {
+.typing-tab-content {
     padding: 20px;
+    background: white;
+    border: 2px solid #ccc;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+  display: none;
+}
+  
+.tab-content {
     background-color: #fff;
     border: 1px solid #dee2e6;
     border-top: none;

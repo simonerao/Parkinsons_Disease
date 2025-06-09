@@ -59,23 +59,32 @@ function toggleDropdown() {
             });
     }
 
-    // Select ALL svg polygons within the clicked .directions-title element
-    // .dropdown is the class of the SVG, .dropdown-arrow-polygon is the class of the polygon
-    const triangles = d3.select(this).selectAll('svg.dropdown polygon.dropdown-arrow-polygon');
-    
-    if (!triangles.empty()) {
-        // Determine the target transform based on the 'isOpen' state (state *before* this click)
-        // If it was open (isOpen is true), it's now closing, so rotate to 0 degrees (points down).
-        // If it was closed (isOpen is false), it's now opening, so rotate to 180 degrees (points up).
-        const targetTransform = isOpen ? "rotate(0, 10, 10.5)" : "rotate(180, 10, 10.5)";
-        // Using 10, 10.5 as the approximate center of the 19x19 SVG for rotation
-
-        triangles.transition() // Apply transition to all selected triangles
-            .duration(800)
-            .attr("transform", targetTransform);
-    }
+    // Optional: rotate the triangle
+    d3.select(this)
+        .selectAll('.dropdown-triangles')
+        .attr("transform", isOpen ? null : "rotate(180, 10, 10.67)"); // rotate around center
 }
 
+function enableTabInteraction() {
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        // Hide all content
+        contents.forEach(c => c.classList.add('hidden'));
+
+        // Activate clicked tab
+        tab.classList.add('active');
+        const target = tab.dataset.tab;
+        document.getElementById(target).classList.remove('hidden');
+        });
+    });
+}
+
+enableTabInteraction();
 dropdownTriangle();
 
 // --- VISUALIZATION 6: PULSE VISUALIZATION & MEDICATION LINE CHART ---
