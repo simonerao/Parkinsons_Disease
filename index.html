@@ -79,7 +79,7 @@
             <div class="two-column-layout">
                 <div class="column text-column">
                     <h2>Motor Symptoms & The Hand</h2>
-                    <p style="text-align: center; text-wrap: balance;">The symptoms you explore here – changes in hand function – are not just data points; they
+                    <p>The symptoms you explore here – changes in hand function – are not just data points; they
                         translate into daily challenges. Difficulty with writing can make signing documents or writing
                         notes frustrating. Tremors or rigidity can make buttoning a shirt, using utensils, or holding a
                         cup a slow and arduous process, impacting independence. These seemingly small motor changes can
@@ -98,8 +98,7 @@
                                 difficulties with daily tasks like writing or gripping objects.</li>
                         </ul>
                     </div>
-
-                    <p style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 20px; text-align: center; text-wrap: balance;"><em>The effects on the hand demonstrate the loss of fine motor control. These challenges extend to other precise actions, like typing, where rhythm and consistency are key. Parkinson's and its treatments can alter these digital fingerprints. Let's visualize how typing rhythms might change...</em></p>
+                    <p style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 20px;"><em>The effects on the hand demonstrate the loss of fine motor control. These challenges extend to other precise actions, like typing, where rhythm and consistency are key. Parkinson's and its treatments can alter these digital fingerprints. Let's visualize how typing rhythms might change...</em></p>
                 </div>
                 <div class="column viz-column">
                     <div id="loading-overlay"
@@ -111,12 +110,13 @@
                     <div id="hand-tooltip"></div> <!-- Tooltip for hand.js -->
                 </div>
             </div>
+        </section>
 
-            <p style="margin: 48px auto; text-align: center; letter-spacing: 5em; text-indent: 5em;">●●●●●</p>
-
+        <section id="pulse-viz-page" class="section">
             <div>
-                <div class="two-column-layout" style="margin: auto;">
+                <div class="two-column-layout">
                     <div class="column viz-column pulse-column-left">
+                        <h2>Typing Rhythm & Medication</h2>
                         <div id="med-buttons">
                             <button class="med-btn" data-med="Levadopa" title="The most common and effective drug for Parkinson's. Levodopa converts to dopamine in the brain, helping to improve motor control, reduce tremors, stiffness, and slowness. This can lead to smoother and more consistent typing patterns.">Levadopa</button>
                             <button class="med-btn" data-med="DA" title="Dopamine Agonists mimic the effects of dopamine in the brain by stimulating dopamine receptors. They help manage motor symptoms and can improve movement fluidity, which may be reflected in typing rhythm.">DA</button>
@@ -158,11 +158,7 @@
                     </div>
 
                     <div class="column text-column pulse-column-right">
-                        <h2>Typing Rhythm & Medication</h2>
                         <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
-                        <p style="text-align: center; text-wrap: balance;">The consistency of motor actions, like typing, can be altered by Parkinson's. This interactive
-                            "pulse" demonstrates representative typing rhythms. Select a medication category to see how
-                            treatment might influence these patterns. Below, a line chart visualizes Hold or Flight Times for a sequence of keystrokes.</p>
                         <div class="directions collapsed">
                             <ul>
                                 <li><strong>Select Medication (for PULSE):</strong> Click on the medication buttons ("Levodopa," "DA," etc.)
@@ -198,7 +194,8 @@
                                     when you select different medication categories for the PULSE? Compare this to the overall trends and variability visible in the line chart.
                                 </li>
                             </ul>
-                        </div> 
+                        </div>
+                        
                         <!-- MOVED PARAGRAPH WITH SHADOW HERE -->
                         <p style="text-align: center; margin: auto; box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 20px;">For individuals navigating Parkinson's, like Michael J. Fox, medication becomes a crucial part of daily life, aiming to manage symptoms like tremors or slowness that can affect everyday tasks—even something as common as typing. <br> <br> However, finding the right medication and dosage is often a journey, and the effects can vary. This next visualization explores how different common types of Parkinson's medications can influence the rhythm and consistency of typing, offering a glimpse into this aspect of managing the condition. <br> <br> The consistency of motor actions, like typing, can be altered by Parkinson's. This interactive
                             "pulse" demonstrates representative typing rhythms. Select a medication category to see how
@@ -221,7 +218,7 @@
                         <!-- ORIGINAL PARAGRAPH WITH SHADOW WAS HERE, NOW MOVED UP -->
                     </div>
                 </div>
-                <p style="text-align: center; margin: 20px auto 0; width: 65%; padding-bottom: 60px;"><em>We've seen a simulation of how typing rhythms can differ. But how do these abstract patterns compare to a more direct experience? Now you can compare your own typing pattern against a simulated Parkinson's persona.</em></p>
+                <p style="text-align: center; margin: 20px auto 0; width: 65%"><em>We've seen a simulation of how typing rhythms can differ. But how do these abstract patterns compare to a more direct experience? Now you can compare your own typing pattern against a simulated Parkinson's persona.</em></p>
             </div>
         </section>
 
@@ -394,10 +391,10 @@
                      intervention.
                 </p>
                 <p>
-                    <strong>One Thing to Learn:</strong> The most crucial takeaway is that Parkinson's subtly but profoundly impacts everyday actions, and this project demonstrates that by allowing you to directly observe simulated motor symptoms (hand model, pulse viz) and even personally experience a simulated typing difficulty. This firsthand (or close-to-firsthand) encounter makes the 'invisible' challenges of Parkinson's more tangible and fosters genuine empathy.
+                   Our project succeeds because it moves beyond static facts. The 3D hand model allows exploration of affected areas. The 'PULSE' visualization translates abstract data into a perceptible rhythm. Most powerfully, the interactive typing tests—especially the empathy-building second test—allow users to feel a fraction of the challenge, creating a memorable and personal connection to the data and the human experience behind Parkinson's. The personas (MJF, Ali, etc.) help ground these abstract concepts in relatable human stories.
                 </p>
                 <p>
-                   Our project succeeds because it moves beyond static facts. The 3D hand model allows exploration of affected areas. The 'PULSE' visualization translates abstract data into a perceptible rhythm. Most powerfully, the interactive typing tests—especially the empathy-building second test—allow users to feel a fraction of the challenge, creating a memorable and personal connection to the data and the human experience behind Parkinson's. The personas (MJF, Ali, etc.) help ground these abstract concepts in relatable human stories.
+                    <strong>One Thing to Learn:</strong> The most crucial takeaway is that Parkinson's subtly but profoundly impacts everyday actions, and this project demonstrates that by allowing you to directly observe simulated motor symptoms (hand model, pulse viz) and even personally experience a simulated typing difficulty. This firsthand (or close-to-firsthand) encounter makes the 'invisible' challenges of Parkinson's more tangible and fosters genuine empathy.
                 </p>
             </div>
         </section>
@@ -498,13 +495,13 @@
                             reading about how hand movements are affected, you can <em>see</em> and <em>interact</em> with a
                             model that demonstrates these changes. Instead of just learning that typing patterns can alter,
                             you can <em>feel</em> a simulated rhythm and even test your own.</p>
-                        <p><strong>What your interactive experience enables that static resources don't:</strong> Static
+                        <p><strong>What our interactive experience enables that static resources don't:</strong> Static
                             resources provide information; interactive experiences foster engagement and intuition. With
                             this project, you're not just a passive recipient of facts. You can actively explore how
                             specific hand areas are impacted, compare different medication effects on motor rhythm, and even
                             analyze your own typing data. This direct engagement allows for a more personal and memorable
                             understanding of how Parkinson's manifests.</p>
-                        <p><strong>The gap your project fills in Parkinson's education:</strong> While many excellent
+                        <p><strong>The gap our project fills in Parkinson's education:</strong> While many excellent
                             resources explain the medical aspects of Parkinson's, there's a gap in providing intuitive,
                             experiential learning tools for the general public, patients, and their families. This project
                             aims to bridge that gap by translating complex data and symptoms into accessible visual
