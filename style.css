@@ -831,14 +831,14 @@ html {
 }
 
 #hand-viz-content-area {
-    min-height: 100vh; 
+    min-height: 120vh; 
     justify-content: center; 
 }
 
 #hand-viz-content-area > .two-column-layout {
     width: 100%; 
     max-width: 1200px; 
-    height: 90%; 
+    height: 100%; 
     align-items: stretch; 
 }
 
@@ -1049,11 +1049,6 @@ a:hover {
     margin: auto; 
     background-color: #384E77;
     color: #f0f2f5;
-}
-
-.dropdown {
-    width: auto;
-    height: auto;
 }
 
 .directions-title {
