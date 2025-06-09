@@ -256,8 +256,7 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: stretch;
-    /* Changed from flex-start to stretch */
+    align-items: flex-start; /* MODIFIED from stretch */
     width: 100%;
     max-width: 1200px; /* Ensures the layout itself doesn't exceed this, good for combined sections */
     gap: 30px;
@@ -265,8 +264,6 @@ html {
     box-sizing: border-box;
     margin-left: auto; /* Center the layout block if section is wider */
     margin-right: auto; /* Center the layout block */
-    /* margin-top: 10px; Removed, handle spacing between combined parts directly */
-    /* margin-bottom: 20px; Removed */
 }
 
 .column {

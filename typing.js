@@ -11,54 +11,68 @@ const medDescriptions = {
 };
 
 function dropdownTriangle() {
-    const dropdownSvgs = d3.selectAll('.dropdown')
+    const dropdownSvgs = d3.selectAll('.dropdown') // Selects all SVGs with class dropdown
         .attr('width', 19)
         .attr('height', 19);
 
+    // Appends a polygon to EACH selected SVG
     dropdownSvgs.append("polygon")
-        .attr('class', 'unclicked')
-        .attr("points", "5,15 10,6.34 15,15") // upward triangle
+        .attr('class', 'dropdown-arrow-polygon') // Added a class for easier selection if needed
+        .attr("points", "5,6.34 10,15 15,6.34") // downward triangle
         .attr("fill", "#384E77")
-        .style("cursor", "pointer")
+        // .style("cursor", "pointer") // Cursor is on the parent .directions-title
         .style('stroke-width', 1)
         .style('stroke', 'black');
+        // Initial transform is "rotate(0)" by default (points down)
 
     d3.selectAll('.directions-title')
-        .style('cursor', 'pointer')
-        .on('click', function () { toggleDropdown.call(this); });
+        .style('cursor', 'pointer') // Set cursor on the entire title for better UX
+        .on('click', function () { toggleDropdown.call(this); }); // 'this' will be the .directions-title
 }
 
 function toggleDropdown() {
-    const directions = d3.select(this.nextElementSibling);
-    const node = directions.node();
-    const isOpen = node.style.height !== "0px" && node.offsetHeight > 0;
+    const directionsDiv = d3.select(this.nextElementSibling); // The div with class 'directions'
+    const node = directionsDiv.node();
+    // Check if it's currently open (height is not 0px and offsetHeight is greater than 0)
+    const isOpen = node.style.height !== "0px" && node.style.height !== "" && node.offsetHeight > 0;
 
-    if (isOpen) {
+    if (isOpen) { // If currently open, we are closing it
         const currentHeight = node.scrollHeight;
-
-        directions
-        .style("height", currentHeight + "px")
-        .transition()
-        .duration(800)
-        .style("height", "0px");
-    } else {
+        directionsDiv
+            .style("height", currentHeight + "px") // Set to current scrollHeight to start transition from
+            .transition()
+            .duration(800)
+            .style("height", "0px"); // Transition to 0px
+    } else { // If currently closed, we are opening it
         const fullHeight = node.scrollHeight;
-
-        directions
-        .style("height", "0px")
-        .transition()
-        .duration(800)
-        .style("height", fullHeight + "px")
-        .on("end", () => {
-            directions.style("height", "auto");
-        });
+        directionsDiv
+            .style("height", "0px") // Start from 0px
+            .transition()
+            .duration(800)
+            .style("height", fullHeight + "px") // Transition to full scrollHeight
+            .on("end", () => {
+                // Set to auto after transition to accommodate dynamic content,
+                // but only if it was actually opened to fullHeight (not interrupted)
+                if (parseFloat(directionsDiv.style("height")) === fullHeight) {
+                    directionsDiv.style("height", "auto");
+                }
+            });
     }
 
-    const triangle = d3.select(this.querySelector('svg polygon'));
-    if (triangle.node()) { 
-        triangle.transition()
+    // Select ALL svg polygons within the clicked .directions-title element
+    // .dropdown is the class of the SVG, .dropdown-arrow-polygon is the class of the polygon
+    const triangles = d3.select(this).selectAll('svg.dropdown polygon.dropdown-arrow-polygon');
+    
+    if (!triangles.empty()) {
+        // Determine the target transform based on the 'isOpen' state (state *before* this click)
+        // If it was open (isOpen is true), it's now closing, so rotate to 0 degrees (points down).
+        // If it was closed (isOpen is false), it's now opening, so rotate to 180 degrees (points up).
+        const targetTransform = isOpen ? "rotate(0, 10, 10.5)" : "rotate(180, 10, 10.5)";
+        // Using 10, 10.5 as the approximate center of the 19x19 SVG for rotation
+
+        triangles.transition() // Apply transition to all selected triangles
             .duration(800)
-            .attr("transform", isOpen ? null : "rotate(180, 10, 10)");
+            .attr("transform", targetTransform);
     }
 }
 
@@ -66,7 +80,7 @@ dropdownTriangle();
 
 // --- VISUALIZATION 6: PULSE VISUALIZATION & MEDICATION LINE CHART ---
 function initializePulseVisualization() {
-  console.log("initializePulseVisualization called"); 
+  console.log("initializePulseVisualization called");
   const vizContainer = document.getElementById('pulse-viz-page');
   if (!vizContainer) {
     console.error("Pulse viz container not found");
@@ -75,14 +89,14 @@ function initializePulseVisualization() {
 
   console.log("Attempting to set tooltips for med buttons...");
   const medButtons = d3.selectAll('#pulse-viz-page .med-btn');
-  console.log("Found medButtons selection:", medButtons); 
-  console.log("Number of medButtons found:", medButtons.size()); 
-  
+  console.log("Found medButtons selection:", medButtons);
+  console.log("Number of medButtons found:", medButtons.size());
+
   if (medButtons.empty()) {
       console.warn("No medication buttons found with selector '#pulse-viz-page .med-btn'");
   }
 
-  medButtons.each(function(d, i) { 
+  medButtons.each(function(d, i) {
       const buttonNode = this;
       const medName = buttonNode.dataset.med;
 
@@ -106,13 +120,13 @@ function initializePulseVisualization() {
     { name: 'No Med', file: 'data/nomed_events.csv', color: '#9467bd' }
   ];
 
-  let currentChartMetric = 'Hold'; 
-  let visibleMedications = new Set(meds.map(m => m.name)); 
-  let allMedicationData = []; 
-  let currentPulseMedicationName = ''; 
+  let currentChartMetric = 'Hold';
+  let visibleMedications = new Set(meds.map(m => m.name));
+  let allMedicationData = [];
+  let currentPulseMedicationName = '';
 
   const chartLoader = document.getElementById('chart-loading-overlay');
-  const globalLoader = document.getElementById('loader'); 
+  const globalLoader = document.getElementById('loader');
   const chartContainer = d3.select("#medication-line-chart-container");
   const medicationTogglesContainer = d3.select('#chart-medication-toggles');
 
@@ -133,7 +147,7 @@ function initializePulseVisualization() {
       });
     label.append('span').text(med.name);
   });
-  
+
   // --- NEW: Medication Info Tabs Logic ---
   const medTabsNavContainer = d3.select('#pulse-viz-page .med-tabs-nav');
   const medTabDescriptionContent = d3.select('#pulse-viz-page .med-tab-description-content');
@@ -146,10 +160,10 @@ function initializePulseVisualization() {
         .text(med.name)
         .on('click', function() {
           const selectedMedName = d3.select(this).attr('data-med-tab');
-          
+
           medTabsNavContainer.selectAll('.med-tab-btn').classed('active', false);
           d3.select(this).classed('active', true);
-          
+
           const description = medDescriptions[selectedMedName] || "Description not available.";
           medTabDescriptionContent.html(`<p>${description}</p>`);
         });
@@ -185,10 +199,10 @@ function initializePulseVisualization() {
   );
 
   Promise.all(dataPromises).then(datasets => {
-    allMedicationData = datasets; 
-    
+    allMedicationData = datasets;
+
     if (chartLoader) chartLoader.style.display = 'none';
-    if (globalLoader) globalLoader.style.display = 'none'; 
+    if (globalLoader) globalLoader.style.display = 'none';
 
     if (allMedicationData.every(ds => ds.length === 0)) {
       console.error("No data loaded for pulse visualization or line chart.");
@@ -203,7 +217,7 @@ function initializePulseVisualization() {
       return;
     }
 
-    renderMedicationLineChart(); 
+    renderMedicationLineChart();
 
     const button = d3.select('#big-button');
     const pulseHoldTimeEl = document.getElementById('pulse-hold-time');
@@ -220,12 +234,12 @@ function initializePulseVisualization() {
       d3.select('#tempo-value').text(tempo + 'x');
     });
 
-    d3.selectAll('#pulse-viz-page .med-btn').on('click', function () { 
+    d3.selectAll('#pulse-viz-page .med-btn').on('click', function () {
       stopSignal = true;
       if (animationTimeout) clearTimeout(animationTimeout);
-      d3.select(".pulsing-point").remove(); 
+      d3.select(".pulsing-point").remove();
 
-      d3.selectAll('#pulse-viz-page .med-btn').classed('active', false); 
+      d3.selectAll('#pulse-viz-page .med-btn').classed('active', false);
       d3.select(this).classed('active', true);
 
       currentPulseMedicationName = d3.select(this).attr('data-med');
@@ -243,7 +257,7 @@ function initializePulseVisualization() {
 
     function playEvents(i) {
       if (stopSignal || i >= currentEventsForAnimation.length) {
-        d3.select(".pulsing-point").remove(); 
+        d3.select(".pulsing-point").remove();
         return;
       }
       const ev = currentEventsForAnimation[i];
@@ -264,15 +278,15 @@ function initializePulseVisualization() {
       }
 
       button
-        .style('background-color', '#3e7ac0') 
+        .style('background-color', '#3e7ac0')
         .transition()
         .duration(holdDur)
         .style('transform', 'scale(0.85)')
         .on('end', () => {
           button
-            .style('background-color', '#4A90E2') 
+            .style('background-color', '#4A90E2')
             .transition()
-            .duration(50) 
+            .duration(50)
             .style('transform', 'scale(1)')
             .on('end', () => {
               animationTimeout = setTimeout(() => playEvents(i + 1), gapDur);
@@ -294,17 +308,17 @@ function initializePulseVisualization() {
     }
   });
 
-  let chartSvg, xScale, yScale; 
+  let chartSvg, xScale, yScale;
 
   function renderMedicationLineChart() {
     if (allMedicationData.length === 0) return;
 
-    chartContainer.select("svg").remove(); 
+    chartContainer.select("svg").remove();
 
     const margin = { top: 30, right: 150, bottom: 50, left: 60 };
     const containerWidth = chartContainer.node().getBoundingClientRect().width || 600;
-    const containerHeight = 350; 
-    
+    const containerHeight = 350;
+
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
 
@@ -320,7 +334,7 @@ function initializePulseVisualization() {
     dataToPlot.forEach(ds => {
       if (ds.length > maxEvents) maxEvents = ds.length;
     });
-    const displayMaxEvents = Math.min(maxEvents, 200); 
+    const displayMaxEvents = Math.min(maxEvents, 200);
 
     let maxYValue = 0;
     dataToPlot.forEach(ds => {
@@ -328,7 +342,7 @@ function initializePulseVisualization() {
         const currentMaxY = d3.max(slicedDs, d => d[currentChartMetric]);
         if (currentMaxY > maxYValue) maxYValue = currentMaxY;
     });
-    if (maxYValue === 0 || isNaN(maxYValue)) maxYValue = (currentChartMetric === 'Hold') ? 500 : 1000; 
+    if (maxYValue === 0 || isNaN(maxYValue)) maxYValue = (currentChartMetric === 'Hold') ? 500 : 1000;
 
     xScale = d3.scaleLinear()
       .domain([0, displayMaxEvents > 0 ? displayMaxEvents - 1 : 1])
@@ -402,7 +416,7 @@ function initializePulseVisualization() {
   function showPulsePointOnChart(index, value, color) {
     if (!chartSvg || !xScale || !yScale || isNaN(value) || value === null) return;
 
-    d3.select(".pulsing-point").remove(); 
+    d3.select(".pulsing-point").remove();
 
     const cx = xScale(index);
     const cy = yScale(value);
@@ -416,9 +430,9 @@ function initializePulseVisualization() {
           .attr("fill", color)
           .style("opacity", 1)
           .transition()
-            .duration(1000) 
+            .duration(1000)
             .style("opacity", 0)
-            .remove(); 
+            .remove();
     }
   }
 
