@@ -1208,3 +1208,75 @@ a:hover {
     margin-bottom: 12px;
     text-align: left;
 }
+
+.medication-info-tabs-container {
+    margin-top: 25px; /* Space above this new section */
+    margin-bottom: 20px; /* Space below before the next paragraph */
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.medication-info-tabs-container h4 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.med-tabs-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: -1px; /* To make active tab border connect */
+    padding-bottom: 0;
+}
+
+.med-tab-btn {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    background-color: #e9eef2;
+    color: #333;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #ddd; /* Default bottom border */
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 0;
+}
+
+.med-tab-btn:hover {
+    background-color: #d1d9e0;
+}
+
+.med-tab-btn.active {
+    background-color: #ffffff; /* Same as description background */
+    color: #2c3e50;
+    border-color: #ddd;
+    border-bottom: 1px solid #ffffff; /* To make it look connected to content */
+    font-weight: bold;
+    position: relative;
+    z-index: 2; /* Ensure active tab is above the description border */
+}
+
+.med-tab-description-content {
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 0 0 4px 4px; /* Rounded corners for bottom */
+    min-height: 100px; /* Ensure some space for description */
+    text-align: left;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1; /* Below active tab */
+}
+
+.med-tab-description-content p {
+    margin: 0;
+    color: #333;
+}
