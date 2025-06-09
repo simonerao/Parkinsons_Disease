@@ -188,10 +188,6 @@ html {
     background-color: #e9eef2;
 }
 
-#pulse-viz-page {
-    background-color: #ffffff;
-}
-
 #quote-page {
     background-color: #384E77;
     color: #f0f2f5;
@@ -238,7 +234,12 @@ html {
     color: #2c3e50;
 }
 
-#intro-page .text-column>h2,
+#intro-page .text-column>h2 {
+    margin-left: auto;
+    text-align: right;
+    width: 300px;
+}
+
 #hand-viz-page .text-column>h2 {
     text-align: center;
     width: 100%;
@@ -284,7 +285,7 @@ html {
     padding: 10px 0;
     box-sizing: border-box;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .column {
@@ -297,7 +298,7 @@ html {
 }
 
 .text-column {
-    text-align: left;
+    text-align: right;
 }
 
 .text-column h2,
@@ -552,12 +553,7 @@ html {
 }
 
 .typing-test-wrapper {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 800px;
+    background-color: transparent;
 }
 
 .typing-test-wrapper h2 {
@@ -961,8 +957,7 @@ html {
 
 .three-column-layout .text-column {
     flex: 1 1 50%;
-    min-width: 300px;
-    max-width: 700px;
+    width: 50%;
     padding: 15px 20px;
     box-sizing: border-box;
     background-color: #fff;
@@ -976,7 +971,7 @@ html {
 .three-column-layout .text-column p,
 .three-column-layout .text-column h3,
 .three-column-layout .text-column ul {
-    text-align: left;
+    text-align: right;
 }
 
 .three-column-layout .text-column h3 {
@@ -1120,10 +1115,77 @@ a:hover {
     padding: 6px;
     justify-content: center;
     align-items: center;
+    text-align: center;
     margin: 0 0 6px 0;
 }
 
 .directions {
     overflow: hidden;
     height: 0;
+}
+
+#intro {
+    display: flex;
+    flex-direction: column;
+    width: 60%; 
+    text-align: right; 
+    margin-left: auto;
+    text-wrap: balance;
+    gap: 24px;
+
+    h2 {
+        font-family: serif;
+        font-size: 48px;
+        margin-bottom: 16px;
+    }
+
+    h3 {
+        font-family: serif;
+        font-size: 30px;
+        margin-bottom: 16px;
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 2em;
+    }
+}
+
+.tabs {
+    display: flex;
+    position: relative;
+    height: 3em;
+    gap: -5px;
+    top: 2px;
+}
+
+.tab {
+    flex: 1;
+    background: white;
+    opacity: 0.3;
+    border: 2px solid #ccc;
+    border-bottom: none;
+    padding: 8px 16px;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tab.active {
+    background: white;
+    opacity: 1;
+    z-index: 1;
+}
+
+.tab-content {
+    padding: 20px;
+    background: white;
+    border: 2px solid #ccc;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+  display: none;
 }

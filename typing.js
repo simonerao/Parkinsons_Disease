@@ -7,7 +7,7 @@ function dropdownTriangle() {
         .attr('height', 19);
 
     dropdownSvgs.append("polygon")
-        .attr('class', 'unclicked')
+        .attr('class', 'dropdown-triangles')
         .attr("points", "5,15 10,6.34 15,15") // upward triangle
         .attr("fill", "#384E77")
         .style("cursor", "pointer")
@@ -46,12 +46,31 @@ function toggleDropdown() {
     }
 
     // Optional: rotate the triangle
-    const triangle = d3.selectAll(this.querySelector('svg polygon'));
-    triangle.transition()
-        .duration(800)
-        .attr("transform", isOpen ? null : "rotate(180, 10, 10)"); // rotate around center
+    d3.select(this)
+        .selectAll('.dropdown-triangles')
+        .attr("transform", isOpen ? null : "rotate(180, 10, 10.67)"); // rotate around center
 }
 
+function enableTabInteraction() {
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        // Hide all content
+        contents.forEach(c => c.classList.add('hidden'));
+
+        // Activate clicked tab
+        tab.classList.add('active');
+        const target = tab.dataset.tab;
+        document.getElementById(target).classList.remove('hidden');
+        });
+    });
+}
+
+enableTabInteraction();
 dropdownTriangle();
 
 // --- VISUALIZATION 6: PULSE VISUALIZATION & MEDICATION LINE CHART ---

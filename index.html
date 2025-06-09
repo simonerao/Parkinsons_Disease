@@ -41,46 +41,50 @@
         </section>
 
         <section id="intro-page" class="section">
-            <div class="three-column-layout">
-                <div class="image-column">
+            <img src="images/top-left-polaroid.png" width="50%" style="position:absolute; left:0; top:-5; z-index: -1;">
+            <!-- <div class="three-column-layout"> -->
+                <!-- <div class="image-column">
                     <img src="images/doubtfire.jpg" alt="Image of Robin Williams, who had Parkinson's">
                     <img src="images/ali.jpg" alt="Image of Muhammad Ali, who had Parkinson's">
-                </div>
+                </div> -->
 
-                <div class="text-column">
-                    <h2>A Deeper Look into Parkinson's</h2>
-                    <p><em>What if the way you typed could tell a story about your brain health? Parkinson's Disease, a
-                            condition affecting millions, often whispers its first signs in the subtle changes to our
-                            everyday movements.</em></p>
-                    <p>Every six minutes, someone in the United States is diagnosed with Parkinson's Disease. That's
-                        over
-                        90,000 people each year facing a future with this progressive neurological disorder. For many,
-                        including beloved figures like Michael J. Fox and Muhammad Ali, the journey with Parkinson's is
-                        a
-                        public one, but for countless others, it's a personal battle fought with courage and resilience.
-                        This project is inspired by the need to bring greater understanding to a condition that touches
-                        so
-                        many lives, often silently at first.</p>
-                    <h3>Our Research Question</h3>
+                <div id="intro">
+                    <div>
+                        <h2>A Deeper Look into Parkinson's</h2>
+                        <p><em>What if the way you typed could tell a story about your brain health? Parkinson's Disease, a
+                                condition affecting millions, often whispers its first signs in the subtle changes to our
+                                everyday movements.</em></p>
+                    </div>
+                    <div>
+                        <h3>Every six minutes, someone in the United States is diagnosed with Parkinson's Disease.</h3>
+                        <p>That's
+                            <b><u>over 90,000 people each year</u></b> facing a future with this progressive neurological disorder. For many,
+                            including beloved figures like Michael J. Fox and Muhammad Ali, the journey with Parkinson's is
+                            a
+                            public one, but for countless others, it's a personal battle fought with courage and resilience.
+                            This project is inspired by the need to bring greater understanding to a condition that touches
+                            so
+                            many lives, often silently at first.</p>
+                    <!-- <h3>Our Research Question</h3>
                     <p>How can interactive data visualizations make the complex motor symptoms of Parkinson's Disease,
                         particularly those detectable through fine motor tasks like hand movements and typing, more
                         tangible
-                        and understandable for a general audience, thereby fostering empathy and awareness?</p>
-
+                        and understandable for a general audience, thereby fostering empathy and awareness?</p> -->
+                    </div>
                 </div>
 
-                <div class="image-column">
+                <!-- <div class="image-column">
                     <img src="images/diamond.jpg" alt="Image of Neil Diamond, who has Parkinson's">
                     <img src="images/mcfly.jpg" alt="Image of Michael J. Fox, who has Parkinson's">
-                </div>
-            </div>
+                </div> -->
+            <!-- </div> -->
         </section>
 
         <section id="hand-viz-page" class="section">
             <div class="two-column-layout">
                 <div class="column text-column">
                     <h2>Motor Symptoms & The Hand</h2>
-                    <p>The symptoms you explore here – changes in hand function – are not just data points; they
+                    <p style="text-align: center; text-wrap: balance;">The symptoms you explore here – changes in hand function – are not just data points; they
                         translate into daily challenges. Difficulty with writing can make signing documents or writing
                         notes frustrating. Tremors or rigidity can make buttoning a shirt, using utensils, or holding a
                         cup a slow and arduous process, impacting independence. These seemingly small motor changes can
@@ -99,7 +103,8 @@
                                 difficulties with daily tasks like writing or gripping objects.</li>
                         </ul>
                     </div>
-                    <p style="margin-top: 15px; box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;"><em>The way Parkinson's affects the hands gives us a glimpse into its
+                    <p style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin: 0; text-align: center; text-wrap: balance;">
+                        <em>The way Parkinson's affects the hands gives us a glimpse into its
                             impact on fine motor control. But what about other everyday actions that require similar
                             precision, like typing? The rhythm of our keystrokes can also tell a subtle story. Let's
                             explore how these digital fingerprints can change, drawing upon our understanding of
@@ -115,13 +120,12 @@
                     <div id="hand-tooltip"></div> <!-- Tooltip for hand.js -->
                 </div>
             </div>
-        </section>
 
-        <section id="pulse-viz-page" class="section">
+            <p style="margin: 48px auto; text-align: center; letter-spacing: 5em; text-indent: 5em;">●●●●●</p>
+
             <div>
-                <div class="two-column-layout">
+                <div class="two-column-layout" style="margin: auto;">
                     <div class="column viz-column pulse-column-left">
-                        <h2>Typing Rhythm & Medication</h2>
                         <div id="med-buttons">
                             <button class="med-btn" data-med="Levadopa">Levadopa</button>
                             <button class="med-btn" data-med="DA">DA</button>
@@ -163,7 +167,11 @@
                     </div>
 
                     <div class="column text-column pulse-column-right">
+                        <h2>Typing Rhythm & Medication</h2>
                         <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
+                        <p style="text-align: center; text-wrap: balance;">The consistency of motor actions, like typing, can be altered by Parkinson's. This interactive
+                            "pulse" demonstrates representative typing rhythms. Select a medication category to see how
+                            treatment might influence these patterns. Below, a line chart visualizes Hold or Flight Times for a sequence of keystrokes.</p>
                         <div class="directions collapsed">
                             <ul>
                                 <li><strong>Select Medication (for PULSE):</strong> Click on the medication buttons ("Levodopa," "DA," etc.)
@@ -200,15 +208,13 @@
                                 </li>
                             </ul>
                         </div>
-                        <p style="text-align: center; margin: auto; box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">The consistency of motor actions, like typing, can be altered by Parkinson's. This interactive
-                            "pulse" demonstrates representative typing rhythms. Select a medication category to see how
-                            treatment might influence these patterns. Below, a line chart visualizes Hold or Flight Times for a sequence of keystrokes.</p>
+                        <p style="text-align: center; margin: auto; box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0; text-wrap: balance;">
+                            <em>We've seen a simulation of how typing rhythms can differ. Now, you 
+                                have the chance to compare your own typing patterns (in a simulation) against a representative 
+                                example from the Tappy dataset, illustrating how technology might one day help us understand 
+                                these nuances even better.</em></p>
                     </div>
                 </div>
-                <p style="text-align: center; margin: auto; width: 65%"><em>We've seen a simulation of how typing rhythms can differ. Now, you 
-                    have the chance to compare your own typing patterns (in a simulation) against a representative 
-                    example from the Tappy dataset, illustrating how technology might one day help us understand 
-                    these nuances even better.</em></p>
             </div>
         </section>
 
@@ -224,125 +230,129 @@
 
         <section id="typing-test-page" class="section">
             <div class="content-wrapper typing-test-wrapper">
-                <h2>Analyze Your Typing Patterns</h2>
-                <p>Changes in typing speed and accuracy can be a significant hurdle for those with Parkinson's who rely
-                    on computers. Simple tasks like sending an email or navigating a smartphone may take longer and
-                    require more effort. This interactive test allows you to explore these nuances.</p>
-                <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
-                <div class="directions collapsed">
-                    <ul>
-                        <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
-                            persona with Parkinson's. Their typing data will be compared against yours. 
-                            The dropdown menu is sorted by slowest (top) to fastest (bottom) simulated typing speed.</li>
-                    </ul>
+                <div class="tabs">
+                    <button class="tab active" data-tab="tab1">Typing Showdown</button>
+                    <button class="tab" data-tab="tab2">Oh, How the Tables Have Turned</button>
+                </div>
+                <div class="tab-content" id="tab1">
+                    <h2 style="margin: 16px auto;">Typing Showdown</h2>
+                    <p style="text-align: center; text-wrap: balance;">Changes in typing speed and accuracy can be a significant hurdle for those with Parkinson's who rely
+                        on computers. Simple tasks like sending an email or navigating a smartphone may take longer and
+                        require more effort. <b>This typing test allows you to race against a simulated persona with Parkinson's.</b></p>
+                    <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
+                    <div class="directions collapsed">
+                        <ul>
+                            <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
+                                persona with Parkinson's. Their typing data will be compared against yours. 
+                                The dropdown menu is sorted by slowest (top) to fastest (bottom) simulated typing speed.</li>
+                        </ul>
+                            <div id="persona-note">
+                                <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
+                                an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
+                            </div>
+                        <ul>
+                            <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear. Type
+                                the displayed sentence; your typing will appear over the prompt. <i><u>Another cursor will appear, representing the rate at which the Parkinson's persona is typing at.</u></i></li>
+                            <li><strong>View Real-time Chart:</strong> Once you or the persona finishes, a line chart will appear, plotting <i><u>your latency (time
+                                between keystrokes) in dark blue</u></i>, and <i><u>the selected persona's latency in golden yellow.</u></i></li>
+                            <li><strong>Interpret the Chart:</strong>
+                                <ul>
+                                    <li>The <strong>x-axis</strong> shows the character index (which keystroke in the sequence).
+                                    </li>
+                                    <li>The <strong>y-axis</strong> shows the latency in milliseconds (ms).</li>
+                                </ul>
+                            </li>
+                            <li><strong>What to Look For:</strong> Compare your line to the persona's line. Is your average
+                                latency generally higher or lower? Ignoring stark outliers, does your line vary more than the persona's?</li>
+                            <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
+                                comparison persona.</li>
+                        </ul>
+                    </div>
+
+                    <div id="options" style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">
+                        <select id="person-select">
+                            <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
+                            <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
+                            <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
+                            <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
+                            <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
+                        </select>
+                        <select id="word-count">
+                            <option value="10">10 words</option>
+                            <option value="25">25 words</option>
+                        </select>
+                        <button id="reset">Reset</button>
+                    </div>
+
+                    <div id="test-container">
+                        <div id="blur-overlay">Click to start</div>
+                        <div id="sentence"></div>
+                        <input type="text" id="input" autocomplete="off" autocorrect="off" autocapitalize="off"
+                            spellcheck="false" />
+                    </div>
+
+                    <div id="result"></div>
+                </div>
+
+                <div class="tab-content hidden" id="tab2">
+                    <h2 style="margin: 16px auto;">Oh, How the Tables Have Turned</h2>
+                    <p style="text-align: center; text-wrap: balance;">If you did <i>Typing Showdown</i>, most likely, you typed faster than the simulated persona with Parkinson's. Now, let's simulate the experience
+                        of <i>actually typing as that persona</i>. <b>This typing test limits you from typing too fast, mimicking the rate of the Parkinson's persona.</b>
+                    </p>
+                    <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
+                    <div class="directions collapsed">
+                        <ul>
+                            <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
+                                persona with Parkinson's. Their typing data will be compared against yours. 
+                                The dropdown menu is sorted by slowest (top) to fastest (bottom) simulated typing speed.</li>
+                        </ul>
                         <div id="persona-note">
                             <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
                             an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
                         </div>
-                    <ul>
-                        <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear. Type
-                            the displayed sentence; your typing will appear over the prompt.</li>
-                        <li><strong>View Real-time Chart:</strong> Once you or the persona finishes, a line chart will appear, plotting your latency (time
-                            between keystrokes) in a dark blue, and the selected persona's latency in a golden yellow.</li>
-                        <li><strong>Interpret the Chart:</strong>
-                            <ul>
-                                <li>The <strong>X-axis</strong> shows the character index (which keystroke in the sequence).
-                                </li>
-                                <li>The <strong>Y-axis</strong> shows the latency in milliseconds (ms).</li>
-                            </ul>
-                        </li>
-                        <li><strong>What to Look For:</strong> Compare your line to the persona's line. Is your average
-                            latency generally higher or lower? Ignoring stark outliers, does your line vary more than the persona's?</li>
-                        <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
-                            comparison persona.</li>
-                    </ul>
-                </div>
-
-                <div id="options" style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">
-                    <select id="person-select">
-                        <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
-                        <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
-                        <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
-                        <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
-                        <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
-                    </select>
-                    <select id="word-count">
-                        <option value="10">10 words</option>
-                        <option value="25">25 words</option>
-                    </select>
-                    <button id="reset">Reset</button>
-                </div>
-
-                <div id="test-container">
-                    <div id="blur-overlay">Click to start</div>
-                    <div id="sentence"></div>
-                    <input type="text" id="input" autocomplete="off" autocorrect="off" autocapitalize="off"
-                        spellcheck="false" />
-                </div>
-
-                <div id="result"></div>
-            </div>
-        </section>
-
-        <section id="typing-test-page-2" class="section">
-            <div class="content-wrapper typing-test-wrapper">
-                <h2>What It Feels Like to Type with Parkinson's</h2>
-                <p>Most likely in the previous typing test, you typed faster than the simulated persona with Parkinson's. Now, let's simulate the experience
-                    of <i>actually typing as that persona</i> with Parkinson's.
-                </p>
-                <h3 class="directions-title"><svg class="dropdown"></svg>How to Use This Visualization<svg class="dropdown"></svg></h3>
-                <div class="directions collapsed">
-                    <ul>
-                        <li><strong>Select a Comparison Persona:</strong> Use the dropdown menu to choose a famous 
-                            persona with Parkinson's. Their typing data will be compared against yours. 
-                            The dropdown menu is sorted by slowest (top) to fastest (bottom) simulated typing speed.</li>
-                    </ul>
-                    <div id="persona-note">
-                        <b>Disclaimer: </b>The rate of simulated personas is not representative of real life personas and their typing speeds. Instead, their data is imitated by a pattern seen in 
-                        an individual with Parkinson's with similar demographics from <a href="https://physionet.org/content/tappy/1.0.0/">this</a> dataset.
+                        <ul>
+                            <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear, <u><i>but this time you won't be able to type the letters until 
+                                they are shaded black</i></u>, imitating the pace of your selected persona.</li>
+                            <li><strong>View Real-time Chart:</strong> Once you finish, a line chart will appear, showing <i><u>the duration you spent typing with the restriction in golden yellow</i></u>, 
+                                and <i><u>your most recent test duration in "Race Mode" in dark blue.</i></u></li>
+                            <li><strong>Interpret the Chart:</strong>
+                                <ul>
+                                    <li>The <strong>x-axis</strong> shows the character index (which keystroke in the sequence).
+                                    </li>
+                                    <li>The <strong>y-axis</strong> shows the duration of the test in seconds (s).</li>
+                                </ul>
+                            </li>
+                            <li><strong>What to Look For:</strong> Look at the difference between the "Restriction" line for this test and the line for the "No Restriction" test. 
+                                How did it feel to type at the pace of someone with Parkinson's?</li>
+                            <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
+                                comparison persona.</li>
+                        </ul>
                     </div>
-                    <ul>
-                        <li><strong>Start Typing:</strong> Click the "Click to start" overlay. A sentence will appear, <u><i>but this time you won't be able to type the letters until 
-                            they are shaded black</i></u>, imitating the pace of your selected persona.</li>
-                        <li><strong>View Real-time Chart:</strong> Once you finish, a line chart will appear, showing the duration you spent typing with the restriction in golden yellow, 
-                            and the most recent test when you typed without any restrictions in dark blue.</li>
-                        <li><strong>Interpret the Chart:</strong>
-                            <ul>
-                                <li>The <strong>X-axis</strong> shows the character index (which keystroke in the sequence).
-                                </li>
-                                <li>The <strong>Y-axis</strong> shows the duration of the test in seconds (s).</li>
-                            </ul>
-                        </li>
-                        <li><strong>What to Look For:</strong> Look at the difference between the "Restriction" line for this test and the line for the "No Restriction" test. 
-                            How did it feel to type at the pace of someone with Parkinson's?</li>
-                        <li><strong>Reset:</strong> Click the "Reset" button to try again with a new sentence or a different
-                            comparison persona.</li>
-                    </ul>
-                </div>
 
-                <div id="options-2" style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">
-                    <select id="person-select-2">
-                        <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
-                        <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
-                        <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
-                        <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
-                        <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
-                    </select>
-                    <select id="word-count-2">
-                        <option value="10">10 words</option>
-                        <option value="25">25 words</option>
-                    </select>
-                    <button id="reset-2">Reset</button>
-                </div>
+                    <div id="options-2" style="box-shadow: 0 -4px 3px -3px gray; padding-top: 30px; margin-top: 0;">
+                        <select id="person-select-2">
+                            <option id="59M" value="LIOUUNGQ8Q">Brett Favre (retired NFL player)</option>
+                            <option id="81M" value="8TEUUGQBYB">Muhammad Ali (boxer), Billy Connolly (actor), Neil Diamond (musician)</option> 
+                            <option id="83F" value="VCTVD6LMPK">Janet Reno (78th U.S. Attorney General)</option>
+                            <option id="77F" value="JHBOKKHOQW">Linda Ronstadt (musician)</option>
+                            <option id="65M" value="LSQWWDXEYO">Michael J. Fox, Robin Williams (actors)</option>
+                        </select>
+                        <select id="word-count-2">
+                            <option value="10">10 words</option>
+                            <option value="25">25 words</option>
+                        </select>
+                        <button id="reset-2">Reset</button>
+                    </div>
 
-                <div id="test-container-2">
-                    <div id="blur-overlay-2">Click to start</div>
-                    <div id="sentence-2"></div>
-                    <input type="text" id="input-2" autocomplete="off" autocorrect="off" autocapitalize="off"
-                        spellcheck="false" />
-                </div>
+                    <div id="test-container-2">
+                        <div id="blur-overlay-2">Click to start</div>
+                        <div id="sentence-2"></div>
+                        <input type="text" id="input-2" autocomplete="off" autocorrect="off" autocapitalize="off"
+                            spellcheck="false" />
+                    </div>
 
-                <div id="result-2"></div>
+                    <div id="result-2"></div>
+                </div>
             </div>
         </section>
 
