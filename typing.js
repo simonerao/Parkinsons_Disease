@@ -165,7 +165,7 @@ function initializePulseVisualization() {
           d3.select(this).classed('active', true);
 
           const description = medDescriptions[selectedMedName] || "Description not available.";
-          medTabDescriptionContent.html(`<p><em>${firstDescription}</em></p>`);
+          medTabDescriptionContent.html(`<p><em>${description}</em></p>`);
         });
     });
 
