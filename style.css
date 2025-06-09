@@ -183,13 +183,6 @@ html {
     font-weight: 500;
   }
   
-/* Original hand-viz-page, typing-test-page, typing-test-page-2 had background-color: #e9eef2; */
-/* combined-typing-tests-section is set to #e9eef2 inline */
-
-
-/* Original pulse-viz-page had background-color: #ffffff; (covered by parkinsons-deep-dive-section) */
-
-
 #quote-page, #quote-page2 { /* Combined quote page styles */
     background-color: #384E77;
     color: #f0f2f5;
@@ -220,8 +213,6 @@ html {
     margin-bottom: 20px;
     color: #5fc0ce;
 }
-
-/* Removed specific #intro-page, #-viz-page h2 centering rule, relying on general styles */
 
 .content-wrapper h3 {
     font-family: 'Roboto', sans-serif;
@@ -773,11 +764,6 @@ html {
         padding: 10px;
     }
 
-    #hand-viz-page .two-column-layout {
-        height: 90%; 
-        align-items: stretch;
-    }
-
     #hand-container {
         min-height: 700px;
     }
@@ -811,6 +797,10 @@ html {
     }
 }
 
+#hand-viz-page .two-column-layout {
+    height: 90%; 
+    align-items: stretch;
+}
 
 #hand-container {
     position: relative;
