@@ -1482,3 +1482,7 @@ a:hover {
         min-height: 1.4rem;
     }
 }
+
+.spotlight-text {
+    color: #4c98a4;; /* A standard blue color, or choose your preferred blue */
+}
