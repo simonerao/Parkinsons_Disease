@@ -66,8 +66,8 @@ function toggleDropdown() {
 }
 
 function enableTabInteraction() {
-    const tabs = document.querySelectorAll('.tab');
-    const contents = document.querySelectorAll('.tab-content');
+    const tabs = document.querySelectorAll('.typing-tab');
+    const contents = document.querySelectorAll('.typing-tab-content');
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
