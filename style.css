@@ -169,47 +169,27 @@ html {
     /* CSS transition for fade-in */
 }
 
-#hook-page,
-#intro-page,
-#dataset-info-page,
-#science-behind-symptoms-page,
-#medications-explained-page,
-#living-with-pd-page,
-#interpreting-visualizations-page,
-#typing-data-deep-dive-page,
+/* Original intro-page, conclusion-page, resources-support-page, writeup-combined-page had background-color: #ffffff; */
+/* parkinsons-deep-dive-section is set to #ffffff inline */
+/* conclusion-page, resources-support-page, writeup-combined-page will use this */
 #conclusion-page,
-#methodology-notes-page,
-#resources-support-page {
+#resources-support-page,
+#writeup-combined-page { 
     background-color: #ffffff;
 }
 
-#hand-viz-page,
-#typing-test-page {
-    background-color: #e9eef2;
-}
-
-#quote-page {
+.highlighted-line {
+    color: #007BA7;
+    font-weight: 500;
+  }
+  
+#quote-page, #quote-page2 { /* Combined quote page styles */
     background-color: #384E77;
     color: #f0f2f5;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-#writeup-title-page {
-    background-color: #2f4861;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#writeup-title-page h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-}
-
 
 .content-wrapper {
     max-width: 900px;
@@ -231,7 +211,7 @@ html {
     font-size: 2.2rem;
     margin-top: 10px;
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: #5fc0ce;
 }
 
 #intro-page .text-column>h2 {
@@ -253,7 +233,8 @@ html {
     color: #2c3e50;
 }
 
-#quote-page .content-wrapper h2 {
+#quote-page .content-wrapper h2,
+#quote-page2 .content-wrapper h2 { /* Applied to both quote pages */
     color: #f0f2f5;
 }
 
@@ -277,15 +258,14 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: stretch;
-    /* Changed from flex-start to stretch */
+    align-items: flex-start; /* MODIFIED from stretch */
     width: 100%;
-    max-width: 1200px;
+    max-width: 1200px; /* Ensures the layout itself doesn't exceed this, good for combined sections */
     gap: 30px;
-    padding: 10px 0;
+    padding: 10px 0; /* Adjusted padding, original section had more */
     box-sizing: border-box;
-    margin-top: 10px;
-    margin-bottom: 0;
+    margin-left: auto; /* Center the layout block if section is wider */
+    margin-right: auto; /* Center the layout block */
 }
 
 .column {
@@ -759,11 +739,6 @@ html {
         min-height: 1.6rem;
     }
 
-
-    #writeup-title-page h1 {
-        font-size: 2.5rem;
-    }
-
     .content-wrapper h2,
     .two-column-layout h2 {
         font-size: 1.8rem;
@@ -795,21 +770,18 @@ html {
     }
 
     #hand-container {
-        /* height will be 100% of its parent column, so fixed height here is less relevant unless for specific cases.
-           min-height is still useful. */
-        min-height: 250px;
-        /* Adjusted min-height for smaller screens */
+        min-height: 700px;
     }
 
     .typing-test-wrapper {
         padding: 15px;
     }
 
-    #test-container {
+    #test-container, #test-container-2 { /* Applied to both */
         font-size: 1em;
     }
 
-    #blur-overlay {
+    #blur-overlay, #blur-overlay-2 { /* Applied to both */
         font-size: 1em;
     }
 }
@@ -830,14 +802,16 @@ html {
     }
 }
 
+#hand-viz-page .two-column-layout {
+    height: 90%; 
+    align-items: stretch;
+}
 
 #hand-container {
     position: relative;
     width: 100%;
     height: 100%;
-    /* Changed from 450px to 100% */
     min-height: 300px;
-    /* Keeps a minimum sensible height */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -931,9 +905,11 @@ html {
     justify-content: center;
     flex-wrap: nowrap;
     max-width: 1300px;
-    margin: 0 auto;
-    padding: 10px;
+    margin-left: auto; /* Center the layout block */
+    margin-right: auto; /* Center the layout block */
+    padding: 10px; /* Minimal padding for the layout itself */
     box-sizing: border-box;
+    width: 100%; /* Take full width up to max-width */
 }
 
 .three-column-layout .image-column {
@@ -966,6 +942,7 @@ html {
 
 .three-column-layout .text-column h2 {
     margin-top: 0;
+    text-align: center; /* Ensure H2 is centered in this column */
 }
 
 .three-column-layout .text-column p,
@@ -1086,14 +1063,6 @@ a:hover {
     transform: scale(1.1);
 }
 
-#quote-page2 {
-    background-color: #384E77;
-    color: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #persona-note {
     border: 2px solid black;
     text-align: center;
@@ -1151,7 +1120,7 @@ a:hover {
     }
 }
 
-.tabs {
+.typing-tabs {
     display: flex;
     position: relative;
     height: 3em;
@@ -1159,7 +1128,7 @@ a:hover {
     top: 2px;
 }
 
-.tab {
+.typing-tab {
     flex: 1;
     background: white;
     opacity: 0.3;
@@ -1171,13 +1140,79 @@ a:hover {
     font-weight: bold;
 }
 
-.tab.active {
+.typing-tab.active {
     background: white;
     opacity: 1;
     z-index: 1;
+
+/* Styles for Tabbed Write-Up Section */
+.writeup-tabs-container {
+    max-width: 950px; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 40px); /* Adjust to prevent overflow of the whole section */
+    margin-top: 20px; /* Space from top of section */
+    margin-bottom: 20px; /* Space from bottom of section */
 }
 
-.tab-content {
+.writeup-tabs-container h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.5rem; 
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+    flex-shrink: 0; /* Prevent h1 from shrinking */
+}
+
+.tabs {
+    width: 100%;
+    margin-bottom: 0; /* Remove bottom margin, border handled by tab-content */
+    border-bottom: 2px solid #dee2e6;
+    flex-shrink: 0; /* Prevent tabs bar from shrinking */
+}
+
+.tab-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+
+.tab-list li {
+    margin-bottom: -2px; 
+}
+
+.tab-list li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #4A90E2;
+    border: 2px solid transparent;
+    border-bottom: none; 
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+.tab-list li a:hover {
+    color: #3a7ac0;
+    border-color: #e9ecef #e9ecef transparent; 
+}
+
+.tab-list li.active a {
+    color: #2c3e50; 
+    background-color: #fff; 
+    border-color: #dee2e6 #dee2e6 transparent;
+    border-bottom: 2px solid #fff; 
+    font-weight: 700;
+}
+
+.typing-tab-content {
     padding: 20px;
     background: white;
     border: 2px solid #ccc;
@@ -1188,4 +1223,121 @@ a:hover {
 
 .hidden {
   display: none;
+}
+  
+.tab-content {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 .25rem .25rem;
+    flex-grow: 1; 
+    overflow-y: auto; 
+    /* max-height: calc(100vh - 250px); Example: Adjust based on header/tab height and padding */
+    /* Height will be constrained by .writeup-tabs-container and flex properties */
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.tab-pane h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.8rem; 
+    margin-top: 0; 
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+.tab-pane h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.4rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #2c3e50;
+}
+.tab-pane p, .tab-pane li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    text-align: left;
+}
+.tab-pane ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.medication-info-tabs-container {
+    margin-top: 25px; /* Space above this new section */
+    margin-bottom: 20px; /* Space below before the next paragraph */
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.medication-info-tabs-container h4 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.med-tabs-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: -1px; /* To make active tab border connect */
+    padding-bottom: 0;
+}
+
+.med-tab-btn {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    background-color: #e9eef2;
+    color: #333;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #ddd; /* Default bottom border */
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 0;
+}
+
+.med-tab-btn:hover {
+    background-color: #d1d9e0;
+}
+
+.med-tab-btn.active {
+    background-color: #ffffff; /* Same as description background */
+    color: #2c3e50;
+    border-color: #ddd;
+    border-bottom: 1px solid #ffffff; /* To make it look connected to content */
+    font-weight: bold;
+    position: relative;
+    z-index: 2; /* Ensure active tab is above the description border */
+}
+
+.med-tab-description-content {
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 0 0 4px 4px; /* Rounded corners for bottom */
+    min-height: 100px; /* Ensure some space for description */
+    text-align: left;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1; /* Below active tab */
+}
+
+.med-tab-description-content p {
+    margin: 0;
+    color: #333;
 }
