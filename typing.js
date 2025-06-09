@@ -60,7 +60,7 @@ function toggleDropdown() {
   // then select the polygon within each of them.
   const trianglePolygons = d3.select(this)
       .selectAll('svg.dropdown')
-      .select('polygon.dropdown-arrow-polygon')
+      .select('polygon.dropdown-arrow-polygon');
 
   if (!trianglePolygons.empty()) {
       trianglePolygons.transition()
