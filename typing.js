@@ -11,62 +11,57 @@ const medDescriptions = {
 };
 
 function dropdownTriangle() {
-  const dropdownSvgs = d3.selectAll('.dropdown') // Selects all SVGs with class dropdown
-      .attr('width', 19)
-      .attr('height', 19);
+    const dropdownSvgs = d3.selectAll('.dropdown') // Selects all SVGs with class dropdown
+        .attr('width', 19)
+        .attr('height', 19);
 
-  // Appends a polygon to EACH selected SVG
-  dropdownSvgs.append("polygon")
-      .attr('class', 'dropdown-arrow-polygon') // Added a class for easier selection if needed
-      .attr("points", "5,6.34 10,15 15,6.34") // downward triangle
-      .attr("fill", "#384E77")
-      .style('stroke-width', 1)
-      .style('stroke', 'black');
+    // Appends a polygon to EACH selected SVG
+    dropdownSvgs.append("polygon")
+        .attr('class', 'dropdown-arrow') // Added a class for easier selection if needed
+        .attr("points", "5,6.34 10,15 15,6.34") // downward triangle
+        .attr("fill", "#384E77")
+        .style('stroke-width', 1)
+        .style('stroke', 'black');
 
-  d3.selectAll('.directions-title')
-      .style('cursor', 'pointer') // Set cursor on the entire title for better UX
-      .on('click', function () { toggleDropdown.call(this); }); // 'this' will be the .directions-title
+    d3.selectAll('.directions-title')
+        .style('cursor', 'pointer') // Set cursor on the entire title for better UX
+        .on('click', function () { toggleDropdown.call(this); }); // 'this' will be the .directions-title
 }
 
 function toggleDropdown() {
-  const directionsDiv = d3.select(this.nextElementSibling); // The div with class 'directions'
-  const node = directionsDiv.node();
-  const isOpen = node.style.height !== "0px" && node.style.height !== "" && node.offsetHeight > 0;
+    const directions = d3.select(this.nextElementSibling);
+    const node = directions.node();
+    const isOpen = node.offsetHeight > 0;
 
-  if (isOpen) {
-      const currentHeight = node.scrollHeight;
-      directionsDiv
-          .style("height", currentHeight + "px")
-          .transition()
-          .duration(800)
-          .style("height", "0px");
-  } else {
-      const fullHeight = node.scrollHeight;
-      directionsDiv
-          .style("height", "0px")
-          .transition()
-          .duration(800)
-          .style("height", fullHeight + "px")
-          .on("end", () => {
-              // Check if the transition completed to the full height
-              // parseFloat is important as style.height might be "XXX.YYYpx"
-              if (Math.abs(parseFloat(directionsDiv.style("height")) - fullHeight) < 1) { // Allow for small floating point discrepancies
-                  directionsDiv.style("height", "auto");
-              }
-          });
-  }
+    const triangles = d3.selectAll(this.querySelectorAll('svg polygon'));
 
-  // Select ALL svg.dropdown elements within the clicked .directions-title,
-  // then select the polygon within each of them.
-  const trianglePolygons = d3.select(this)
-      .selectAll('svg.dropdown')
-      .select('polygon.dropdown-arrow-polygon');
+    if (isOpen) {
+        directions
+            .style("height", node.scrollHeight + "px")
+            .transition()
+            .duration(400)
+            .style("height", "0px");
 
-  if (!trianglePolygons.empty()) {
-      trianglePolygons.transition()
-          .duration(300)
-          .attr("transform", isOpen ? "rotate(0, 9.5, 10.67)" : "rotate(-180, 9.5, 10.67)");
-  }
+        triangles
+            .transition()
+            .duration(400)
+            .attr("transform", "rotate(0, 10, 10)");
+    } else {
+        directions
+            .style("height", "0px")
+            .transition()
+            .duration(400)
+            .style("height", node.scrollHeight + "px")
+            .on("end", () => directions.style("height", "auto"));
+
+        triangles
+            .transition()
+            .duration(400)
+            .attr("transform", "rotate(180, 10, 10.67)");
+
+        console.log(directions.text());
+    }
+    // debugger;
 }
 
 
